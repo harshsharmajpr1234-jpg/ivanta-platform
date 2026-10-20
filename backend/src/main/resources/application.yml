@@ -1,0 +1,104 @@
+# ------------------------------------------------------------------
+# iVanta backend configuration.
+# ALL secrets come from environment variables — nothing sensitive is
+# hardcoded here or committed to git. See backend/.env.example.
+# ------------------------------------------------------------------
+spring:
+  application:
+    name: ivanta-backend
+
+  datasource:
+    # XAMPP local dev default: jdbc:mysql://localhost:3306/ivanta (root / configurable password)
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:ivanta}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Kolkata
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      pool-name: ivanta-pool
+
+  jpa:
+    hibernate:
+      # Flyway owns the schema; Hibernate must never auto-modify it in prod.
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        jdbc.time_zone: Asia/Kolkata
+        format_sql: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${SERVER_PORT:8085}
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${COOKIE_SECURE:false}   # set true behind HTTPS in production
+
+ivanta:
+  cors:
+    # Comma-separated exact origins. NEVER use "*".
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://127.0.0.1:3000}
+  security:
+    admin-session-ttl-minutes: ${ADMIN_SESSION_TTL_MINUTES:30}
+    user-session-ttl-hours: ${USER_SESSION_TTL_HOURS:8}
+    max-login-failures: ${MAX_LOGIN_FAILURES:5}
+    lockout-minutes: ${LOCKOUT_MINUTES:15}
+    # Bootstraps the FIRST super admin when none exists (§36 secure process).
+    # Leave unset in production after first boot; rotate by direct DB update.
+    bootstrap-admin-email: ${IVANTA_INITIAL_ADMIN_EMAIL:${ADMIN_ROOT_EMAIL:}}
+    bootstrap-admin-password: ${IVANTA_INITIAL_ADMIN_PASSWORD:${ADMIN_ROOT_PASSWORD:}}
+    bootstrap-admin-name: ${ADMIN_ROOT_NAME:iVanta Root Admin}
+    dev-seed-demo-admins: ${DEV_SEED_DEMO_ADMINS:false}  # "true" only in local dev
+  otp:
+    provider: mock            # mock | msg91 | twilio (future) — OtpProvider interface
+    mock-fixed-code: ${DEV_OTP_CODE:123456}
+    ttl-seconds: 300
+  storage:
+    provider: local           # local | s3 | cloudinary — StorageProvider interface
+    local-dir: ${UPLOAD_DIR:./uploads}
+  checkout:
+    reservation-ttl-minutes: ${RESERVATION_TTL_MINUTES:15}
+    cod-enabled: ${COD_ENABLED:true}
+    min-order-value: ${MIN_ORDER_VALUE:999}
+  returns:
+    window-days: ${RETURN_WINDOW_DAYS:3}
+  payment:
+    provider: ${PAYMENT_PROVIDER:mock}            # mock | razorpay — PaymentProvider interface
+    mock-secret: ${PAYMENT_MOCK_SECRET:dev-only-mock-secret-change-me}
+    razorpay:
+      key-id: ${RAZORPAY_KEY_ID:}
+      key-secret: ${RAZORPAY_KEY_SECRET:}
+      webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:}
+  geo:
+    provider: dataset         # dataset | google | mapbox | osm — GeocodingProvider interface
+  delivery:
+    provider: ${DELIVERY_PROVIDER:mock}          # mock | shiprocket | delhivery — CourierProvider interface
+    auto-ship-on-packed: ${DELIVERY_AUTO_SHIP:true}
+    shiprocket:
+      email: ${SHIPROCKET_EMAIL:}
+      password: ${SHIPROCKET_PASSWORD:}
+      pickup-location: ${SHIPROCKET_PICKUP_LOCATION:Primary Warehouse}
+      api-base-url: ${SHIPROCKET_API_URL:https://apiv2.shiprocket.in/v1}
+    delhivery:
+      api-token: ${DELHIVERY_API_TOKEN:}
+      client-name: ${DELHIVERY_CLIENT_NAME:}
+      pickup-location: ${DELHIVERY_PICKUP_LOCATION:Primary Warehouse}
+      api-base-url: ${DELHIVERY_API_URL:https://track.delhivery.com}
+
+logging:
+  level:
+    com.ivanta: INFO
+    org.hibernate.SQL: WARN
