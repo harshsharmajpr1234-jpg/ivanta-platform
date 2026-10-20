@@ -189,7 +189,7 @@ export function Header() {
                 </div>
               )}
             </div>
-            <Link href="/login" className="rounded-full bg-ink px-4 py-1.5 text-[13px] font-semibold text-white md:hidden" >{user ? 'Account' : 'Sign in'}</Link>
+            <Link href="/login" className="rounded-full bg-ink px-4 py-1.5 text-[13px] font-semibold text-white md:hidden" >{user ? 'Account' : 'Sign in / Register'}</Link>
           </div>
         </div>
       </header>
