@@ -47,7 +47,7 @@ export default function RefundPolicyPage() {
       </section>
       <section>
         <h2>9. Contact</h2>
-        <p>Refund status not updating or money not received within the timelines above? Write to care@ivanta.in with your order ID — we reconcile against payment provider records and respond within 2 working days.</p>
+        <p>Refund status not updating or money not received within the timelines above? Write to ivanta@gmail.com with your order ID — we reconcile against payment provider records and respond within 2 working days.</p>
       </section>
     </PolicyPage>
   );

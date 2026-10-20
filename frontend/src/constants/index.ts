@@ -5,8 +5,8 @@ export const BRAND = {
   name: 'iVanta',
   tagline: 'Premium Apple Products, Delivered',
   domain: 'https://ivanta.in',
-  supportEmail: 'care@ivanta.in',
-  supportPhone: '+91 98290 41000',
+  supportEmail: 'ivanta@gmail.com',
+  supportPhone: '+91 90214 11513',
 } as const;
 
 /* ---------- catalog ---------- */

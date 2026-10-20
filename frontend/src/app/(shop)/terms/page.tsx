@@ -43,7 +43,7 @@ export default function TermsPage() {
       </section>
       <section>
         <h2>10. Governing law</h2>
-        <p>These terms are governed by the laws of India. Courts at Jaipur, Rajasthan have exclusive jurisdiction. Questions: care@ivanta.in.</p>
+        <p>These terms are governed by the laws of India. Courts at Jaipur, Rajasthan have exclusive jurisdiction. Questions: ivanta@gmail.com.</p>
       </section>
     </PolicyPage>
   );
