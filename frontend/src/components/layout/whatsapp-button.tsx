@@ -10,7 +10,7 @@ export function WhatsAppButton() {
   const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hello iVanta, I have an inquiry regarding Apple products.')}`;
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex items-center gap-3">
+    <div className="fixed bottom-16 right-3.5 z-40 flex items-center gap-3 sm:bottom-6 sm:right-6">
       {/* Tooltip badge */}
       {showTooltip && (
         <div className="hidden animate-fade-in items-center gap-2 rounded-2xl border border-line bg-white px-3.5 py-2 shadow-pop sm:flex">

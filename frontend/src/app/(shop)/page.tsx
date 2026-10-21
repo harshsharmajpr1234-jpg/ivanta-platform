@@ -25,16 +25,16 @@ export default function HomePage() {
   return (
     <div className="bg-surface">
       {/* ---------- HERO ---------- */}
-      <section className="relative overflow-hidden border-b border-line bg-white">
+      <section className="relative border-b border-line bg-white">
         <div className="mx-auto grid max-w-[1240px] items-center gap-8 px-4 py-8 sm:py-12 md:grid-cols-2 md:gap-10 md:py-20">
-          <div>
+          <div className="w-full min-w-0">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-border bg-accent-soft px-3 py-1 text-[11px] font-semibold text-accent sm:text-[12px]">
               Certified Pre-Owned · 1-Month Warranty Included
             </span>
-            <h1 className="mt-3.5 text-[28px] font-extrabold leading-[1.12] tracking-tight text-ink sm:text-[38px] md:text-[50px]">
+            <h1 className="mt-3.5 text-[26px] font-extrabold leading-[1.14] tracking-tight text-ink sm:text-[38px] md:text-[50px]">
               Premium Pre-Owned Apple. <span className="text-accent">Tested. Verified. Affordable.</span>
             </h1>
-            <p className="mt-3 max-w-lg text-[13.5px] leading-relaxed text-ink-soft sm:mt-4 sm:text-[15px] md:text-base">
+            <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-ink-soft sm:mt-4 sm:text-[15px] md:text-base">
               Shop certified used iPhones, Macs, iPads, Watches and AirPods at up to 60% off —
               with Open Box Delivery, 3-Day Free Replacement, 1-Month Hardware Warranty, and Online/COD payments.
             </p>
@@ -49,7 +49,7 @@ export default function HomePage() {
             </div>
 
             {/* Quick Mobile Category Badges */}
-            <div className="mt-4 flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar sm:hidden">
+            <div className="mt-4 flex w-full max-w-full items-center gap-2 overflow-x-auto pb-1 no-scrollbar sm:hidden">
               {[
                 { label: 'iPhones', href: '/products?cat=iphone' },
                 { label: 'MacBooks', href: '/products?cat=mac' },
@@ -64,9 +64,9 @@ export default function HomePage() {
             </div>
 
             <dl className="mt-6 grid grid-cols-3 gap-2 border-t border-line pt-4 sm:mt-9 sm:max-w-md sm:gap-4 sm:pt-6">
-              <div><dt className="text-[10px] uppercase tracking-wider text-ink-faint sm:text-[11px]">Warranty</dt><dd className="mt-0.5 text-[15px] font-bold text-ink sm:text-lg">1 Month</dd></div>
-              <div><dt className="text-[10px] uppercase tracking-wider text-ink-faint sm:text-[11px]">Delivery</dt><dd className="mt-0.5 text-[15px] font-bold text-ink sm:text-lg">Open Box</dd></div>
-              <div><dt className="text-[10px] uppercase tracking-wider text-ink-faint sm:text-[11px]">Replacement</dt><dd className="mt-0.5 text-[15px] font-bold text-ink sm:text-lg">3 Days</dd></div>
+              <div className="min-w-0"><dt className="truncate text-[10px] uppercase tracking-wider text-ink-faint sm:text-[11px]">Warranty</dt><dd className="mt-0.5 text-[14px] font-bold text-ink sm:text-lg">1 Month</dd></div>
+              <div className="min-w-0"><dt className="truncate text-[10px] uppercase tracking-wider text-ink-faint sm:text-[11px]">Delivery</dt><dd className="mt-0.5 text-[14px] font-bold text-ink sm:text-lg">Open Box</dd></div>
+              <div className="min-w-0"><dt className="truncate text-[10px] uppercase tracking-wider text-ink-faint sm:text-[11px]">Replacement</dt><dd className="mt-0.5 text-[14px] font-bold text-ink sm:text-lg">3 Days</dd></div>
             </dl>
           </div>
 
@@ -85,9 +85,9 @@ export default function HomePage() {
 
       {/* ---------- TRUST ROW ---------- */}
       <section className="border-b border-line bg-white">
-        <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-3 px-4 py-6 sm:gap-6 sm:py-10 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-2.5 px-3 py-6 sm:gap-6 sm:px-4 sm:py-10 lg:grid-cols-4">
           {TRUST.map((t) => (
-            <div key={t.title} className="flex flex-col gap-2 rounded-2xl bg-surface-sunk/60 p-3.5 sm:flex-row sm:bg-transparent sm:p-0">
+            <div key={t.title} className="flex min-w-0 flex-col gap-2 rounded-2xl bg-surface-sunk/60 p-3 sm:flex-row sm:bg-transparent sm:p-0">
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent sm:h-9 sm:w-9">
                 <t.icon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
               </span>

@@ -6,22 +6,24 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
-  max-width: 100vw;
+  -webkit-text-size-adjust: 100%;
 }
 body {
   @apply bg-surface text-ink antialiased;
   font-feature-settings: 'cv11', 'ss01';
-  overflow-x: hidden;
-  max-width: 100vw;
   width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
 }
 
-* { -webkit-tap-highlight-color: transparent; }
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
 
 ::selection { background: #0b5cff22; }
 
-::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #d2d2d7; border-radius: 8px; border: 2px solid #fbfbfd; }
 ::-webkit-scrollbar-thumb:hover { background: #aeaeB5; }
