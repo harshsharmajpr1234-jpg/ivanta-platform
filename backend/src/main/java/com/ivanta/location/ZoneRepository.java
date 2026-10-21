@@ -10,7 +10,8 @@ public interface ZoneRepository extends JpaRepository<ServiceabilityZone, String
     List<ServiceabilityZone> findByIsActiveTrue();
 
     @Query("SELECT z FROM ServiceabilityZone z WHERE z.isActive = true AND z.serviceable = true "
-            + "AND z.id IN (SELECT z2.id FROM ServiceabilityZone z2 JOIN z2.pinPrefixes p WHERE :pin LIKE CONCAT(p, '%'))")
+            + "AND z.id IN (SELECT z2.id FROM ServiceabilityZone z2 JOIN z2.pinPrefixes p WHERE :pin LIKE CONCAT(p, '%')) "
+            + "ORDER BY z.deliveryFee ASC, z.etaMinDays ASC")
     List<ServiceabilityZone> findServiceableByPinPrefix(@Param("pin") String pin);
 
     @Query("SELECT z FROM ServiceabilityZone z WHERE z.isActive = true "
