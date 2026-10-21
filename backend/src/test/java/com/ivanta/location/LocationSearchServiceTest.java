@@ -34,13 +34,14 @@ class LocationSearchServiceTest {
     @Mock ZoneRepository zones;
     @Mock ShippingMethodRepository shippingMethods;
     @Mock com.ivanta.location.provider.IndiaPostPincodeProvider indiaPostProvider;
+    @Mock PincodeLookupCacheRepository cacheRepo;
 
     LocationSearchService service;
 
     @BeforeEach
     void setUp() {
         service = new LocationSearchService(cities, localities, pincodes, postOffices,
-                states, zones, shippingMethods, indiaPostProvider);
+                states, zones, shippingMethods, indiaPostProvider, cacheRepo, new com.fasterxml.jackson.databind.ObjectMapper());
         StateEntity raj = new StateEntity();
         raj.setId("ST-RJ");
         raj.setName("Rajasthan");

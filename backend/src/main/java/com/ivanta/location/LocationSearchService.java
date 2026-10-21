@@ -29,6 +29,8 @@ public class LocationSearchService {
     private final ZoneRepository zones;
     private final com.ivanta.delivery.ShippingMethodRepository shippingMethods;
     private final com.ivanta.location.provider.IndiaPostPincodeProvider indiaPostProvider;
+    private final PincodeLookupCacheRepository cacheRepo;
+    private final com.fasterxml.jackson.databind.ObjectMapper objectMapper;
 
     private record Ranked(int rank, Suggestion s) { }
 
@@ -45,6 +47,14 @@ public class LocationSearchService {
                     ranked.add(new Ranked(0, pinSuggestion(p))));
             pincodes.findTop10ByCodeStartingWithAndIsActiveTrue(q).forEach(p -> {
                 if (!p.getCode().equals(q)) ranked.add(new Ranked(1, pinSuggestion(p)));
+            });
+
+            // Also search all-India PIN code database cache
+            cacheRepo.findTop10ByPincodeStartingWith(q).forEach(c -> {
+                ranked.add(new Ranked(c.getPincode().equals(q) ? 0 : 1,
+                        new Suggestion(c.getPincode(), "pincode", c.getPincode(),
+                                c.getDistrict() != null ? c.getDistrict() + ", " + c.getState() : c.getState(),
+                                c.getDistrict(), c.getState(), c.getPincode(), false)));
             });
         }
 
@@ -106,8 +116,31 @@ public class LocationSearchService {
 
     @Transactional(readOnly = true)
     public PincodeInfo pincodeInfo(String code) {
-        // 1. ALWAYS query India Post Official API first for 100% accurate live postal data
         if (code != null && code.matches("\\d{6}")) {
+            // 1. Check in-database All-India postal directory first (instant, 100% accurate)
+            Optional<PincodeLookupCache> cachedOpt = cacheRepo.findById(code);
+            if (cachedOpt.isPresent()) {
+                PincodeLookupCache cached = cachedOpt.get();
+                try {
+                    com.ivanta.location.dto.PincodeLookupDtos.UpstreamV1Response v1 =
+                            objectMapper.readValue(cached.getResponseJson(), com.ivanta.location.dto.PincodeLookupDtos.UpstreamV1Response.class);
+                    List<String> pos = (v1 != null && v1.data() != null && v1.data().postOffices() != null)
+                            ? v1.data().postOffices().stream().map(com.ivanta.location.dto.PincodeLookupDtos.UpstreamPostOffice::officeName).toList()
+                            : List.of();
+                    boolean serviceable = isPinServiceable(code).serviceable();
+                    return new PincodeInfo(
+                            code,
+                            cached.getDistrict() != null ? List.of(cached.getDistrict()) : List.of(),
+                            cached.getState() != null ? List.of(cached.getState()) : List.of(),
+                            pos,
+                            pos,
+                            serviceable
+                    );
+                } catch (Exception ignored) {
+                }
+            }
+
+            // 2. Query live provider if not found in DB
             PincodeInfo liveInfo = indiaPostProvider.lookupPincode(code);
             if (liveInfo != null) {
                 boolean serviceable = isPinServiceable(code).serviceable();
@@ -116,7 +149,7 @@ public class LocationSearchService {
             }
         }
 
-        // 2. Fallback to local DB cache only if external provider failed
+        // 3. Fallback to relational tables
         Optional<Pincode> opt = pincodes.findByCode(code);
         if (opt.isPresent()) {
             Pincode p = opt.get();
