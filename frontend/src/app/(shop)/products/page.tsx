@@ -164,7 +164,7 @@ function Catalog() {
             <NoResultsState icon={SearchX} title="No products match" description="Try a different search, category or price range."
               action={<Button variant="secondary" onClick={() => router.push('/products')}>Clear filters</Button>} />
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-4 xl:grid-cols-3">
               {products.data.content.map((p) => (
                 <ProductCard key={p.id} p={p} wished={wishIds.data?.includes(p.id)} onToggleWish={() => void toggleWish(p.id)} />
               ))}

@@ -83,11 +83,13 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-line bg-white/85 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-[1240px] items-center gap-2 px-4">
-          <button type="button" className="rounded-full p-2 text-ink md:hidden" aria-label="Open menu" onClick={() => setMenuOpen(true)}><Menu className="h-5 w-5" /></button>
+        <div className="mx-auto flex h-14 max-w-[1240px] items-center gap-2 px-3 sm:px-4">
+          <button type="button" className="rounded-full p-2 text-ink md:hidden" aria-label="Open menu" onClick={() => setMenuOpen(true)}>
+            <Menu className="h-5 w-5" />
+          </button>
           <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="iVanta home">
             <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-ink text-[15px] font-black text-white">iV</span>
-            <span className="hidden text-[19px] font-bold tracking-tight text-ink sm:block">iVanta</span>
+            <span className="text-[17px] font-bold tracking-tight text-ink sm:text-[19px]">iVanta</span>
           </Link>
 
           <nav className="ml-4 hidden items-center gap-0.5 lg:flex" aria-label="Main">{navLinks}</nav>
@@ -157,6 +159,14 @@ export function Header() {
           </div>
 
           <div className="ml-auto flex items-center gap-1 md:ml-2">
+            <button
+              type="button"
+              className="rounded-full p-2 text-ink transition-colors hover:bg-ink/5 md:hidden"
+              aria-label="Search"
+              onClick={() => setMenuOpen(true)}
+            >
+              <Search className="h-5 w-5" />
+            </button>
             {user && <NotificationBell />}
             <Link href="/cart" className="relative rounded-full p-2 text-ink transition-colors hover:bg-ink/5" aria-label="Cart">
               <ShoppingBag className="h-5 w-5" />
@@ -189,13 +199,28 @@ export function Header() {
                 </div>
               )}
             </div>
-            <Link href="/login" className="rounded-full bg-ink px-4 py-1.5 text-[13px] font-semibold text-white md:hidden" >{user ? 'Account' : 'Sign in / Register'}</Link>
+            <Link href="/login" className="rounded-full bg-ink px-3 py-1.5 text-[12.5px] font-semibold text-white md:hidden shrink-0">{user ? 'Account' : 'Sign In'}</Link>
           </div>
         </div>
       </header>
 
       <Sheet open={menuOpen} onClose={() => setMenuOpen(false)} side="left" title="Menu">
         <div className="flex flex-col gap-1">
+          <form
+            onSubmit={(e) => {
+              submitSearch(e);
+              setMenuOpen(false);
+            }}
+            className="relative mb-3"
+          >
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search Apple products…"
+              className="h-10 w-full rounded-full border border-line bg-surface-sunk pl-9 pr-3 text-[13px] text-ink placeholder:text-ink-faint focus:border-accent focus:bg-white focus:outline-none"
+            />
+          </form>
           {NAV.map((n) => (
             <Link key={n.href + n.label} href={n.href} className="rounded-xl px-3 py-2.5 text-[14px] font-medium text-ink hover:bg-surface-sunk">{n.label}</Link>
           ))}

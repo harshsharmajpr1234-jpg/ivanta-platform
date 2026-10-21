@@ -73,8 +73,8 @@ function OtpForm() {
 
   return (
     <div className="bg-surface-sunk/50">
-      <div className="mx-auto flex min-h-[calc(100vh-56px)] max-w-md flex-col justify-center px-4 py-12">
-        <div className="rounded-3xl border border-line bg-white p-8 shadow-soft">
+      <div className="mx-auto flex min-h-[calc(100vh-56px)] max-w-md flex-col justify-center px-3.5 sm:px-4 py-8 sm:py-12">
+        <div className="rounded-3xl border border-line bg-white p-5 sm:p-8 shadow-soft">
           <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-soft text-accent"><MailCheck className="h-6 w-6" /></span>
           <h1 className="mt-4 text-2xl font-bold tracking-tight text-ink">Enter verification code</h1>
           <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-muted">
@@ -87,7 +87,7 @@ function OtpForm() {
             </p>
           )}
           <form onSubmit={verify} className="mt-6 space-y-4">
-            <div className="flex justify-between gap-2" role="group" aria-label="One-time password">
+            <div className="flex justify-between gap-1.5 sm:gap-2" role="group" aria-label="One-time password">
               {digits.map((d, i) => (
                 <input
                   key={i}
@@ -99,7 +99,7 @@ function OtpForm() {
                   autoComplete={i === 0 ? 'one-time-code' : 'off'}
                   maxLength={6}
                   aria-label={`Digit ${i + 1}`}
-                  className="h-14 w-full min-w-0 rounded-2xl border border-line-strong bg-surface text-center text-[20px] font-bold text-ink outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/25"
+                  className="h-12 sm:h-14 w-full min-w-0 rounded-xl sm:rounded-2xl border border-line-strong bg-surface text-center text-[17px] sm:text-[20px] font-bold text-ink outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/25"
                 />
               ))}
             </div>

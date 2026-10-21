@@ -40,9 +40,9 @@ const COLS = [
 export function Footer() {
   return (
     <footer className="border-t border-line bg-white">
-      <div className="mx-auto max-w-[1240px] px-4 py-12">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div>
+      <div className="mx-auto max-w-[1240px] px-4 py-10 sm:py-12">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-10">
+          <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2">
               <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-ink text-[15px] font-black text-white">iV</span>
               <span className="text-[17px] font-bold tracking-tight text-ink">{BRAND.name}</span>
@@ -56,7 +56,7 @@ export function Footer() {
             </p>
           </div>
           {COLS.map((c) => (
-            <div key={c.title}>
+            <div key={c.title} className="col-span-1">
               <h3 className="text-[12px] font-semibold uppercase tracking-wider text-ink">{c.title}</h3>
               <ul className="mt-3 space-y-2">
                 {c.links.map((l) => (

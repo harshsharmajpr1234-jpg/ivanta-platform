@@ -41,21 +41,21 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
     );
   }
   return (
-    <div className="container-x py-6 lg:py-8">
-      <div className="grid gap-8 lg:grid-cols-[240px_1fr]">
+    <div className="container-x py-5 lg:py-8">
+      <div className="grid gap-6 lg:grid-cols-[240px_1fr] lg:gap-8">
         <aside>
           <div className="rounded-2xl border border-line bg-white p-4">
             <p className="text-[15px] font-bold text-ink">{user.name}</p>
             <p className="truncate text-[12px] text-ink-muted">{user.email ?? user.phone}</p>
             <span className="mt-2 inline-flex rounded-full bg-accent-soft px-2.5 py-0.5 text-[10.5px] font-bold text-accent">Customer account</span>
           </div>
-          <nav className="mt-4 space-y-1" aria-label="Account">
+          <nav className="mt-3 flex items-center gap-1.5 overflow-x-auto pb-2 no-scrollbar lg:mt-4 lg:block lg:space-y-1 lg:overflow-visible lg:pb-0" aria-label="Account">
             {LINKS.map((l) => {
               const active = l.exact ? pathname === l.href : pathname.startsWith(l.href);
               return (
                 <Link key={l.href + l.label} href={l.href}
-                  className={cn('flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[13.5px] font-medium transition-colors',
-                    active ? 'bg-ink text-white' : 'text-ink/70 hover:bg-surface-sunk hover:text-ink')}>
+                  className={cn('flex shrink-0 items-center gap-2 rounded-xl px-3 py-2 text-[13px] font-medium transition-colors whitespace-nowrap lg:shrink lg:px-3 lg:py-2.5 lg:text-[13.5px]',
+                    active ? 'bg-ink text-white' : 'border border-line bg-white text-ink/70 hover:bg-surface-sunk hover:text-ink lg:border-0 lg:bg-transparent')}>
                   <l.icon className="h-4 w-4" /> {l.label}
                 </Link>
               );

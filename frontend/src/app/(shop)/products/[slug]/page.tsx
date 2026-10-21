@@ -163,26 +163,28 @@ export default function ProductDetailPage() {
   const kind = artKindFor(p.name, p.category);
 
   return (
-    <div className="mx-auto max-w-[1240px] px-4 py-8">
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Products', href: '/products' },
-        ...(p.category ? [{ label: p.category, href: `/products?cat=${p.category.toLowerCase().replace(/\s+/g, '-')}` }] : []),
-        { label: p.name },
-      ]} />
+    <div className="mx-auto max-w-[1240px] px-3.5 sm:px-4 py-5 sm:py-8 pb-20 lg:pb-8">
+      <div className="overflow-x-auto no-scrollbar py-1">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Products', href: '/products' },
+          ...(p.category ? [{ label: p.category, href: `/products?cat=${p.category.toLowerCase().replace(/\s+/g, '-')}` }] : []),
+          { label: p.name },
+        ]} />
+      </div>
 
-      <div className="mt-6 grid gap-10 lg:grid-cols-2">
+      <div className="mt-5 sm:mt-6 grid gap-8 lg:grid-cols-2 lg:gap-10">
         {/* ---------- gallery ---------- */}
         <div>
           <div className="overflow-hidden rounded-3xl border border-line bg-white">
             <ProductImage imageKey={p.images.find((i) => i.isMain)?.storageKey ?? p.images[0]?.storageKey}
-              name={p.name} category={p.category} className="aspect-square w-full p-10" />
+              name={p.name} category={p.category} className="aspect-square w-full p-4 sm:p-8 md:p-10" />
           </div>
           {p.images.length > 1 && (
-            <div className="mt-3 grid grid-cols-4 gap-3">
+            <div className="mt-3 grid grid-cols-4 gap-2 sm:gap-3">
               {p.images.slice(0, 4).map((img) => (
                 <div key={img.id} className="overflow-hidden rounded-2xl border border-line bg-white">
-                  <ProductImage imageKey={img.storageKey} name={p.name} category={p.category} className="aspect-square w-full p-3" />
+                  <ProductImage imageKey={img.storageKey} name={p.name} category={p.category} className="aspect-square w-full p-2 sm:p-3" />
                 </div>
               ))}
             </div>
@@ -274,20 +276,25 @@ export default function ProductDetailPage() {
           </div>
 
           {/* qty + actions */}
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <div className="flex h-11 items-center rounded-full border border-line-strong bg-white">
-              <button type="button" aria-label="Decrease quantity" disabled={qty <= 1} onClick={() => setQty((n) => Math.max(1, n - 1))}
-                className="flex h-full w-10 items-center justify-center rounded-l-full text-ink disabled:opacity-40"><Minus className="h-4 w-4" /></button>
-              <span className="w-8 text-center text-[14px] font-semibold text-ink">{qty}</span>
-              <button type="button" aria-label="Increase quantity" disabled={qty >= Math.max(1, Math.min(available, 5))} onClick={() => setQty((n) => n + 1)}
-                className="flex h-full w-10 items-center justify-center rounded-r-full text-ink disabled:opacity-40"><Plus className="h-4 w-4" /></button>
+          <div className="mt-6 space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 sm:h-11 items-center rounded-full border border-line-strong bg-white shrink-0">
+                <button type="button" aria-label="Decrease quantity" disabled={qty <= 1} onClick={() => setQty((n) => Math.max(1, n - 1))}
+                  className="flex h-full w-9 sm:w-10 items-center justify-center rounded-l-full text-ink disabled:opacity-40"><Minus className="h-4 w-4" /></button>
+                <span className="w-8 text-center text-[13.5px] sm:text-[14px] font-semibold text-ink">{qty}</span>
+                <button type="button" aria-label="Increase quantity" disabled={qty >= Math.max(1, Math.min(available, 5))} onClick={() => setQty((n) => n + 1)}
+                  className="flex h-full w-9 sm:w-10 items-center justify-center rounded-r-full text-ink disabled:opacity-40"><Plus className="h-4 w-4" /></button>
+              </div>
+              <span className="text-[12px] text-ink-muted">Qty</span>
             </div>
-            <Button size="lg" disabled={out} onClick={() => void addToCart(false)} className="flex-1 sm:flex-none">
-              <ShoppingBag className="h-4 w-4" /> Add to cart
-            </Button>
-            <Button size="lg" variant="accent" disabled={out} onClick={() => void addToCart(true)} className="flex-1 sm:flex-none">
-              <Zap className="h-4 w-4" /> Buy now
-            </Button>
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-3">
+              <Button size="lg" disabled={out} onClick={() => void addToCart(false)} className="w-full sm:w-auto">
+                <ShoppingBag className="h-4 w-4" /> Add to cart
+              </Button>
+              <Button size="lg" variant="accent" disabled={out} onClick={() => void addToCart(true)} className="w-full sm:w-auto">
+                <Zap className="h-4 w-4" /> Buy now
+              </Button>
+            </div>
           </div>
 
           {/* serviceability */}
@@ -457,6 +464,21 @@ export default function ProductDetailPage() {
           is created automatically with your first OTP sign-in — no separate registration needed.
         </p>
       </Dialog>
+      {/* Sticky Mobile Action Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-between border-t border-line bg-white/95 px-4 py-2.5 shadow-pop backdrop-blur-md lg:hidden">
+        <div>
+          <span className="text-[10.5px] uppercase tracking-wider text-ink-muted">Total Price</span>
+          <p className="text-[17px] font-bold tracking-tight text-ink">{inr(price * qty)}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button size="sm" disabled={out} onClick={() => void addToCart(false)} className="rounded-xl px-3.5">
+            <ShoppingBag className="h-3.5 w-3.5" /> Add
+          </Button>
+          <Button size="sm" variant="accent" disabled={out} onClick={() => void addToCart(true)} className="rounded-xl px-4">
+            <Zap className="h-3.5 w-3.5" /> Buy Now
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
