@@ -14,6 +14,15 @@ async function start() {
     console.log(`👉 ${listener.url()}`);
     console.log('======================================================');
     console.log('(Keep this terminal open while your client is browsing)\n');
+
+    // Keep process alive indefinitely
+    setInterval(() => {}, 1000 * 60 * 60);
+
+    process.on('SIGINT', async () => {
+      console.log('Closing tunnel...');
+      await listener.close();
+      process.exit(0);
+    });
   } catch (err) {
     console.error('Tunnel error:', err.message || err);
   }
