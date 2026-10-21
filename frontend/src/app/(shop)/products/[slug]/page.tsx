@@ -84,11 +84,29 @@ export default function ProductDetailPage() {
     if (!p) return;
     const nextStorage = storage ?? variant?.storage ?? undefined;
     const nextColor = color ?? variant?.color ?? undefined;
-    const match =
+
+    // 1. Try exact combination (in stock first, then any)
+    let match =
       p.variants.find((v) => (!nextStorage || v.storage === nextStorage) && (!nextColor || v.color === nextColor) && v.stockStatus !== 'OUT_OF_STOCK') ??
       p.variants.find((v) => (!nextStorage || v.storage === nextStorage) && (!nextColor || v.color === nextColor));
-    if (match) setVariantId(match.id);
-    else toast({ title: 'That combination is not available', tone: 'warning' });
+
+    // 2. If exact combo not found, switch smoothly to the selected storage or color
+    if (!match && storage) {
+      match =
+        p.variants.find((v) => v.storage === storage && v.stockStatus !== 'OUT_OF_STOCK') ??
+        p.variants.find((v) => v.storage === storage);
+    }
+    if (!match && color) {
+      match =
+        p.variants.find((v) => v.color === color && v.stockStatus !== 'OUT_OF_STOCK') ??
+        p.variants.find((v) => v.color === color);
+    }
+
+    if (match) {
+      setVariantId(match.id);
+    } else {
+      toast({ title: 'That option is currently out of stock', tone: 'warning' });
+    }
   };
 
   const price = variant?.price ?? p?.price ?? 0;
