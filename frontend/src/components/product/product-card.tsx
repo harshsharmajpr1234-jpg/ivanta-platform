@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { Heart } from 'lucide-react';
+import { Heart, ShoppingBag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Rating } from '@/components/ui/rating';
 import { ProductImage } from './product-image';
@@ -37,6 +37,15 @@ export function ProductCard({ p, wished, onToggleWish, className }: {
           <span className="text-[14px] font-bold text-ink sm:text-[16px]">{inr(p.price)}</span>
           {p.mrp > p.price && <span className="text-[11px] text-ink-faint line-through sm:text-[12px]">{inr(p.mrp)}</span>}
           {p.discountPct > 0 && <span className="text-[10.5px] font-semibold text-success sm:text-[12px]">{p.discountPct}% off</span>}
+        </div>
+
+        <div className="mt-3 pt-2.5 border-t border-line/60">
+          <Link
+            href={`/products/${p.slug}`}
+            className="flex h-9 w-full items-center justify-center gap-1.5 rounded-xl bg-ink text-[12.5px] font-semibold text-white transition-all hover:bg-ink/90 active:scale-[0.98] sm:h-10 sm:text-[13px]"
+          >
+            <ShoppingBag className="h-3.5 w-3.5" /> Buy / View Options
+          </Link>
         </div>
       </div>
     </div>
