@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Loader2, MapPin, Pencil, Plus, Star, Trash2 } from 'lucide-react';
+import { Loader2, MapPin, Navigation, Pencil, Plus, Star, Trash2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
@@ -27,9 +27,12 @@ export default function AddressesPage() {
   const [form, setForm] = useState<AddressInput>(EMPTY);
   const [busy, setBusy] = useState(false);
   const [pinBusy, setPinBusy] = useState(false);
+  const [locatingGps, setLocatingGps] = useState(false);
+  const [availableLocalities, setAvailableLocalities] = useState<string[]>([]);
 
   const open = (target: Address | 'new') => {
     setEditing(target);
+    setAvailableLocalities([]);
     setForm(target === 'new' ? EMPTY : {
       name: target.name, phone: target.phone, addressLine1: target.addressLine1,
       addressLine2: target.addressLine2 ?? '', locality: target.locality ?? '', city: target.city,
@@ -43,16 +46,96 @@ export default function AddressesPage() {
     if (/^\d{6}$/.test(pincode)) {
       setPinBusy(true);
       try {
-        const info = await locationService.pincode(pincode);
+        let city = '';
+        let district = '';
+        let state = '';
+        let locList: string[] = [];
+
+        try {
+          const info = await locationService.pincode(pincode);
+          city = info.cities?.[0] || '';
+          district = info.cities?.[0] || '';
+          state = info.states?.[0] || '';
+          const raw = [...(info.postOffices || []), ...(info.localities || [])];
+          locList = raw.filter((v, i, a) => a.indexOf(v) === i && v !== city);
+          if (!info.serviceable) {
+            toast({ title: 'Heads up — this PIN code is outside standard delivery zone', tone: 'warning' });
+          }
+        } catch {
+          const res = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+          const data = await res.json();
+          if (Array.isArray(data) && data[0]?.Status === 'Success' && data[0]?.PostOffice) {
+            const po = data[0].PostOffice;
+            district = po[0]?.District || '';
+            city = po[0]?.District || po[0]?.Circle || '';
+            state = po[0]?.State || '';
+            locList = po.map((p: { Name: string }) => p.Name).filter(Boolean);
+          }
+        }
+
+        setAvailableLocalities(locList);
         setForm((f) => ({
           ...f,
-          city: f.city || info.cities[0] || '',
-          state: f.state || info.states[0] || '',
-          locality: f.locality || info.localities[0] || '',
+          city: city || f.city,
+          district: district || f.district || city,
+          state: state || f.state,
+          locality: locList[0] || f.locality || city,
         }));
-        if (!info.serviceable) toast({ title: 'Heads up — this PIN code is not serviceable yet', tone: 'warning' });
-      } catch { /* enrichment optional */ } finally { setPinBusy(false); }
+      } catch (err) {
+        console.error('Location lookup error:', err);
+      } finally {
+        setPinBusy(false);
+      }
     }
+  };
+
+  const detectLocation = () => {
+    if (!navigator.geolocation) {
+      toast({ title: 'Geolocation is not supported by your browser', tone: 'warning' });
+      return;
+    }
+    setLocatingGps(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`);
+          const data = await res.json();
+          const addr = data.address || {};
+          const pin = addr.postcode?.replace(/\D/g, '').slice(0, 6) || '';
+          const state = addr.state || '';
+          const city = addr.city || addr.town || addr.county || addr.state_district || '';
+          const district = addr.state_district || addr.county || city;
+          const locality = addr.suburb || addr.neighbourhood || addr.residential || addr.village || addr.road || '';
+          const line1 = [addr.house_number, addr.road, addr.suburb].filter(Boolean).join(', ');
+
+          setForm((f) => ({
+            ...f,
+            addressLine1: line1 || f.addressLine1,
+            pincode: pin || f.pincode,
+            city: city || f.city,
+            district: district || f.district,
+            state: state || f.state,
+            locality: locality || f.locality,
+          }));
+
+          if (pin && /^\d{6}$/.test(pin)) {
+            void onPin(pin);
+          }
+          toast({ title: 'Location detected successfully', tone: 'success' });
+        } catch {
+          toast({ title: 'Could not resolve address from GPS', tone: 'warning' });
+        } finally {
+          setLocatingGps(false);
+        }
+      },
+      (err) => {
+        setLocatingGps(false);
+        toast({ title: 'Location access denied or unavailable', description: err.message, tone: 'warning' });
+      },
+      { timeout: 10000, enableHighAccuracy: true }
+    );
   };
 
   const save = async (e: React.FormEvent) => {
@@ -129,20 +212,66 @@ export default function AddressesPage() {
             <Button form="address-form" type="submit" loading={busy}>Save address</Button>
           </div>
         }>
+        <div className="mb-3 flex justify-end">
+          <button
+            type="button"
+            onClick={detectLocation}
+            disabled={locatingGps}
+            className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent-soft px-3 py-1.5 text-[12px] font-semibold text-accent transition-colors hover:bg-accent/15"
+          >
+            <Navigation className={cn('h-3.5 w-3.5', locatingGps && 'animate-spin')} />
+            {locatingGps ? 'Detecting…' : 'Use GPS Location'}
+          </button>
+        </div>
         <form id="address-form" onSubmit={save} className="grid gap-3 sm:grid-cols-2">
           <div><Label required>Full name</Label><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} maxLength={120} /></div>
           <div><Label required>Phone</Label><Input required inputMode="numeric" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })} placeholder="10-digit mobile" /></div>
-          <div className="sm:col-span-2"><Label required>Address line 1</Label><Input required value={form.addressLine1} onChange={(e) => setForm({ ...form, addressLine1: e.target.value })} maxLength={200} /></div>
+          <div className="sm:col-span-2"><Label required>Address line 1</Label><Input required value={form.addressLine1} onChange={(e) => setForm({ ...form, addressLine1: e.target.value })} maxLength={200} placeholder="Flat / house no, building, street" /></div>
           <div className="sm:col-span-2"><Label>Address line 2</Label><Input value={form.addressLine2 ?? ''} onChange={(e) => setForm({ ...form, addressLine2: e.target.value })} maxLength={200} /></div>
           <div><Label required>PIN code</Label>
             <div className="relative">
-              <Input required inputMode="numeric" value={form.pincode} onChange={(e) => void onPin(e.target.value.replace(/\D/g, '').slice(0, 6))} />
+              <Input required inputMode="numeric" value={form.pincode} onChange={(e) => void onPin(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder="6 digits — auto-fills city & state" />
               {pinBusy && <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-ink-faint" />}
             </div>
           </div>
-          <div><Label>Locality</Label><Input value={form.locality ?? ''} onChange={(e) => setForm({ ...form, locality: e.target.value })} maxLength={120} /></div>
+          <div>
+            <Label>Locality / Area</Label>
+            <Input
+              list="account-localities-list"
+              value={form.locality ?? ''}
+              onChange={(e) => setForm({ ...form, locality: e.target.value })}
+              maxLength={120}
+              placeholder="e.g. Murlipura, Vidhyadhar Nagar"
+            />
+            {availableLocalities.length > 0 && (
+              <datalist id="account-localities-list">
+                {availableLocalities.map((loc) => (
+                  <option key={loc} value={loc} />
+                ))}
+              </datalist>
+            )}
+            {availableLocalities.length > 0 && (
+              <div className="mt-1.5 flex flex-wrap gap-1">
+                {availableLocalities.slice(0, 4).map((loc) => (
+                  <button
+                    key={loc}
+                    type="button"
+                    onClick={() => setForm((f) => ({ ...f, locality: loc }))}
+                    className={cn(
+                      'rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors',
+                      form.locality === loc
+                        ? 'bg-ink text-white'
+                        : 'bg-surface-sunk text-ink-soft hover:bg-line'
+                    )}
+                  >
+                    {loc}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <div><Label required>City</Label><Input required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} maxLength={80} /></div>
-          <div><Label>District</Label><Input value={form.district ?? ''} onChange={(e) => setForm({ ...form, district: e.target.value })} maxLength={80} /></div>
+          <div><Label>District</Label><Input value={form.district ?? ''} onChange={(e) => setForm({ ...form, district: e.target.value })} maxLength={80} placeholder="District" /></div>
           <div><Label required>State</Label><Input required value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} maxLength={80} /></div>
           <div><Label>Landmark</Label><Input value={form.landmark ?? ''} onChange={(e) => setForm({ ...form, landmark: e.target.value })} maxLength={200} /></div>
           <div><Label>Type</Label>
