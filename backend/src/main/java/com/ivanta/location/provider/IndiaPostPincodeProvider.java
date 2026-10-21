@@ -76,7 +76,12 @@ public class IndiaPostPincodeProvider {
                                 String stateName = po.path("State").asText(null);
                                 String block = po.path("Block").asText(null);
 
-                                if (name != null && !name.isBlank()) postOffices.add(name);
+                                if (name != null && !name.isBlank()) {
+                                    postOffices.add(name);
+                                    if (!localities.contains(name)) {
+                                        localities.add(name);
+                                    }
+                                }
                                 if (district != null && !district.isBlank() && !cities.contains(district)) {
                                     cities.add(district);
                                 }

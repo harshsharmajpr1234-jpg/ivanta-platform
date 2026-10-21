@@ -51,26 +51,43 @@ export default function AddressesPage() {
         let state = '';
         let locList: string[] = [];
 
+        // 1. Direct fetch from official India Post API for instant 100% accurate live resolution
         try {
-          const info = await locationService.pincode(pincode);
-          city = info.cities?.[0] || '';
-          district = info.cities?.[0] || '';
-          state = info.states?.[0] || '';
-          const raw = [...(info.postOffices || []), ...(info.localities || [])];
-          locList = raw.filter((v, i, a) => a.indexOf(v) === i && v !== city);
-          if (!info.serviceable) {
-            toast({ title: 'Heads up — this PIN code is outside standard delivery zone', tone: 'warning' });
-          }
-        } catch {
           const res = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
           const data = await res.json();
-          if (Array.isArray(data) && data[0]?.Status === 'Success' && data[0]?.PostOffice) {
-            const po = data[0].PostOffice;
-            district = po[0]?.District || '';
-            city = po[0]?.District || po[0]?.Circle || '';
-            state = po[0]?.State || '';
-            locList = po.map((p: { Name: string }) => p.Name).filter(Boolean);
+          if (Array.isArray(data) && data[0]?.Status === 'Success' && Array.isArray(data[0]?.PostOffice) && data[0].PostOffice.length > 0) {
+            const poList = data[0].PostOffice;
+            district = poList[0]?.District || '';
+            city = poList[0]?.District || poList[0]?.Circle || '';
+            state = poList[0]?.State || '';
+            locList = poList.map((p: { Name: string }) => p.Name).filter(Boolean);
           }
+        } catch (e) {
+          console.warn('Direct India Post API failed, trying backend service...', e);
+        }
+
+        // 2. Fallback to backend locationService if direct fetch was unavailable
+        if (!city || locList.length === 0) {
+          try {
+            const info = await locationService.pincode(pincode);
+            city = info.cities?.[0] || '';
+            district = info.cities?.[0] || '';
+            state = info.states?.[0] || '';
+            const raw = [...(info.postOffices || []), ...(info.localities || [])];
+            locList = raw.filter((v, i, a) => a.indexOf(v) === i && v !== city);
+          } catch {
+            // Optional enrichment failure
+          }
+        }
+
+        // Verify serviceability with backend
+        try {
+          const s = await locationService.serviceability(pincode);
+          if (!s.serviceable) {
+            toast({ title: 'Heads up — delivery might take 3–5 days for this PIN code', tone: 'warning' });
+          }
+        } catch {
+          // ignore
         }
 
         setAvailableLocalities(locList);

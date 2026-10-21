@@ -106,6 +106,17 @@ public class LocationSearchService {
 
     @Transactional(readOnly = true)
     public PincodeInfo pincodeInfo(String code) {
+        // 1. ALWAYS query India Post Official API first for 100% accurate live postal data
+        if (code != null && code.matches("\\d{6}")) {
+            PincodeInfo liveInfo = indiaPostProvider.lookupPincode(code);
+            if (liveInfo != null) {
+                boolean serviceable = isPinServiceable(code).serviceable();
+                return new PincodeInfo(liveInfo.code(), liveInfo.cities(), liveInfo.states(),
+                        liveInfo.localities(), liveInfo.postOffices(), serviceable);
+            }
+        }
+
+        // 2. Fallback to local DB cache only if external provider failed
         Optional<Pincode> opt = pincodes.findByCode(code);
         if (opt.isPresent()) {
             Pincode p = opt.get();
@@ -114,15 +125,6 @@ public class LocationSearchService {
             List<String> pos = postOffices.findByPincodeIdAndIsActiveTrue(p.getId()).stream().map(PostOffice::getName).toList();
             boolean serviceable = isPinServiceable(code).serviceable();
             return new PincodeInfo(p.getCode(), cityNames, List.of(stateName(p.getStateId())), locNames, pos, serviceable);
-        }
-
-        if (code != null && code.matches("\\d{6}")) {
-            PincodeInfo liveInfo = indiaPostProvider.lookupPincode(code);
-            if (liveInfo != null) {
-                boolean serviceable = isPinServiceable(code).serviceable();
-                return new PincodeInfo(liveInfo.code(), liveInfo.cities(), liveInfo.states(),
-                        liveInfo.localities(), liveInfo.postOffices(), serviceable);
-            }
         }
 
         throw new com.ivanta.common.exception.ResourceNotFoundException("PIN code " + code);
