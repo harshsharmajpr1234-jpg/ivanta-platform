@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Loader2, MapPin, Navigation, Pencil, Plus, Star, Trash2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -12,7 +12,7 @@ import { MapAddressPicker } from '@/components/location/map-address-picker';
 import { locationService, userService } from '@/services';
 import { useUIStore } from '@/store/ui';
 import { cn } from '@/lib/utils';
-import type { Address, AddressInput } from '@/types';
+import type { Address, AddressInput, PostOfficeOption } from '@/types';
 
 const EMPTY: AddressInput = {
   name: '', phone: '', addressLine1: '', addressLine2: '', locality: '', city: '', district: '',
@@ -31,11 +31,21 @@ export default function AddressesPage() {
   const [locatingGps, setLocatingGps] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [availableLocalities, setAvailableLocalities] = useState<string[]>([]);
+  const [postOfficeOptions, setPostOfficeOptions] = useState<PostOfficeOption[]>([]);
+  const [isAmbiguous, setIsAmbiguous] = useState(false);
+  const [pinStatus, setPinStatus] = useState<'idle' | 'loading' | 'success' | 'not_found' | 'rate_limited' | 'error'>('idle');
+  const [pinErrorMessage, setPinErrorMessage] = useState<string | null>(null);
+  const lastPinRef = useRef<string>('');
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const open = (target: Address | 'new') => {
     setEditing(target);
     setShowMap(false);
     setAvailableLocalities([]);
+    setPostOfficeOptions([]);
+    setIsAmbiguous(false);
+    setPinStatus('idle');
+    setPinErrorMessage(null);
     setForm(target === 'new' ? EMPTY : {
       name: target.name, phone: target.phone, addressLine1: target.addressLine1,
       addressLine2: target.addressLine2 ?? '', locality: target.locality ?? '', city: target.city,
@@ -44,69 +54,93 @@ export default function AddressesPage() {
     });
   };
 
-  const onPin = async (pincode: string) => {
-    setForm((f) => ({ ...f, pincode }));
-    if (/^\d{6}$/.test(pincode)) {
-      setPinBusy(true);
-      try {
-        let city = '';
-        let district = '';
-        let state = '';
-        let locList: string[] = [];
+  const lookupPincode = async (pincode: string, force = false) => {
+    if (!pincode || !/^\d{6}$/.test(pincode)) {
+      setPinStatus('idle');
+      setPinErrorMessage(null);
+      setPostOfficeOptions([]);
+      setIsAmbiguous(false);
+      return;
+    }
+    if (!force && lastPinRef.current === pincode && pinStatus === 'success') {
+      return;
+    }
+    lastPinRef.current = pincode;
+    setPinBusy(true);
+    setPinStatus('loading');
+    setPinErrorMessage(null);
 
-        // 1. Direct fetch from official India Post API for instant 100% accurate live resolution
-        try {
-          const res = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
-          const data = await res.json();
-          if (Array.isArray(data) && data[0]?.Status === 'Success' && Array.isArray(data[0]?.PostOffice) && data[0].PostOffice.length > 0) {
-            const poList = data[0].PostOffice;
-            district = poList[0]?.District || '';
-            city = poList[0]?.District || poList[0]?.Circle || '';
-            state = poList[0]?.State || '';
-            locList = poList.map((p: { Name: string }) => p.Name).filter(Boolean);
-          }
-        } catch (e) {
-          console.warn('Direct India Post API failed, trying backend service...', e);
-        }
+    try {
+      const res = await locationService.pincodeLookup(pincode);
+      setPinStatus('success');
+      const pos = res.postOffices || [];
+      setPostOfficeOptions(pos);
+      setIsAmbiguous(!res.isUnambiguous);
 
-        // 2. Fallback to backend locationService if direct fetch was unavailable
-        if (!city || locList.length === 0) {
-          try {
-            const info = await locationService.pincode(pincode);
-            city = info.cities?.[0] || '';
-            district = info.cities?.[0] || '';
-            state = info.states?.[0] || '';
-            const raw = [...(info.postOffices || []), ...(info.localities || [])];
-            locList = raw.filter((v, i, a) => a.indexOf(v) === i && v !== city);
-          } catch {
-            // Optional enrichment failure
-          }
-        }
+      const locList = pos.map((p) => p.name).filter(Boolean);
+      setAvailableLocalities(locList);
 
-        // Verify serviceability with backend
-        try {
-          const s = await locationService.serviceability(pincode);
-          if (!s.serviceable) {
-            toast({ title: 'Heads up — delivery might take 3–5 days for this PIN code', tone: 'warning' });
-          }
-        } catch {
-          // ignore
-        }
-
-        setAvailableLocalities(locList);
+      if (res.isUnambiguous) {
         setForm((f) => ({
           ...f,
-          city: city || f.city,
-          district: district || f.district || city,
-          state: state || f.state,
-          locality: locList[0] || f.locality || city,
+          district: res.district || f.district,
+          state: res.state || f.state,
+          city: res.district || f.city || res.district || '',
+          locality: f.locality || locList[0] || '',
         }));
-      } catch (err) {
-        console.error('Location lookup error:', err);
-      } finally {
-        setPinBusy(false);
       }
+
+      try {
+        const s = await locationService.serviceability(pincode);
+        if (!s.serviceable) {
+          toast({ title: 'Heads up — delivery might take 3–5 days for this PIN code', tone: 'warning' });
+        }
+      } catch {
+        // optional warning
+      }
+    } catch (err: any) {
+      const status = err?.status || err?.response?.status;
+      const code = err?.code || '';
+      if (status === 404 || code === 'NOT_FOUND') {
+        setPinStatus('not_found');
+        setPinErrorMessage('PIN code not found in postal directory. You can enter details manually.');
+      } else if (status === 429 || status === 423 || code === 'RATE_LIMITED') {
+        setPinStatus('rate_limited');
+        setPinErrorMessage('Postal service rate limit reached. Click Retry or enter manually.');
+      } else {
+        setPinStatus('error');
+        setPinErrorMessage('Postal lookup unavailable. Click Retry or enter details manually.');
+      }
+    } finally {
+      setPinBusy(false);
     }
+  };
+
+  const onPinChange = (val: string) => {
+    const cleaned = val.replace(/\D/g, '').slice(0, 6);
+    setForm((f) => ({ ...f, pincode: cleaned }));
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    if (cleaned.length === 6) {
+      debounceTimerRef.current = setTimeout(() => {
+        void lookupPincode(cleaned);
+      }, 300);
+    } else {
+      setPinStatus('idle');
+      setPinErrorMessage(null);
+      setPostOfficeOptions([]);
+      setIsAmbiguous(false);
+    }
+  };
+
+  const selectPostOffice = (po: PostOfficeOption) => {
+    setForm((f) => ({
+      ...f,
+      locality: po.name,
+      district: po.district || f.district,
+      state: po.state || f.state,
+      city: po.district || f.city || po.district,
+    }));
+    setIsAmbiguous(false);
   };
 
   const detectLocation = () => {
@@ -141,7 +175,7 @@ export default function AddressesPage() {
           }));
 
           if (pin && /^\d{6}$/.test(pin)) {
-            void onPin(pin);
+            void lookupPincode(pin, true);
           }
           toast({ title: 'Location detected successfully', tone: 'success' });
         } catch {
@@ -274,7 +308,7 @@ export default function AddressesPage() {
                   pincode: addr.pincode || f.pincode,
                 }));
                 if (addr.pincode && /^\d{6}$/.test(addr.pincode)) {
-                  void onPin(addr.pincode);
+                  void lookupPincode(addr.pincode, true);
                 }
                 setShowMap(false);
               }}
@@ -287,11 +321,43 @@ export default function AddressesPage() {
           <div><Label required>Phone</Label><Input required inputMode="numeric" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })} placeholder="10-digit mobile" /></div>
           <div className="sm:col-span-2"><Label required>Address line 1</Label><Input required value={form.addressLine1} onChange={(e) => setForm({ ...form, addressLine1: e.target.value })} maxLength={200} placeholder="Flat / house no, building, street" /></div>
           <div className="sm:col-span-2"><Label>Address line 2</Label><Input value={form.addressLine2 ?? ''} onChange={(e) => setForm({ ...form, addressLine2: e.target.value })} maxLength={200} /></div>
-          <div><Label required>PIN code</Label>
+          <div>
+            <Label required>PIN code</Label>
             <div className="relative">
-              <Input required inputMode="numeric" value={form.pincode} onChange={(e) => void onPin(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder="6 digits — auto-fills city & state" />
+              <Input
+                required
+                inputMode="numeric"
+                value={form.pincode}
+                onChange={(e) => onPinChange(e.target.value)}
+                placeholder="6 digits — auto-fills district & state"
+              />
               {pinBusy && <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-ink-faint" />}
             </div>
+            {pinStatus === 'loading' && (
+              <p className="mt-1 flex items-center gap-1.5 text-[11.5px] text-accent">
+                <Loader2 className="h-3 w-3 animate-spin" /> Verifying PIN code with postal registry…
+              </p>
+            )}
+            {pinStatus === 'not_found' && (
+              <p className="mt-1 text-[11.5px] text-danger">{pinErrorMessage}</p>
+            )}
+            {(pinStatus === 'rate_limited' || pinStatus === 'error') && (
+              <p className="mt-1 flex items-center gap-1.5 text-[11.5px] text-warning-dark">
+                <span>{pinErrorMessage}</span>
+                <button
+                  type="button"
+                  onClick={() => void lookupPincode(form.pincode, true)}
+                  className="font-semibold text-accent underline hover:text-accent-hover"
+                >
+                  Retry
+                </button>
+              </p>
+            )}
+            {isAmbiguous && (
+              <p className="mt-1 text-[11.5px] font-medium text-warning-dark">
+                Multiple post offices found. Select your post office below to complete address.
+              </p>
+            )}
           </div>
           <div>
             <Label>Locality / Area</Label>
@@ -300,7 +366,7 @@ export default function AddressesPage() {
               value={form.locality ?? ''}
               onChange={(e) => setForm({ ...form, locality: e.target.value })}
               maxLength={120}
-              placeholder="e.g. Murlipura, Vidhyadhar Nagar"
+              placeholder="e.g. Jhotwara, Murlipura"
             />
             {availableLocalities.length > 0 && (
               <datalist id="account-localities-list">
@@ -309,23 +375,33 @@ export default function AddressesPage() {
                 ))}
               </datalist>
             )}
-            {availableLocalities.length > 0 && (
-              <div className="mt-1.5 flex flex-wrap gap-1">
-                {availableLocalities.slice(0, 4).map((loc) => (
-                  <button
-                    key={loc}
-                    type="button"
-                    onClick={() => setForm((f) => ({ ...f, locality: loc }))}
-                    className={cn(
-                      'rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors',
-                      form.locality === loc
-                        ? 'bg-ink text-white'
-                        : 'bg-surface-sunk text-ink-soft hover:bg-line'
-                    )}
-                  >
-                    {loc}
-                  </button>
-                ))}
+            {postOfficeOptions.length > 0 && (
+              <div className="mt-2 space-y-1">
+                <span className="text-[11px] font-medium text-ink-muted">
+                  {isAmbiguous ? 'Select your Post Office:' : 'Matching Post Offices:'}
+                </span>
+                <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
+                  {postOfficeOptions.map((po) => {
+                    const active = form.locality === po.name;
+                    return (
+                      <button
+                        key={po.name}
+                        type="button"
+                        onClick={() => selectPostOffice(po)}
+                        className={cn(
+                          'rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors text-left border',
+                          active
+                            ? 'border-ink bg-ink text-white shadow-xs'
+                            : 'border-line bg-surface-sunk text-ink-soft hover:bg-line hover:text-ink'
+                        )}
+                      >
+                        <span>{po.name}</span>
+                        {po.officeType && <span className="ml-1 opacity-70">({po.officeType})</span>}
+                        {isAmbiguous && po.district && <span className="ml-1 opacity-80">· {po.district}</span>}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

@@ -16,6 +16,7 @@ public enum ErrorCode {
     ORDER_CANCELLED(409),
     RETURN_NOT_ALLOWED(422),
     RATE_LIMITED(423),
+    SERVICE_UNAVAILABLE(503),
     INTERNAL_ERROR(500);
 
     private final int httpStatus;

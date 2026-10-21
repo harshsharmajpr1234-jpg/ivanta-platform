@@ -1,10 +1,11 @@
 import { api } from '@/lib/api/client';
 import { API } from '@/lib/api/paths';
-import type { LocationSuggestion, PincodeInfo, Serviceability } from '@/types';
+import type { LocationSuggestion, PincodeInfo, PincodeLookupResponse, Serviceability } from '@/types';
 
 export const locationService = {
   search: (q: string) => api.get<{ query: string; suggestions: LocationSuggestion[] }>(API.location.search, { query: { q } }),
   pincode: (code: string) => api.get<PincodeInfo>(API.location.pincode(code)),
+  pincodeLookup: (pincode: string) => api.get<PincodeLookupResponse>(API.location.pincodeLookup(pincode)),
   cities: () => api.get<{ id: string; name: string; state: string; popular: boolean }[]>(API.location.cities),
   localities: (cityId?: string) =>
     api.get<{ id: string; name: string; cityId: string; popular: boolean }[]>(API.location.localities, { query: { cityId } }),

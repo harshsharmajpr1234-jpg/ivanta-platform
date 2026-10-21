@@ -21,6 +21,7 @@ public class IvantaProperties {
     private final Payment payment = new Payment();
     private final Geo geo = new Geo();
     private final Delivery delivery = new Delivery();
+    private final Location location = new Location();
 
     @Getter @Setter
     public static class Cors {
@@ -109,5 +110,11 @@ public class IvantaProperties {
             private String pickupLocation = "Primary Warehouse";
             private String apiBaseUrl = "https://track.delhivery.com";
         }
+    }
+
+    @Getter @Setter
+    public static class Location {
+        private String pincodeApiUrl = "https://api.pincodeapi.in/api/v1/pincode";
+        private int cacheTtlHours = 24;
     }
 }

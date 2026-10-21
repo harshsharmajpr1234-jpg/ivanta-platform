@@ -88,6 +88,23 @@ export interface LocationSuggestion {
 export interface PincodeInfo {
   code: string; cities: string[]; states: string[]; localities: string[]; postOffices: string[]; serviceable: boolean;
 }
+export interface PostOfficeOption {
+  name: string;
+  district: string;
+  state: string;
+  officeType: string;
+  deliveryStatus: string;
+}
+export interface PincodeLookupResponse {
+  pincode: string;
+  district?: string | null;
+  state?: string | null;
+  isUnambiguous: boolean;
+  districts: string[];
+  states: string[];
+  postOffices: PostOfficeOption[];
+  serviceable: boolean;
+}
 export interface ShippingMethodOption { id: string; name: string; fee: number; etaMinDays?: number | null; etaMaxDays?: number | null }
 export interface Serviceability {
   serviceable: boolean; zone?: string | null; deliveryCharge?: number | null;

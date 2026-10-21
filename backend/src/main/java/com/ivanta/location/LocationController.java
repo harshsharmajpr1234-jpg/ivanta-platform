@@ -16,6 +16,7 @@ public class LocationController {
 
     private final LocationSearchService service;
     private final GeocodingProvider geocoding;
+    private final com.ivanta.location.provider.PincodeApiProvider pincodeApiProvider;
 
     @GetMapping("/search")
     public ApiResponse<SearchResponse> search(@RequestParam("q") String q) {
@@ -25,6 +26,11 @@ public class LocationController {
     @GetMapping("/pincodes/{code}")
     public ApiResponse<PincodeInfo> pincode(@PathVariable String code) {
         return ApiResponse.ok(service.pincodeInfo(code));
+    }
+
+    @GetMapping("/pincode/{pincode}")
+    public ApiResponse<com.ivanta.location.dto.PincodeLookupDtos.PincodeLookupResponse> lookupPincode(@PathVariable String pincode) {
+        return ApiResponse.ok(pincodeApiProvider.lookup(pincode));
     }
 
     @GetMapping("/cities")

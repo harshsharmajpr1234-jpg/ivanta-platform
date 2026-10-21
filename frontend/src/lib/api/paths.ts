@@ -36,6 +36,7 @@ export const API = {
   location: {
     search: '/location/search',
     pincode: (code: string) => `/location/pincodes/${code}`,
+    pincodeLookup: (pincode: string) => `/location/pincode/${pincode}`,
     cities: '/location/cities',
     localities: '/location/localities',
     serviceability: '/location/serviceability',
