@@ -20,7 +20,8 @@ import { useAuthStore } from '@/store/auth';
 import { useUIStore } from '@/store/ui';
 import { PAYMENT_METHODS } from '@/constants';
 import { cn, etaLabel, inr } from '@/lib/utils';
-import type { Address, AddressInput, CheckoutPreview, OrderDetail, PaymentMethod, PostOfficeOption } from '@/types';
+import { PaymentGatewayModal } from '@/components/checkout/payment-gateway-modal';
+import type { Address, AddressInput, CheckoutPreview, OrderDetail, Payment, PaymentMethod, PostOfficeOption } from '@/types';
 
 const METHOD_ICONS: Record<PaymentMethod, typeof Smartphone> = {
   UPI: Smartphone, CARD: CreditCard, NETBANKING: Landmark, WALLET: Wallet, COD: BadgeIndianRupee,
@@ -48,6 +49,12 @@ function CheckoutFlow() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
   const [placing, setPlacing] = useState(false);
   const [outcome, setOutcome] = useState<{ kind: 'success'; order: OrderDetail; cod: boolean } | { kind: 'failed'; message: string; order?: OrderDetail } | null>(null);
+  const [gatewayModal, setGatewayModal] = useState<{
+    open: boolean;
+    payment: Payment;
+    order: OrderDetail;
+    method: PaymentMethod;
+  } | null>(null);
 
   const addresses = useQuery({ queryKey: ['addresses'], queryFn: () => userService.addresses(), enabled: Boolean(user) });
   const preview = useQuery({
@@ -209,16 +216,13 @@ function CheckoutFlow() {
         return;
       }
 
-      // Fallback / mock provider verification
-      const reference = payment.clientSecret;
-      if (!reference) throw new Error('Provider did not return a payment reference');
-      const verified = await paymentService.verify(payment.id, reference);
-      const fresh = await orderService.get(order.id);
-      if (verified.status === 'SUCCESS') {
-        setOutcome({ kind: 'success', order: fresh, cod: false });
-      } else {
-        setOutcome({ kind: 'failed', message: verified.failureReason ?? 'The provider rejected the payment.', order: fresh });
-      }
+      // Fallback / mock provider: Open interactive payment gateway modal
+      setGatewayModal({
+        open: true,
+        payment,
+        order,
+        method: paymentMethod,
+      });
     } catch (e) {
       const msg = e instanceof Error ? e.message : 'Could not place the order';
       if (/verification/i.test(msg) || /PAYMENT_VERIFICATION/.test(String((e as { code?: string })?.code ?? ''))) {
@@ -227,6 +231,37 @@ function CheckoutFlow() {
         toast({ title: msg, tone: 'error' });
       }
     } finally { setPlacing(false); }
+  };
+
+  const handleGatewayAuthorize = async () => {
+    if (!gatewayModal) return;
+    const { payment, order } = gatewayModal;
+    const reference = payment.clientSecret;
+    if (!reference) throw new Error('Payment reference missing');
+    const verified = await paymentService.verify(payment.id, reference);
+    const fresh = await orderService.get(order.id);
+    setGatewayModal(null);
+    if (verified.status === 'SUCCESS') {
+      setOutcome({ kind: 'success', order: fresh, cod: false });
+    } else {
+      setOutcome({ kind: 'failed', message: verified.failureReason ?? 'Payment authorization failed.', order: fresh });
+    }
+  };
+
+  const handleGatewayCancel = async () => {
+    if (!gatewayModal) return;
+    const { order } = gatewayModal;
+    try {
+      await orderService.cancel(order.id, 'Cancelled by customer at payment gateway');
+    } catch {
+      // ignore
+    }
+    setGatewayModal(null);
+    setOutcome({
+      kind: 'failed',
+      message: 'Payment was cancelled. Order has not been placed and no money was deducted.',
+      order,
+    });
   };
 
   return (
@@ -302,6 +337,17 @@ function CheckoutFlow() {
           </aside>
         )}
       </div>
+
+      {gatewayModal && (
+        <PaymentGatewayModal
+          open={gatewayModal.open}
+          payment={gatewayModal.payment}
+          order={gatewayModal.order}
+          method={gatewayModal.method}
+          onAuthorize={handleGatewayAuthorize}
+          onCancel={handleGatewayCancel}
+        />
+      )}
     </div>
   );
 }
@@ -825,7 +871,9 @@ function ReviewStep({ pv, address, method, shippingMethodName, placing, onPlace,
         {pv.couponCode && <p className="mt-3 text-[12.5px] font-medium text-success">Coupon {pv.couponCode} — saving {inr(pv.couponDiscount)}</p>}
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button size="lg" loading={placing} onClick={onPlace} className="flex-1 sm:flex-none">
-            Place order · {inr(pv.grandTotal)}
+            {method === 'COD'
+              ? `Place Cash-on-Delivery Order · ${inr(pv.grandTotal)}`
+              : `Proceed to Pay via ${PAYMENT_METHODS.find((m) => m.value === method)?.label} · ${inr(pv.grandTotal)}`}
           </Button>
           <button type="button" onClick={onBack} className="text-[12.5px] font-medium text-accent hover:underline">← Back to payment</button>
         </div>
