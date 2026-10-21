@@ -8,6 +8,7 @@ import {
   MapPin, Navigation, Plus, Smartphone, Truck, Wallet, XCircle,
 } from 'lucide-react';
 import { ProductImage } from '@/components/product/product-image';
+import { MapAddressPicker } from '@/components/location/map-address-picker';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input, Label, Textarea } from '@/components/ui/input';
@@ -314,6 +315,7 @@ function AddressStep({ addresses, addressId, setAddressId, onManaged }: {
   const [busy, setBusy] = useState(false);
   const [pinBusy, setPinBusy] = useState(false);
   const [locatingGps, setLocatingGps] = useState(false);
+  const [showMap, setShowMap] = useState(false);
   const [availableLocalities, setAvailableLocalities] = useState<string[]>([]);
 
   const [form, setForm] = useState<AddressInput>({
@@ -457,7 +459,20 @@ function AddressStep({ addresses, addressId, setAddressId, onManaged }: {
             <h2 className="text-[15px] font-bold text-ink">New delivery address</h2>
             <p className="text-[12px] text-ink-muted">Enter PIN code for automatic district, city & area matching</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setShowMap(!showMap)}
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-semibold transition-colors",
+                showMap
+                  ? "border-accent bg-accent text-white"
+                  : "border-line-strong bg-white text-ink hover:border-ink/40 shadow-xs"
+              )}
+            >
+              <MapPin className="h-3.5 w-3.5" />
+              {showMap ? 'Hide Map' : 'Pick on Map'}
+            </button>
             <button
               type="button"
               onClick={detectLocation}
@@ -470,6 +485,32 @@ function AddressStep({ addresses, addressId, setAddressId, onManaged }: {
             {addresses.length > 0 && <button type="button" onClick={() => setAdding(false)} className="text-[12.5px] font-medium text-accent hover:underline">Cancel</button>}
           </div>
         </div>
+
+        {showMap && (
+          <div className="mt-4">
+            <MapAddressPicker
+              initialPincode={form.pincode}
+              initialCity={form.city}
+              initialState={form.state}
+              onSelectAddress={(addr) => {
+                setForm((f) => ({
+                  ...f,
+                  addressLine1: addr.addressLine1 || f.addressLine1,
+                  locality: addr.locality || f.locality,
+                  city: addr.city || f.city,
+                  district: addr.district || f.district,
+                  state: addr.state || f.state,
+                  pincode: addr.pincode || f.pincode,
+                }));
+                if (addr.pincode && /^\d{6}$/.test(addr.pincode)) {
+                  void onPin(addr.pincode);
+                }
+                setShowMap(false);
+              }}
+              onClose={() => setShowMap(false)}
+            />
+          </div>
+        )}
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div><Label required>Full name</Label><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} maxLength={120} /></div>
           <div><Label required>Phone</Label><Input required inputMode="numeric" pattern="[6-9]\d{9}" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })} placeholder="10-digit mobile" /></div>

@@ -8,6 +8,7 @@ import { Dialog } from '@/components/ui/dialog';
 import { Input, Label } from '@/components/ui/input';
 import { EmptyState, ErrorState } from '@/components/ui/states';
 import { RowsSkeleton } from '@/components/ui/skeleton';
+import { MapAddressPicker } from '@/components/location/map-address-picker';
 import { locationService, userService } from '@/services';
 import { useUIStore } from '@/store/ui';
 import { cn } from '@/lib/utils';
@@ -28,10 +29,12 @@ export default function AddressesPage() {
   const [busy, setBusy] = useState(false);
   const [pinBusy, setPinBusy] = useState(false);
   const [locatingGps, setLocatingGps] = useState(false);
+  const [showMap, setShowMap] = useState(false);
   const [availableLocalities, setAvailableLocalities] = useState<string[]>([]);
 
   const open = (target: Address | 'new') => {
     setEditing(target);
+    setShowMap(false);
     setAvailableLocalities([]);
     setForm(target === 'new' ? EMPTY : {
       name: target.name, phone: target.phone, addressLine1: target.addressLine1,
@@ -221,15 +224,28 @@ export default function AddressesPage() {
           </ul>
         )}
 
-      <Dialog open={editing !== null} onClose={() => setEditing(null)}
+      <Dialog open={editing !== null} onClose={() => { setEditing(null); setShowMap(false); }}
         title={editing === 'new' ? 'New address' : 'Edit address'} size="lg"
         footer={
           <div className="flex justify-end gap-2">
-            <Button variant="secondary" onClick={() => setEditing(null)}>Cancel</Button>
+            <Button variant="secondary" onClick={() => { setEditing(null); setShowMap(false); }}>Cancel</Button>
             <Button form="address-form" type="submit" loading={busy}>Save address</Button>
           </div>
         }>
-        <div className="mb-3 flex justify-end">
+        <div className="mb-3 flex flex-wrap items-center justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => setShowMap(!showMap)}
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-semibold transition-colors",
+              showMap
+                ? "border-accent bg-accent text-white"
+                : "border-line-strong bg-white text-ink hover:border-ink/40 shadow-xs"
+            )}
+          >
+            <MapPin className="h-3.5 w-3.5" />
+            {showMap ? 'Hide Map' : 'Pick on Map'}
+          </button>
           <button
             type="button"
             onClick={detectLocation}
@@ -240,6 +256,32 @@ export default function AddressesPage() {
             {locatingGps ? 'Detecting…' : 'Use GPS Location'}
           </button>
         </div>
+
+        {showMap && (
+          <div className="mb-4">
+            <MapAddressPicker
+              initialPincode={form.pincode}
+              initialCity={form.city}
+              initialState={form.state}
+              onSelectAddress={(addr) => {
+                setForm((f) => ({
+                  ...f,
+                  addressLine1: addr.addressLine1 || f.addressLine1,
+                  locality: addr.locality || f.locality,
+                  city: addr.city || f.city,
+                  district: addr.district || f.district,
+                  state: addr.state || f.state,
+                  pincode: addr.pincode || f.pincode,
+                }));
+                if (addr.pincode && /^\d{6}$/.test(addr.pincode)) {
+                  void onPin(addr.pincode);
+                }
+                setShowMap(false);
+              }}
+              onClose={() => setShowMap(false)}
+            />
+          </div>
+        )}
         <form id="address-form" onSubmit={save} className="grid gap-3 sm:grid-cols-2">
           <div><Label required>Full name</Label><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} maxLength={120} /></div>
           <div><Label required>Phone</Label><Input required inputMode="numeric" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })} placeholder="10-digit mobile" /></div>
