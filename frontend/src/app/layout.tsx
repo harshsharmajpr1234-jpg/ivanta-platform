@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   keywords: ['sell old iPhone', 'sell used MacBook India', 'Apple buyback', 'sell iPad for cash', 'used Apple device buyer Jaipur'],
   openGraph: { type: 'website', siteName: BRAND.name, title: `${BRAND.name} — ${BRAND.tagline}`, description: 'Sell your used Apple device to iVanta — fair formula-based valuation, certified inspection, next-day payout.', url: BRAND.domain },
   twitter: { card: 'summary_large_image', title: `${BRAND.name} — ${BRAND.tagline}` },
+  icons: {
+    icon: [
+      { url: '/logo-icon.png', sizes: 'any' },
+      { url: '/favicon.ico', sizes: '32x32' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
   robots: { index: true, follow: true },
 };
 

@@ -87,9 +87,9 @@ export function Header() {
           <button type="button" className="rounded-full p-2 text-ink md:hidden" aria-label="Open menu" onClick={() => setMenuOpen(true)}>
             <Menu className="h-5 w-5" />
           </button>
-          <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="iVanta home">
-            <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-ink text-[15px] font-black text-white">iV</span>
-            <span className="text-[17px] font-bold tracking-tight text-ink sm:text-[19px]">iVanta</span>
+          <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="iVanta home">
+            <img src="/logo-icon.png" alt="iVanta" className="h-8 w-auto object-contain" />
+            <span className="text-[18px] font-extrabold tracking-tight text-ink sm:text-[20px]">iVanta</span>
           </Link>
 
           <nav className="ml-4 hidden items-center gap-0.5 lg:flex" aria-label="Main">{navLinks}</nav>

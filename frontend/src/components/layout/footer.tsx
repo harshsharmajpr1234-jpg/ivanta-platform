@@ -43,9 +43,9 @@ export function Footer() {
       <div className="mx-auto max-w-[1240px] px-4 py-10 sm:py-12">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-10">
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-ink text-[15px] font-black text-white">iV</span>
-              <span className="text-[17px] font-bold tracking-tight text-ink">{BRAND.name}</span>
+            <div className="flex items-center gap-2.5">
+              <img src="/logo-icon.png" alt="iVanta" className="h-8 w-auto object-contain" />
+              <span className="text-[18px] font-extrabold tracking-tight text-ink">{BRAND.name}</span>
             </div>
             <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-ink-muted">
               {BRAND.tagline}. Genuine Apple products with warranty, transparent pricing
