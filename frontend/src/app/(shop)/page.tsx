@@ -7,7 +7,6 @@ import { ProductArt, artKindFor } from '@/components/product/product-image';
 import { ProductGridSkeleton } from '@/components/ui/skeleton';
 import { ErrorState } from '@/components/ui/states';
 import { InspectionAndGrading } from '@/components/home/inspection-and-grading';
-import { TradeInCalculator } from '@/components/home/trade-in-calculator';
 import { catalogService } from '@/services';
 
 const TRUST = [
@@ -156,9 +155,6 @@ export default function HomePage() {
 
       {/* ---------- 32-POINT QC & GRADING STANDARDS ---------- */}
       <InspectionAndGrading />
-
-      {/* ---------- TRADE-IN / EXCHANGE CALCULATOR ---------- */}
-      <TradeInCalculator />
 
       {/* ---------- NEW ARRIVALS ---------- */}
       {newest.data && newest.data.content.length > 0 && (
