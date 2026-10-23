@@ -1,31 +1,38 @@
 const ngrok = require('@ngrok/ngrok');
 
-async function start() {
-  console.log('Starting secure tunnel for iVanta platform...');
+const AUTHTOKEN = process.env.NGROK_AUTHTOKEN || '3KzYR5dEpBG1SwoCgGSQnCy9YFg_3Py3Ab8oLhEEcciAe67B4';
+const DOMAIN = 'straw-outpost-tipper.ngrok-free.dev';
+
+async function run() {
+  console.log(`[${new Date().toLocaleTimeString()}] Connecting ngrok tunnel to localhost:3000...`);
   try {
     const listener = await ngrok.forward({
       addr: 3000,
-      authtoken: process.env.NGROK_AUTHTOKEN || '3KzYR5dEpBG1SwoCgGSQnCy9YFg_3Py3Ab8oLhEEcciAe67B4',
-      domain: 'straw-outpost-tipper.ngrok-free.dev',
+      authtoken: AUTHTOKEN,
+      domain: DOMAIN,
     });
 
     console.log('\n======================================================');
-    console.log('🎉 YOUR LIVE WEBSITE DEMO URL IS READY:');
+    console.log('🎉 YOUR LIVE WEBSITE DEMO URL IS ACTIVE & READY:');
     console.log(`👉 ${listener.url()}`);
     console.log('======================================================');
-    console.log('(Keep this terminal open while your client is browsing)\n');
+    console.log('(Keep this process running while testing)\n');
 
-    // Keep process alive indefinitely
-    setInterval(() => {}, 1000 * 60 * 60);
+    // Keep-alive timer to keep the Node event loop permanently alive
+    const keepAlive = setInterval(() => {}, 30000);
 
-    process.on('SIGINT', async () => {
-      console.log('Closing tunnel...');
-      await listener.close();
+    const shutdown = async () => {
+      clearInterval(keepAlive);
+      try { await listener.close(); } catch {}
       process.exit(0);
-    });
+    };
+
+    process.on('SIGINT', shutdown);
+    process.on('SIGTERM', shutdown);
   } catch (err) {
-    console.error('Tunnel error:', err.message || err);
+    console.error(`[${new Date().toLocaleTimeString()}] Tunnel error:`, err.message || err);
+    process.exit(1);
   }
 }
 
-start();
+run();

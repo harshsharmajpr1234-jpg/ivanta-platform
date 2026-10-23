@@ -1,11 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false, // Prevents duplicate re-renders and double network requests
   poweredByHeader: false,
+  compress: true,
+  swcMinify: true,
   eslint: { ignoreDuringBuilds: true },
-  images: { unoptimized: false },
+  images: { unoptimized: true },
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'recharts'],
+  },
   async headers() {
     return [
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
       {
         source: '/(.*)',
         headers: [
@@ -30,4 +44,5 @@ const nextConfig = {
     ];
   },
 };
+
 export default nextConfig;

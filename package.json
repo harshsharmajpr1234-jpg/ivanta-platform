@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "concurrently -k -p \"[{name}]\" -n \"backend,frontend\" -c \"yellow,cyan\" \"npm run start:backend\" \"npm run start:frontend\"",
+    "fast": "concurrently -k -p \"[{name}]\" -n \"backend,frontend\" -c \"yellow,cyan\" \"npm run start:backend\" \"npm run start:prod\"",
     "dev:frontend": "npm --prefix frontend run dev",
     "build:frontend": "npm --prefix frontend run build",
     "start:frontend": "npm --prefix frontend run dev",
+    "start:prod": "npm --prefix frontend run start",
     "build:backend": "mvn -f backend/pom.xml compile",
     "start:backend": "mvn -f backend/pom.xml spring-boot:run \"-Dspring-boot.run.profiles=h2\" \"-Dmaven.test.skip=true\"",
     "tunnel": "node start-tunnel.js"
