@@ -7,6 +7,7 @@ import { ProductArt, artKindFor } from '@/components/product/product-image';
 import { ProductGridSkeleton } from '@/components/ui/skeleton';
 import { ErrorState } from '@/components/ui/states';
 import { InspectionAndGrading } from '@/components/home/inspection-and-grading';
+import { Hero3DShowcase } from '@/components/home/hero-3d-showcase';
 import { catalogService } from '@/services';
 
 const TRUST = [
@@ -71,15 +72,9 @@ export default function HomePage() {
             </dl>
           </div>
 
-          {/* Desktop Visual Illustration */}
-          <div className="relative hidden md:block" aria-hidden="true">
-            <div className="absolute inset-0 rounded-[32px] bg-surface-sunk" />
-            <div className="relative grid grid-cols-2 gap-4 p-8">
-              <ProductArt kind="iphone" className="col-start-1 row-start-1 w-full" />
-              <ProductArt kind="mac" className="col-start-2 row-start-1 mt-10 w-full" />
-              <ProductArt kind="watch" className="col-start-1 row-start-2 -mt-4 w-2/3 justify-self-center" />
-              <ProductArt kind="airpods" className="col-start-2 row-start-2 -mt-4 w-2/3 justify-self-center" />
-            </div>
+          {/* Interactive 3D Apple Studio Showcase */}
+          <div className="relative hidden w-full md:block">
+            <Hero3DShowcase />
           </div>
         </div>
       </section>
