@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "concurrently -k -p \"[{name}]\" -n \"backend,frontend\" -c \"yellow,cyan\" \"npm run start:backend\" \"npm run start:frontend\"",
     "fast": "concurrently -k -p \"[{name}]\" -n \"backend,frontend\" -c \"yellow,cyan\" \"npm run start:backend\" \"npm run start:prod\"",
+    "all": "concurrently -k -p \"[{name}]\" -n \"backend,frontend,tunnel\" -c \"yellow,cyan,green\" \"npm run start:backend\" \"npm run start:prod\" \"npm run tunnel\"",
     "dev:frontend": "npm --prefix frontend run dev",
     "build:frontend": "npm --prefix frontend run build",
     "start:frontend": "npm --prefix frontend run dev",
