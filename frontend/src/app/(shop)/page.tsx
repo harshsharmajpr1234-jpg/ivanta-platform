@@ -10,6 +10,7 @@ import { InspectionAndGrading } from '@/components/home/inspection-and-grading';
 import { Hero3DShowcase } from '@/components/home/hero-3d-showcase';
 import { TradeInCalculator } from '@/components/home/trade-in-calculator';
 import { UnboxingShowcase } from '@/components/home/unboxing-showcase';
+import { CategoryShowcaseSection } from '@/components/home/category-showcase-section';
 import { catalogService } from '@/services';
 
 const TRUST = [
@@ -21,7 +22,10 @@ const TRUST = [
 
 export default function HomePage() {
   const categories = useQuery({ queryKey: ['categories'], queryFn: () => catalogService.categories(), staleTime: 5 * 60_000 });
-  const featured = useQuery({ queryKey: ['products', 'featured'], queryFn: () => catalogService.featured(8) });
+  const iphones = useQuery({ queryKey: ['products', 'cat-iphone'], queryFn: () => catalogService.products({ category: 'iphone', size: 4 }) });
+  const macs = useQuery({ queryKey: ['products', 'cat-mac'], queryFn: () => catalogService.products({ category: 'mac', size: 4 }) });
+  const watches = useQuery({ queryKey: ['products', 'cat-watch'], queryFn: () => catalogService.products({ category: 'watch', size: 4 }) });
+  const airpods = useQuery({ queryKey: ['products', 'cat-airpods'], queryFn: () => catalogService.products({ category: 'airpods', size: 4 }) });
   const newest = useQuery({ queryKey: ['products', 'newest'], queryFn: () => catalogService.products({ sort: 'newest', size: 4 }) });
 
   const cats = (categories.data?.[0]?.children ?? []).slice(0, 6);
@@ -125,30 +129,126 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- FEATURED PRODUCTS ---------- */}
-      <section className="border-y border-line bg-white">
-        <div className="mx-auto max-w-[1240px] px-4 py-8 sm:py-14">
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <h2 className="text-xl font-bold tracking-tight text-ink sm:text-2xl md:text-3xl">Featured products</h2>
-              <p className="mt-0.5 text-[13px] text-ink-muted sm:text-[14px]">Certified pre-owned Apple devices, inspected and tested by our experts.</p>
-            </div>
+      {/* ---------- CATEGORY QUICK JUMP BAR ---------- */}
+      <nav className="sticky top-16 z-30 border-y border-line bg-white/95 backdrop-blur-md py-3 shadow-xs" aria-label="Category Navigation">
+        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 px-4 overflow-x-auto no-scrollbar">
+          <span className="shrink-0 text-[11px] font-bold uppercase tracking-wider text-ink-faint hidden sm:inline">
+            Browse Lineups:
+          </span>
+          <div className="flex items-center gap-2">
+            {[
+              { id: 'section-iphones', label: 'iPhones', count: iphones.data?.totalElements || 3, icon: '📱' },
+              { id: 'section-mac', label: 'MacBooks', count: macs.data?.totalElements || 2, icon: '💻' },
+              { id: 'section-watch', label: 'Apple Watch', count: watches.data?.totalElements || 2, icon: '⌚' },
+              { id: 'section-airpods', label: 'AirPods', count: airpods.data?.totalElements || 1, icon: '🎧' },
+            ].map((tab) => (
+              <a
+                key={tab.id}
+                href={`#${tab.id}`}
+                className="flex shrink-0 items-center gap-1.5 rounded-full border border-line bg-surface-sunk/80 px-4 py-1.5 text-[12.5px] font-bold text-ink transition-all hover:border-ink hover:bg-white hover:shadow-xs active:scale-95"
+              >
+                <span>{tab.icon}</span>
+                <span>{tab.label}</span>
+                <span className="rounded-full bg-accent-soft px-1.5 py-0.2 text-[10px] font-extrabold text-accent">
+                  {tab.count}
+                </span>
+              </a>
+            ))}
           </div>
-          {featured.isError ? (
-            <ErrorState className="mt-7" description="Unable to load products right now. Please refresh or try again shortly." onRetry={() => void featured.refetch()} />
-          ) : !featured.data ? (
-            <ProductGridSkeleton count={4} />
-          ) : featured.data.length === 0 ? (
-            <div className="mt-7 rounded-2xl border border-line bg-surface-sunk p-8 text-center text-[14px] text-ink-muted">
-              Featured devices will be available shortly. Check back soon!
-            </div>
-          ) : (
-            <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-7 sm:gap-4 lg:grid-cols-4">
-              {featured.data.slice(0, 4).map((p) => <ProductCard key={p.id} p={p} />)}
-            </div>
-          )}
+          <Link
+            href="/products"
+            className="shrink-0 text-[12px] font-bold text-accent hover:underline hidden md:inline"
+          >
+            All Apple Catalog →
+          </Link>
         </div>
-      </section>
+      </nav>
+
+      {/* ---------- 1. iPHONES SHOWCASE SECTION ---------- */}
+      <CategoryShowcaseSection
+        id="section-iphones"
+        categoryName="iPhone"
+        badge="A-Series Bionic & Pro · OLED Retina"
+        headline="Certified Pre-Owned iPhones. 32-Point Inspected."
+        description="Every iPhone undergoes comprehensive diagnostic testing for True Tone, 85%+ original battery health, OIS cameras, and clean IMEI. Includes 1-month hardware warranty and Open Box doorstep inspection."
+        startingPrice="Starting ₹42,999 (Save Up to 45%)"
+        bannerImage="/hero-3d-apple-studio-white.jpg"
+        bannerAlt="Certified Pre-Owned iPhone 15 Pro Max 3D Showcase"
+        categorySlug="iphone"
+        features={[
+          { title: 'True Tone OLED', desc: 'Original OEM display with factory calibration' },
+          { title: '85%+ Battery Health', desc: 'Peak performance certified without service alerts' },
+          { title: '48MP OIS Cameras', desc: 'Sensor-shift stabilization & 4K video passed' },
+          { title: 'Instant Biometrics', desc: 'Face ID / Touch ID hardware mapped' },
+        ]}
+        products={iphones.data?.content || []}
+        loading={iphones.isLoading}
+      />
+
+      {/* ---------- 2. MACBOOKS SHOWCASE SECTION ---------- */}
+      <CategoryShowcaseSection
+        id="section-mac"
+        categoryName="MacBook"
+        badge="Liquid Retina XDR · M-Series Apple Silicon"
+        headline="Certified Pre-Owned MacBooks. Extreme Power."
+        description="Benchmark-tested M2 and M3 Apple Silicon processors, color-calibrated Liquid Retina XDR displays, silent thermal cooling, and verified 100% white Liquid Contact Indicators (zero moisture damage)."
+        startingPrice="Starting ₹69,999 (Save Up to 35%)"
+        bannerImage="/banner-macbook-anatomy.jpg"
+        bannerAlt="Certified Pre-Owned MacBook Pro 3D Hardware Anatomy"
+        categorySlug="mac"
+        reverseBanner={true}
+        features={[
+          { title: 'Apple Silicon Benchmarked', desc: '100% peak clock speed & multi-core performance' },
+          { title: 'Up to 18-Hr Battery Life', desc: 'Original health verified with full day autonomy' },
+          { title: 'Zero Liquid Damage', desc: 'LCI indicators 100% white and untouched' },
+          { title: 'Magic Keyboard & Ports', desc: 'Backlit scissors, MagSafe 3 & Thunderbolt tested' },
+        ]}
+        products={macs.data?.content || []}
+        loading={macs.isLoading}
+      />
+
+      {/* ---------- 3. APPLE WATCH SHOWCASE SECTION ---------- */}
+      <CategoryShowcaseSection
+        id="section-watch"
+        categoryName="Apple Watch"
+        badge="Aerospace Titanium & Genuine Straps"
+        headline="iVanta Watch Studio. Health & Performance on Wrist."
+        description="From the rugged 49mm Titanium Watch Ultra 2 to the sleek Series 9 with Double Tap gestures. Blood Oxygen, ECG, optical heart sensors, and water-resistance seals fully validated."
+        startingPrice="Starting ₹29,999 (Save Up to 33%)"
+        bannerImage="/banner-watch-studio.jpg"
+        bannerAlt="iVanta Apple Watch Studio 3D Customizer"
+        categorySlug="watch"
+        features={[
+          { title: 'ECG & Blood Oxygen', desc: 'Advanced biometric health tracking calibrated' },
+          { title: '100% Genuine Straps', desc: 'Alpine, Ocean & Trail bands thoroughly tested' },
+          { title: '3000 Nits Brightness', desc: 'Crystal sapphire glass with high daylight visibility' },
+          { title: 'Water Resistance Sealed', desc: 'Acoustic speaker moisture ejection verified' },
+        ]}
+        products={watches.data?.content || []}
+        loading={watches.isLoading}
+      />
+
+      {/* ---------- 4. AIRPODS SHOWCASE SECTION ---------- */}
+      <CategoryShowcaseSection
+        id="section-airpods"
+        categoryName="AirPods"
+        badge="Personalized Spatial Audio · Dynamic Tracking"
+        headline="Certified AirPods Pro. Pure Acoustic Immersion."
+        description="Experience up to 2x more Active Noise Cancellation, Adaptive Audio, and crystal-clear call quality. Cleaned and acoustically certified with fresh silicone ear tips and USB-C MagSafe case."
+        startingPrice="Starting ₹16,999 (Save 32% Off MRP)"
+        bannerImage="/banner-airpods-spatial.jpg"
+        bannerAlt="Certified Pre-Owned AirPods Pro 3D Spatial Audio Showcase"
+        categorySlug="airpods"
+        reverseBanner={true}
+        features={[
+          { title: '2x Active Noise Cancellation', desc: 'Acoustic micro-vents tested for silence' },
+          { title: 'Dual Beamforming Mics', desc: 'Studio vocal isolation for voice calls' },
+          { title: '30-Hour MagSafe Battery', desc: 'Fast USB-C & wireless charging verified' },
+          { title: 'Hygienically Sanitized', desc: 'Ultrasound cleaned with fresh ear-tips' },
+        ]}
+        products={airpods.data?.content || []}
+        loading={airpods.isLoading}
+      />
 
       {/* ---------- 3D UNBOXING & WHAT'S IN THE BOX ---------- */}
       <UnboxingShowcase />

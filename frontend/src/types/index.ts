@@ -65,7 +65,7 @@ export interface ProductDetail {
 }
 export type ProductSort = 'price_asc' | 'price_desc' | 'newest' | 'popular' | 'featured';
 export interface ProductQuery {
-  q?: string; categoryId?: string; brandId?: string; minPrice?: number; maxPrice?: number;
+  q?: string; categoryId?: string; category?: string; brandId?: string; minPrice?: number; maxPrice?: number;
   color?: string; storage?: string; sort?: ProductSort; page?: number; size?: number;
 }
 
