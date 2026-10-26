@@ -8,6 +8,8 @@ import { ProductGridSkeleton } from '@/components/ui/skeleton';
 import { ErrorState } from '@/components/ui/states';
 import { InspectionAndGrading } from '@/components/home/inspection-and-grading';
 import { Hero3DShowcase } from '@/components/home/hero-3d-showcase';
+import { TradeInCalculator } from '@/components/home/trade-in-calculator';
+import { UnboxingShowcase } from '@/components/home/unboxing-showcase';
 import { catalogService } from '@/services';
 
 const TRUST = [
@@ -148,8 +150,14 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ---------- 3D UNBOXING & WHAT'S IN THE BOX ---------- */}
+      <UnboxingShowcase />
+
       {/* ---------- 32-POINT QC & GRADING STANDARDS ---------- */}
       <InspectionAndGrading />
+
+      {/* ---------- APPLE TRADE-IN & VALUE CALCULATOR ---------- */}
+      <TradeInCalculator />
 
       {/* ---------- NEW ARRIVALS ---------- */}
       {newest.data && newest.data.content.length > 0 && (

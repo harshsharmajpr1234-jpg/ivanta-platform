@@ -22,6 +22,7 @@ import { useAuthStore } from '@/store/auth';
 import { useGuestCart } from '@/store/guest-cart';
 import { useUIStore } from '@/store/ui';
 import { Dialog } from '@/components/ui/dialog';
+import { HardwareDiagnosticModal } from '@/components/product/hardware-diagnostic-modal';
 import { STOCK_STATUS_LABEL, STOCK_STATUS_TONE } from '@/constants';
 import { cn, formatDate, inr } from '@/lib/utils';
 import type { Variant } from '@/types';
@@ -34,6 +35,7 @@ export default function ProductDetailPage() {
   const { user, setUser } = useAuthStore();
   const addGuestItem = useGuestCart((s) => s.addItem);
   const [wishLoginOpen, setWishLoginOpen] = useState(false);
+  const [diagnosticOpen, setDiagnosticOpen] = useState(false);
 
   const product = useQuery({ queryKey: ['product', slug], queryFn: () => catalogService.product(slug) });
   const related = useQuery({
@@ -293,6 +295,27 @@ export default function ProductDetailPage() {
             {p.warrantyMonths > 0 && <span className="flex items-center gap-1 text-[12px] text-ink-muted"><ShieldCheck className="h-3.5 w-3.5 text-success" /> {p.warrantyMonths}-month warranty</span>}
           </div>
 
+          {/* Live 32-Point QC & Battery Diagnostic Button */}
+          <button
+            type="button"
+            onClick={() => setDiagnosticOpen(true)}
+            className="mt-3.5 flex w-full items-center justify-between rounded-2xl border border-line bg-surface-sunk/60 p-3 text-left transition-all hover:border-accent/40 hover:bg-accent-soft/20 group"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white border border-line text-accent shadow-xs group-hover:scale-105 transition-transform">
+                <ShieldCheck className="h-4 w-4" />
+              </div>
+              <div>
+                <div className="text-[12.5px] font-bold text-ink flex items-center gap-1.5">
+                  32-Point QC & Battery Report
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                </div>
+                <div className="text-[11px] text-ink-muted">88%+ Original Battery · TrueTone · OIS Camera Passed</div>
+              </div>
+            </div>
+            <span className="text-[11.5px] font-bold text-accent">View Report →</span>
+          </button>
+
           {/* qty + actions */}
           <div className="mt-6 space-y-3">
             <div className="flex items-center gap-3">
@@ -482,6 +505,15 @@ export default function ProductDetailPage() {
           is created automatically with your first OTP sign-in — no separate registration needed.
         </p>
       </Dialog>
+
+      {/* Hardware & Battery Diagnostic QC Modal */}
+      {p && (
+        <HardwareDiagnosticModal
+          isOpen={diagnosticOpen}
+          onClose={() => setDiagnosticOpen(false)}
+          productTitle={p.name}
+        />
+      )}
       {/* Sticky Mobile Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-between border-t border-line bg-white/95 px-4 py-2.5 shadow-pop backdrop-blur-md lg:hidden">
         <div>
