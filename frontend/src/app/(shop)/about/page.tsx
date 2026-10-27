@@ -1,57 +1,124 @@
-import type { Metadata } from 'next';
-import { ShieldCheck, Truck, RotateCcw, BadgeIndianRupee } from 'lucide-react';
+'use client';
 
-export const metadata: Metadata = { title: 'About iVanta — Premium Apple Products, Delivered' };
+import Link from 'next/link';
+import { ShieldCheck, Truck, RotateCcw, BadgeIndianRupee, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { InspectionAndGrading } from '@/components/home/inspection-and-grading';
+import { UnboxingShowcase } from '@/components/home/unboxing-showcase';
+import { TradeInCalculator } from '@/components/home/trade-in-calculator';
 
 const PILLARS = [
-  { icon: ShieldCheck, title: 'Genuine, always', body: 'Every iPhone, Mac, iPad, Watch and AirPod we ship is a sealed-box, India-warranty unit sourced through authorised distribution. No grey market, no refurbishment passed off as new.' },
-  { icon: BadgeIndianRupee, title: 'Fair, transparent pricing', body: 'Prices are recalculated by our servers on every order — the price you see at checkout is the price you pay. Coupons and discounts apply automatically, with every rupee itemised.' },
-  { icon: Truck, title: 'Delivery across India', body: 'From metros to tier-3 towns, our serviceability engine checks your PIN code before you pay, shows real ETAs and tracks every shipment event until it reaches your door.' },
-  { icon: RotateCcw, title: 'Returns without drama', body: 'Changed your mind or received a defective unit? Request a return from your order page within the return window. Refunds are issued to your original payment method.' },
+  {
+    icon: ShieldCheck,
+    title: 'Independently Inspected & Verified',
+    body: 'Every iPhone, Mac, Watch, and AirPod undergoes a rigorous 32-point hardware and diagnostic inspection by specialized technicians before dispatch.',
+  },
+  {
+    icon: BadgeIndianRupee,
+    title: 'Fair, Transparent Pricing',
+    body: 'Save up to 40% compared to brand new retail prices. Prices are computed server-side with zero hidden fees and full tax invoicing.',
+  },
+  {
+    icon: Truck,
+    title: 'Open Box Doorstep Delivery',
+    body: 'Inspect your device physical condition right at your doorstep in front of the courier partner before accepting delivery.',
+  },
+  {
+    icon: RotateCcw,
+    title: '1-Month Warranty & 3-Day Testing',
+    body: 'Includes a 3-day replacement window for real-world testing and a 1-month iVanta hardware warranty for complete peace of mind.',
+  },
 ];
 
 export default function AboutPage() {
   return (
-    <div className="bg-surface-sunk/40">
-      <section className="mx-auto max-w-[1240px] px-4 py-16 text-center lg:py-24">
-        <p className="text-[13px] font-bold uppercase tracking-widest text-accent">About iVanta</p>
-        <h1 className="mx-auto mt-4 max-w-3xl text-[32px] font-bold leading-tight tracking-tight text-ink md:text-[44px]">
-          The most trustworthy way to buy Apple products in India.
+    <div className="bg-surface">
+      {/* ---------- HEADER HERO ---------- */}
+      <section className="mx-auto max-w-[1240px] px-4 py-12 text-center sm:py-16 lg:py-20">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-sunk px-3.5 py-1 text-[11px] font-semibold text-ink">
+          About iVanta
+        </span>
+        <h1 className="mx-auto mt-4 max-w-3xl text-[30px] font-extrabold leading-tight tracking-tight text-ink sm:text-[42px] lg:text-[48px]">
+          The most trustworthy way to buy pre-owned Apple in India.
         </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-ink-soft">
-          iVanta is a specialist Apple retail platform. We sell iPhones, Macs, MacBooks, iPads,
-          Apple Watches, AirPods and genuine accessories — with server-verified pricing, live stock,
-          insured delivery and a return process that actually refunds you.
+        <p className="mx-auto mt-4 max-w-2xl text-[14px] leading-relaxed text-ink-muted sm:text-[16px]">
+          iVanta is an independent platform dedicated to delivering certified pre-owned Apple devices.
+          We test every device across 32 quality points, back every order with a 1-month hardware warranty,
+          and offer doorstep open-box inspection across India.
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1240px] px-4 pb-16">
-        <div className="grid gap-4 md:grid-cols-2">
+      {/* ---------- 4 PILLARS ---------- */}
+      <section className="mx-auto max-w-[1240px] px-4 pb-12 sm:pb-16">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PILLARS.map((p) => (
-            <div key={p.title} className="rounded-3xl border border-line bg-white p-7 shadow-soft">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-accent-soft text-accent"><p.icon className="h-5 w-5" /></span>
-              <h2 className="mt-4 text-[17px] font-bold text-ink">{p.title}</h2>
-              <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">{p.body}</p>
+            <div key={p.title} className="rounded-2xl border border-line bg-white p-6 shadow-soft transition-transform hover:-translate-y-0.5">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                <p.icon className="h-5 w-5" />
+              </span>
+              <h2 className="mt-3.5 text-[15px] font-bold text-ink">{p.title}</h2>
+              <p className="mt-2 text-[12.5px] leading-relaxed text-ink-muted">{p.body}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1240px] px-4 pb-20">
-        <div className="rounded-3xl border border-line bg-ink p-10 text-white lg:p-14">
-          <h2 className="text-[24px] font-bold tracking-tight lg:text-[30px]">How we work</h2>
+      {/* ---------- 32-POINT QC & GRADING STANDARDS ---------- */}
+      <div className="border-t border-line">
+        <InspectionAndGrading />
+      </div>
+
+      {/* ---------- 3D UNBOXING & WHAT'S IN THE BOX ---------- */}
+      <div className="border-t border-line">
+        <UnboxingShowcase />
+      </div>
+
+      {/* ---------- TRADE-IN & VALUE CALCULATOR ---------- */}
+      <div className="border-t border-line">
+        <TradeInCalculator />
+      </div>
+
+      {/* ---------- HOW WE WORK ---------- */}
+      <section className="mx-auto max-w-[1240px] px-4 py-16">
+        <div className="rounded-3xl border border-line bg-ink p-8 text-white sm:p-12 lg:p-14">
+          <h2 className="text-[22px] font-bold tracking-tight sm:text-[28px]">Our Commitments to You</h2>
           <div className="mt-8 grid gap-8 md:grid-cols-3">
             {[
-              { n: '01', t: 'Curated catalog', d: 'Our product team lists only current-generation Apple hardware with complete variant matrices — storage, colour, connectivity — and full specifications, maintained in our own database.' },
-              { n: '02', t: 'Engineered checkout', d: 'Stock is reserved the moment you check out, prices are computed server-side, payments are verified with signed proofs, and every order state transition is recorded in an immutable history.' },
-              { n: '03', t: 'Accountable after-sales', d: 'Shipments are tracked event-by-event, returns follow a published status flow, refunds are issued provider-confirmed, and every action on your order is audit-logged.' },
+              {
+                n: '01',
+                t: 'Authentic Hardware',
+                d: 'We inspect for genuine displays, minimum 85% battery health, and verified Apple internal components without generic warning popups.',
+              },
+              {
+                n: '02',
+                t: 'Engineered Checkout & Stock',
+                d: 'Real inventory counts in real time. Prices are verified by backend servers, payments are cryptographically confirmed, and stock is reserved.',
+              },
+              {
+                n: '03',
+                t: 'Open Box Delivery & Warranty',
+                d: 'Doorstep inspection before courier acceptance, 3 days of testing with free reverse pickup, and 1-month comprehensive hardware warranty.',
+              },
             ].map((s) => (
-              <div key={s.n}>
-                <span className="text-[13px] font-bold text-white/50">{s.n}</span>
-                <h3 className="mt-2 text-[16px] font-bold">{s.t}</h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-white/70">{s.d}</p>
+              <div key={s.n} className="space-y-2">
+                <span className="text-[13px] font-bold text-accent">{s.n}</span>
+                <h3 className="text-[16px] font-bold text-white">{s.t}</h3>
+                <p className="text-[13px] leading-relaxed text-white/70">{s.d}</p>
               </div>
             ))}
+          </div>
+          <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-white/10 pt-6">
+            <Link
+              href="/products"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-white px-7 text-[14px] font-semibold text-ink transition-transform hover:scale-[1.02]"
+            >
+              Explore All Devices <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/support"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-white/20 bg-transparent px-6 text-[14px] font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              Warranty & Policy Hub
+            </Link>
           </div>
         </div>
       </section>
