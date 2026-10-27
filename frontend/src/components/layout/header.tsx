@@ -18,7 +18,8 @@ const NAV = [
   { label: 'iPad', href: '/products?cat=ipad' },
   { label: 'Mac', href: '/products?cat=mac' },
   { label: 'Watch', href: '/products?cat=watch' },
-  { label: 'AirPods', href: '/products?cat=airpods' },
+  { label: 'Condition Guide', href: '/condition-guide' },
+  { label: 'Warranty', href: '/warranty-policy' },
   { label: 'Support', href: '/support' },
 ];
 
@@ -87,8 +88,11 @@ export function Header() {
             <Menu className="h-5 w-5" />
           </button>
           <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="FlyPhones home">
-            <img src="/logo-icon.png" alt="FlyPhones" className="h-8 w-auto object-contain" />
-            <span className="text-[18px] font-extrabold tracking-tight text-ink sm:text-[20px]">FlyPhones</span>
+            <img src="/logo-icon.png" alt="Flyphones Mascot" className="h-9 w-auto object-contain" />
+            <div className="flex flex-col">
+              <span className="text-[18px] font-extrabold tracking-tight text-ink sm:text-[19px] leading-none">Flyphones</span>
+              <span className="text-[8.5px] font-medium tracking-wider text-ink-muted hidden sm:block uppercase pt-0.5">by Manish Tech</span>
+            </div>
           </Link>
 
           <nav className="ml-4 hidden items-center gap-0.5 lg:flex" aria-label="Main">{navLinks}</nav>

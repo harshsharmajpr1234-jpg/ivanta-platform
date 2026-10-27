@@ -1,49 +1,73 @@
+import Link from 'next/link';
 import { PolicyPage } from '@/components/layout/policy-page';
+import { BRAND } from '@/constants';
 
-export const metadata = { title: 'Terms of Service — FlyPhones' };
+export const metadata = { title: `Terms of Service — ${BRAND.name}` };
 
 export default function TermsPage() {
   return (
-    <PolicyPage title="Terms of Service" updated="September 2026">
+    <PolicyPage title="Terms of Service" updated="October 2026">
       <section>
-        <h2>1. What FlyPhones is</h2>
-        <p>FlyPhones is an online retail platform selling genuine Apple products — iPhones, Macs, MacBooks, iPads, Apple Watches, AirPods and accessories — to customers in India. By browsing, ordering or using an account on flyphones.in you agree to these terms.</p>
+        <h2>1. About Flyphones & Legal Attribution</h2>
+        <p>
+          Flyphones is an online e-commerce platform operated in association with <strong>{BRAND.parentCompany}</strong>, offering quality-tested refurbished and pre-owned smartphones and related consumer electronics to customers in India. By browsing, purchasing, or registering an account on flyphones.in you agree to these Terms of Service.
+        </p>
       </section>
+
       <section>
-        <h2>2. Your account</h2>
-        <p>Accounts are created with OTP-verified email or mobile sign-in, or with a password. You must provide accurate information and keep your credentials confidential. You are responsible for all orders placed under your account. Sessions use HTTP-only cookies and expire automatically; suspected abuse may result in account suspension.</p>
+        <h2>2. User Accounts & Security</h2>
+        <p>
+          Accounts are authenticated via OTP-verified mobile/email credentials or encrypted password authentication. You agree to provide accurate registration details and maintain the security of your credentials. Sessions utilize secure HTTP-only cookie protocols.
+        </p>
       </section>
+
       <section>
-        <h2>3. Products, pricing and availability</h2>
-        <p>Product details, prices and stock shown on the site are served live from our catalog. All prices are in Indian Rupees and inclusive of applicable taxes unless stated otherwise. Prices and availability can change without notice; the binding price is the one computed by our servers and shown in your order confirmation at checkout. We may refuse or cancel orders arising from pricing errors, suspected fraud or stock unavailability, with a full refund for any amount captured.</p>
+        <h2>3. Catalog, Pricing & Stock Reservation</h2>
+        <p>
+          All product details, specifications, condition grades (Grade A, B, and C), and real-time inventory counts are verified live by our servers. All prices are in Indian Rupees (₹) inclusive of applicable taxes. Prices and discounts are calculated and validated server-side.
+        </p>
       </section>
+
       <section>
-        <h2>4. Orders and payment</h2>
-        <p>An order is placed when you complete checkout. Online payments (UPI, cards, netbanking, wallets) are verified server-side with our payment provider before the order is confirmed; Cash on Delivery is available on eligible orders and PIN codes. Stock for your order is reserved for a short window while you check out — if the reservation lapses, items may need to be re-added. Minimum order value applies to Cash on Delivery.</p>
+        <h2>4. Orders & Payment Processing</h2>
+        <p>
+          Orders are placed upon completing checkout. Online transactions (UPI, credit/debit cards, net banking, digital wallets) are cryptographically verified by our payment gateway providers prior to confirmation. Cash on Delivery (COD) is available on eligible PIN codes and order limits.
+        </p>
       </section>
+
       <section>
-        <h2>5. Shipping and delivery</h2>
-        <p>We ship to serviceable PIN codes across India. Delivery timelines shown at checkout are estimates from our courier partners and can vary by location. You can track every shipment from your order page. Risk in the goods passes to you on delivery; please inspect the package at handover where possible and report damage immediately through your order page.</p>
+        <h2>5. Shipping, Open Box Delivery & Transit Risk</h2>
+        <p>
+          We deliver to serviceable PIN codes across India via verified logistics partners. Customers are entitled to Open Box Delivery inspection at their doorstep. Any physical transit damage or cosmetic discrepancy must be reported within 24 hours of delivery accompanied by an unboxing video.
+        </p>
       </section>
+
       <section>
-        <h2>6. Returns, refunds and warranty</h2>
-        <p>Returns are accepted within the published return window from delivery, subject to the conditions in our Refund Policy. Refunds are issued to the original payment method, or via bank transfer for COD orders. Product warranty is provided by Apple India per its standard terms; FlyPhones facilitates but does not replace manufacturer warranty obligations.</p>
+        <h2>6. Warranty & Return Commitments</h2>
+        <p>
+          Refurbished devices carry an official <strong>six (06) months limited warranty</strong> commencing from the invoice date, and supplied accessories hold a <strong>three (03) months warranty</strong>. Claims require matching device IMEI/serial validation, intact internal security seals, and compliance with our{' '}
+          <Link href="/warranty-policy" className="font-semibold text-accent underline">
+            Warranty & Return Policy
+          </Link>{' '}
+          and{' '}
+          <Link href="/condition-guide" className="font-semibold text-accent underline">
+            Device Condition Guide
+          </Link>.
+        </p>
       </section>
+
       <section>
-        <h2>7. Coupons and promotions</h2>
-        <p>Coupons are validated on our servers against their published conditions — minimum order value, applicable products or categories, usage limits and validity dates. We may withdraw or modify promotions at any time. Coupons cannot be exchanged for cash.</p>
+        <h2>7. Limitation of Liability</h2>
+        <p>
+          To the maximum extent permitted by applicable Indian law, Flyphones and {BRAND.parentCompany}&apos;s aggregate liability for any transaction is strictly limited to the amount paid for that specific order.
+        </p>
       </section>
+
       <section>
-        <h2>8. Prohibited use</h2>
-        <p>You agree not to attempt to manipulate prices, stock, coupons, payment verification or order statuses; to probe, scan or test the vulnerability of the platform; to resell products in violation of applicable law; or to use the platform for any unlawful purpose. Violations may lead to order cancellation, account termination and legal action.</p>
-      </section>
-      <section>
-        <h2>9. Liability</h2>
-        <p>To the maximum extent permitted by law, FlyPhones&apos;s aggregate liability for any order is limited to the amount paid for that order. Nothing in these terms limits liability that cannot be limited under Indian law, including for fraud or death or personal injury caused by negligence.</p>
-      </section>
-      <section>
-        <h2>10. Governing law</h2>
-        <p>These terms are governed by the laws of India. Courts at Jaipur, Rajasthan have exclusive jurisdiction. Questions: support@flyphones.in.</p>
+        <h2>8. Governing Law & Jurisdiction</h2>
+        <p>
+          These terms and all transactions are governed by the laws of India. Courts at New Delhi, Delhi shall have jurisdiction. For inquiries, write to {BRAND.supportEmail} or call {BRAND.supportPhone}.
+        </p>
       </section>
     </PolicyPage>
   );

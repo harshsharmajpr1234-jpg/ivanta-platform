@@ -1,53 +1,100 @@
+import Link from 'next/link';
 import { PolicyPage } from '@/components/layout/policy-page';
+import { BRAND, WARRANTY_POLICY } from '@/constants';
 
-export const metadata = { title: 'Refund & Return Policy — FlyPhones' };
+export const metadata = { title: `Refund & Return Policy — ${BRAND.name}` };
 
 export default function RefundPolicyPage() {
   return (
-    <PolicyPage title="Refund & Return Policy" updated="September 2026">
+    <PolicyPage title="Refund & Return Policy" updated="October 2026">
+      <div className="mb-6 rounded-2xl border border-line bg-surface-sunk/60 p-4 text-[13px] text-ink-muted">
+        Looking for technical warranty rules or grading definitions? Read our comprehensive{' '}
+        <Link href="/warranty-policy" className="font-semibold text-accent underline">
+          Warranty & Return Policy
+        </Link>{' '}
+        and{' '}
+        <Link href="/condition-guide" className="font-semibold text-accent underline">
+          Device Condition Guide
+        </Link>.
+      </div>
+
       <section>
-        <h2>1. 3-Day Testing & Replacement Window</h2>
-        <p>All items on FlyPhones are independently quality-checked pre-owned Apple devices. Every order comes with <strong>Open Box Delivery</strong> and a strict <strong>3-Day Testing Window</strong> starting from the timestamp of delivery. You can thoroughly test all hardware and software features of the device. If any hardware defect or functionality issue arises within these 3 days, you can raise a free replacement request directly from your Account → Orders page.</p>
+        <h2>1. Warranty Duration & Scope</h2>
+        <p>
+          Refurbished smartphones and consoles purchased from {BRAND.name} (Powered by {BRAND.parentCompany}) carry a{' '}
+          <strong>six (06) months limited warranty</strong> commencing from the invoice date. Accessories provided with the product
+          (including adaptor, data/charging cable, and battery) carry a <strong>three (03) months warranty</strong>.
+        </p>
       </section>
+
       <section>
-        <h2>2. Open Box Delivery & Eligibility</h2>
+        <h2>2. Damage Reporting Within 24 Hours & Unboxing Video</h2>
+        <p>
+          Any physical damage, external cosmetic discrepancy, or condition mismatch must be reported within{' '}
+          <strong>24 hours of delivery</strong> accompanied by a continuous un-cut unboxing video of the purchased package.
+          Failure to report within 24 hours with an unboxing video will void cosmetic or transit damage claims.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. IMEI Validation & Device Imaging</h2>
+        <p>
+          To establish warranty validity, customers must provide the matching IMEI or serial number shown on the invoice.
+          Before packing the unit for pickup, customers must share clear front, side, and back photographs of the device and demonstrate reported issues via video if requested.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Internal Seal Integrity Requirement</h2>
+        <p>
+          The security seal inside the device must remain completely intact. If the seal is found broken, opened, or tampered with at the time of return inspection, the claim will be rejected and no resolution will be provided.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. The Return & Replacement Process</h2>
+        <p>
+          Requested → Approved → Pickup scheduled → Received → Inspection → Resolution. During the warranty period, {BRAND.name} may repair or replace the device at its discretion. Any replacement device carries the residual warranty period of the original purchase.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Return Packaging & Transit Safety</h2>
+        <p>
+          Customers must pack return devices securely with adequate cushioning. {BRAND.name} reserves the right to deduct or recover costs for improper packaging resulting in physical transit damage.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Warranty Exclusions</h2>
         <ul>
-          <li><strong>Open Box Delivery</strong>: Inspect the physical condition of the device right in front of the delivery courier before accepting. Any external physical damage or missing accessories must be noted at the time of delivery.</li>
-          <li><strong>Internal Hardware Faults</strong>: Display, camera, Face ID, speaker, microphone, or battery issues discovered within the 3-day testing period qualify for immediate free replacement or return.</li>
-          <li>Devices must be returned with their original accessories and packaging as dispatched, and must be free from any personal Apple ID / iCloud lock.</li>
+          {WARRANTY_POLICY.exclusions.map((e, i) => (
+            <li key={i}>{e}</li>
+          ))}
         </ul>
       </section>
+
       <section>
-        <h2>3. The return & replacement process</h2>
-        <p>Requested → Approved → Pickup scheduled → Received → Inspecting → Replacement dispatched / Refund processed. Each transition is timestamped and shown on your account page. Serial / IMEI numbers are verified upon pickup.</p>
-      </section>
-      <section>
-        <h2>4. Refund amounts</h2>
-        <p>Refunds cover the item price, its tax share and a pro-rated share of any order-level coupon discount, exactly as computed by our servers — never more than what was actually paid. Shipping charges are refunded for damaged/defective/wrong deliveries or full-order returns; for partial change-of-mind returns, shipping may not be refundable. The itemised breakdown is shown on each return.</p>
-      </section>
-      <section>
-        <h2>5. How refunds are issued</h2>
+        <h2>8. How Refunds Are Issued</h2>
         <ul>
-          <li><strong>Online payments (UPI, cards, netbanking, wallets)</strong> — refunded to the original payment method. Banks/UPI typically reflect refunds within 3–7 working days of processing; card refunds can take up to 7–10 working days depending on the issuer.</li>
-          <li><strong>Cash on Delivery</strong> — refunded via bank transfer (NEFT/IMPS) to the account you provide during the return.</li>
+          <li><strong>Online payments (UPI, cards, net banking, wallets)</strong> — refunded to original payment method within 3–7 working days of return approval.</li>
+          <li><strong>Cash on Delivery (COD)</strong> — refunded via bank transfer (NEFT/IMPS) to customer-provided verified account details.</li>
         </ul>
-        <p>Every refund is provider-confirmed and carries a reference ID visible on the return page.</p>
       </section>
+
       <section>
-        <h2>6. Cancellations</h2>
-        <p>Orders can be cancelled from the order page until they ship. Prepaid cancellations are refunded in full to the original payment method with the timelines above. COD cancellations require no refund.</p>
-      </section>
-      <section>
-        <h2>7. 1-Month Hardware Warranty (Post-3-Day Coverage)</h2>
-        <p>All pre-owned Apple devices come with a <strong>3-Day Instant Replacement Window</strong> followed by a <strong>1-Month (30 days from delivery) FlyPhones Hardware Warranty</strong>. This covers internal hardware malfunctions (display, camera, Face ID, motherboard, speaker) not caused by physical drops, liquid/water damage, or unauthorized tampering. Once the 1-month warranty period expires, the company bears no further warranty, liability, or role.</p>
-      </section>
-      <section>
-        <h2>8. Fraud prevention</h2>
-        <p>Returns are inspected before refunds are released. Serialised items are matched against the dispatched unit. Fraudulent returns (swapped, tampered or non-purchased items) are rejected and may be reported to law enforcement.</p>
-      </section>
-      <section>
-        <h2>9. Contact</h2>
-        <p>Refund status not updating or money not received within the timelines above? Write to support@flyphones.in with your order ID — we reconcile against payment provider records and respond within 2 working days.</p>
+        <h2>9. Customer Support Contact</h2>
+        <p>
+          For warranty claims, return tracking, or support assistance:
+          <br />
+          Calling Support: <a href={`tel:${BRAND.supportPhoneRaw}`} className="text-accent underline">{BRAND.supportPhone}</a>
+          <br />
+          WhatsApp Support: <a href={`https://wa.me/${BRAND.supportPhoneRaw}`} className="text-accent underline">{BRAND.supportPhone}</a>
+          <br />
+          Support Hours: {BRAND.supportHours}
+          <br />
+          Email: <span className="font-semibold text-ink">{BRAND.supportEmail}</span>
+        </p>
       </section>
     </PolicyPage>
   );

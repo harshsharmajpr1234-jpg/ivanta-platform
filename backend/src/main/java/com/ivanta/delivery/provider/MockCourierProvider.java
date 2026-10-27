@@ -27,15 +27,15 @@ public class MockCourierProvider implements CourierProvider {
         if (!serviceable) {
             return new ServiceabilityResult(false, null, null, null, null, "Pincode is not serviceable by courier network");
         }
-        return new ServiceabilityResult(true, "iVanta Express (Mock)", BigDecimal.valueOf(99.00), 2, 4, "Serviceable via iVanta Express");
+        return new ServiceabilityResult(true, "Flyphones Express (Mock)", BigDecimal.valueOf(99.00), 2, 4, "Serviceable via Flyphones Express");
     }
 
     @Override
     public List<RateOption> calculateRates(String pickupPincode, String deliveryPincode, double weightKg, BigDecimal declaredValue, boolean cod) {
         log.info("[MOCK COURIER] Calculate rates from {} to {}, weight={}kg", pickupPincode, deliveryPincode, weightKg);
         return List.of(
-            new RateOption("MOCK-STD", "iVanta Standard", BigDecimal.valueOf(49.00), BigDecimal.valueOf(49.00), 3, 5),
-            new RateOption("MOCK-EXP", "iVanta Express", BigDecimal.valueOf(99.00), BigDecimal.valueOf(99.00), 1, 2)
+            new RateOption("MOCK-STD", "Flyphones Standard", BigDecimal.valueOf(49.00), BigDecimal.valueOf(49.00), 3, 5),
+            new RateOption("MOCK-EXP", "Flyphones Express", BigDecimal.valueOf(99.00), BigDecimal.valueOf(99.00), 1, 2)
         );
     }
 
@@ -52,7 +52,7 @@ public class MockCourierProvider implements CourierProvider {
             providerOrderId,
             providerShipmentId,
             awb,
-            "iVanta Express",
+            "Flyphones Express",
             "/api/v1/delivery/shipments/" + req.orderId() + "/label-pdf",
             "MOCK-PKP-" + randomSeq,
             Instant.now().plusSeconds(86400),
@@ -96,7 +96,7 @@ public class MockCourierProvider implements CourierProvider {
             true,
             "MOCK-REV-ORD-" + req.returnId(),
             reverseAwb,
-            "iVanta Reverse Express",
+            "Flyphones Reverse Express",
             LocalDate.now().plusDays(1).toString(),
             "Mock reverse pickup scheduled"
         );

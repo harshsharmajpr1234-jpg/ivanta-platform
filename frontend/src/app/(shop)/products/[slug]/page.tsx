@@ -371,16 +371,26 @@ export default function ProductDetailPage() {
             )}
           </div>
 
+          <div className="mt-3.5 flex items-center justify-between rounded-xl border border-line bg-surface-sunk/60 px-3.5 py-2.5 text-[12.5px]">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-ink">Condition:</span>
+              <Badge tone="success">A Grade · Superb Condition</Badge>
+            </div>
+            <Link href="/condition-guide" className="text-[11.5px] font-semibold text-accent hover:underline">
+              Condition Guide →
+            </Link>
+          </div>
+
           <ul className="mt-5 grid gap-2 text-[12.5px] text-ink-soft sm:grid-cols-2">
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Pre-Owned · FlyPhones 32-Pt Hardware Tested</li>
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Open Box Delivery (Verify at Doorstep)</li>
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> 1-Month Hardware Warranty Included</li>
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> 3-Day Replacement Testing Window</li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Pre-Owned · Flyphones 100% Functional Tested</li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Open Box Delivery & 24h Damage Reporting</li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> 6-Month Limited Warranty Included</li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> 3-Month Accessories Warranty (Cord & Adaptor)</li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Pay Online (UPI/Cards) or Cash on Delivery</li>
           </ul>
 
-          <div className="mt-4 rounded-xl border border-line bg-surface-sunk p-3 text-[12px] text-ink-muted">
-            <p><strong className="text-ink">1-Month Warranty & Guarantee:</strong> Open Box Delivery allows inspection before accepting. You have a <strong>3-Day Testing Window</strong> for instant replacement if defective, backed by a <strong>1-Month FlyPhones Hardware Warranty</strong> for internal hardware faults. No warranty applies after 1 month.</p>
+          <div className="mt-4 rounded-xl border border-line bg-surface-sunk p-3.5 text-[12px] text-ink-muted">
+            <p><strong className="text-ink">6-Month Limited Warranty:</strong> Refurbished devices are backed by our official <strong>6-Month Limited Warranty</strong> commencing from invoice date. Accessories hold a 3-month warranty. Any physical condition mismatch must be reported within <strong>24 hours of delivery</strong> with an unboxing video. Internal security seal must remain intact. <Link href="/warranty-policy" className="text-accent underline font-semibold">Read Full Policy →</Link></p>
           </div>
         </div>
       </div>

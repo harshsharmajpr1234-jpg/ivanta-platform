@@ -30,11 +30,11 @@ CREATE TABLE courier_webhooks (
 ) ENGINE=InnoDB;
 
 INSERT IGNORE INTO system_settings (setting_key, setting_value, category, description) VALUES
-  ('warehouse.name', 'iVanta Main Fulfilment Centre', 'WAREHOUSE', 'Fulfilment centre facility name'),
-  ('warehouse.contact_name', 'iVanta Logistics Manager', 'WAREHOUSE', 'Pickup contact person name'),
+  ('warehouse.name', 'Flyphones Main Fulfilment Centre', 'WAREHOUSE', 'Fulfilment centre facility name'),
+  ('warehouse.contact_name', 'Flyphones Logistics Manager', 'WAREHOUSE', 'Pickup contact person name'),
   ('warehouse.phone', '919876543210', 'WAREHOUSE', 'Pickup contact phone number'),
   ('warehouse.email', 'logistics@ivanta.in', 'WAREHOUSE', 'Pickup contact email'),
-  ('warehouse.address_line1', 'iVanta House, Plot 42', 'WAREHOUSE', 'Pickup street address line 1'),
+  ('warehouse.address_line1', '510, Suneja Tower 2', 'WAREHOUSE', 'Pickup street address line 1'),
   ('warehouse.address_line2', 'Malviya Nagar Industrial Area', 'WAREHOUSE', 'Pickup street address line 2'),
   ('warehouse.city', 'Jaipur', 'WAREHOUSE', 'Warehouse city'),
   ('warehouse.state', 'Rajasthan', 'WAREHOUSE', 'Warehouse state'),

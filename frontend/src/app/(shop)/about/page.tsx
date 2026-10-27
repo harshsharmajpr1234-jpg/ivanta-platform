@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ShieldCheck, Truck, RotateCcw, BadgeIndianRupee, ArrowRight, MapPin } from 'lucide-react';
+import { ShieldCheck, Truck, RotateCcw, BadgeIndianRupee, ArrowRight, MapPin, Sparkles } from 'lucide-react';
 import { BRAND } from '@/constants';
 import { InspectionAndGrading } from '@/components/home/inspection-and-grading';
 import { UnboxingShowcase } from '@/components/home/unboxing-showcase';
@@ -11,22 +11,22 @@ const PILLARS = [
   {
     icon: ShieldCheck,
     title: 'Independently Inspected & Verified',
-    body: 'Every iPhone, Mac, Watch, and AirPod undergoes a rigorous 32-point hardware and diagnostic inspection by specialized technicians before dispatch.',
+    body: 'Every device undergoes comprehensive functional and diagnostic inspection by specialized technicians before dispatch.',
   },
   {
     icon: BadgeIndianRupee,
     title: 'Fair, Transparent Pricing',
-    body: 'Save up to 40% compared to brand new retail prices. Prices are computed server-side with zero hidden fees and full tax invoicing.',
+    body: 'Save substantially compared to brand new retail prices. Prices are computed server-side with zero hidden fees and full tax invoicing.',
   },
   {
     icon: Truck,
     title: 'Open Box Doorstep Delivery',
-    body: 'Inspect your device physical condition right at your doorstep in front of the courier partner before accepting delivery.',
+    body: 'Inspect your device physical condition right at your doorstep in front of the courier partner, backed by a 24-hour reporting window.',
   },
   {
     icon: RotateCcw,
-    title: '1-Month Warranty & 3-Day Testing',
-    body: 'Includes a 3-day replacement window for real-world testing and a 1-month FlyPhones hardware warranty for complete peace of mind.',
+    title: '6-Month Limited Warranty',
+    body: 'Refurbished smartphones and consoles are backed by our official 6-month limited warranty from invoice date, plus 3 months on accessories.',
   },
 ];
 
@@ -36,15 +36,14 @@ export default function AboutPage() {
       {/* ---------- HEADER HERO ---------- */}
       <section className="mx-auto max-w-[1240px] px-4 py-12 text-center sm:py-16 lg:py-20">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-sunk px-3.5 py-1 text-[11px] font-semibold text-ink">
-          About FlyPhones
+          <Sparkles className="h-3 w-3 text-accent" />
+          About {BRAND.name} · Powered by {BRAND.parentCompany}
         </span>
         <h1 className="mx-auto mt-4 max-w-3xl text-[30px] font-extrabold leading-tight tracking-tight text-ink sm:text-[42px] lg:text-[48px]">
-          The most trustworthy way to buy pre-owned Apple in India.
+          Empowering you with the latest mobile devices.
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-[14px] leading-relaxed text-ink-muted sm:text-[16px]">
-          FlyPhones is an independent platform dedicated to delivering certified pre-owned Apple devices.
-          We test every device across 32 quality points, back every order with a 1-month hardware warranty,
-          and offer doorstep open-box inspection across India.
+          {BRAND.name} (associated with {BRAND.parentCompany}) is an independent e-commerce platform delivering high-quality refurbished and pre-owned smartphones and electronics across India. We test every device across technical points, provide 6-month limited warranty coverage, and enforce transparent cosmetic grading.
         </p>
       </section>
 
@@ -87,7 +86,7 @@ export default function AboutPage() {
               {
                 n: '01',
                 t: 'Authentic Hardware',
-                d: 'We inspect for genuine displays, minimum 85% battery health, and verified Apple internal components without generic warning popups.',
+                d: 'We inspect for genuine displays, verified battery health, and authentic internal components without clone parts or warning bypasses.',
               },
               {
                 n: '02',
@@ -96,8 +95,8 @@ export default function AboutPage() {
               },
               {
                 n: '03',
-                t: 'Open Box Delivery & Warranty',
-                d: 'Doorstep inspection before courier acceptance, 3 days of testing with free reverse pickup, and 1-month comprehensive hardware warranty.',
+                t: '6-Month Warranty & Fast Support',
+                d: 'Invoice-backed 6-month limited warranty on refurbished phones, 3 months on accessories, 24-hour unboxing inspection, and dedicated phone/WhatsApp support.',
               },
             ].map((s) => (
               <div key={s.n} className="space-y-2">
@@ -118,7 +117,9 @@ export default function AboutPage() {
                 <div>
                   <h4 className="text-[15px] font-bold text-white">Experience Center & Registered Office</h4>
                   <p className="mt-1 text-[13px] text-white/80">{BRAND.address.full}</p>
-                  <p className="mt-1 text-[12px] text-white/60">Support: {BRAND.supportPhone} · {BRAND.supportEmail}</p>
+                  <p className="mt-1 text-[12px] text-white/60">
+                    Entity: {BRAND.parentCompany} · Support: {BRAND.supportPhone} ({BRAND.supportHours})
+                  </p>
                 </div>
               </div>
               <a
@@ -140,7 +141,13 @@ export default function AboutPage() {
               Explore All Devices <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              href="/support"
+              href="/condition-guide"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-white/20 bg-transparent px-6 text-[14px] font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              Device Condition Guide
+            </Link>
+            <Link
+              href="/warranty-policy"
               className="inline-flex h-11 items-center justify-center rounded-full border border-white/20 bg-transparent px-6 text-[14px] font-semibold text-white transition-colors hover:bg-white/10"
             >
               Warranty & Policy Hub

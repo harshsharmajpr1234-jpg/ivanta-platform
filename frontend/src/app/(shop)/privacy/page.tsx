@@ -1,27 +1,28 @@
 import { PolicyPage } from '@/components/layout/policy-page';
+import { BRAND } from '@/constants';
 
-export const metadata = { title: 'Privacy Policy — FlyPhones' };
+export const metadata = { title: `Privacy Policy — ${BRAND.name}` };
 
 export default function PrivacyPage() {
   return (
-    <PolicyPage title="Privacy Policy" updated="September 2026">
+    <PolicyPage title="Privacy Policy" updated="October 2026">
       <section>
         <h2>1. What we collect</h2>
-        <p>We collect the information you give us: your name, email address and/or mobile number for sign-in and OTP verification; delivery addresses; order and payment details; wishlist and review content; and support communications. Our servers also record technical data needed to operate the platform securely — session cookies, request logs and audit logs of account and order actions.</p>
+        <p>We collect the information you provide: your name, email address and mobile number for sign-in and OTP verification; delivery addresses; order and payment details; wishlist and review content; and support communications. Our servers also record technical data needed to operate the platform securely — session cookies, request logs and audit logs of account and order actions.</p>
       </section>
       <section>
         <h2>2. Why we use it</h2>
         <ul>
           <li>To process and deliver your orders, including payment verification with our payment provider.</li>
           <li>To check serviceability for your PIN code and compute delivery charges and ETAs.</li>
-          <li>To send transactional notifications about your orders, shipments, returns and refunds (email, SMS, WhatsApp or push, as configured).</li>
+          <li>To send transactional notifications about your orders, shipments, returns and refunds (email, SMS, WhatsApp, as configured).</li>
           <li>To operate your account, wishlist, reviews and return requests.</li>
           <li>To prevent fraud, abuse and manipulation of prices, stock, coupons or payments, and to comply with legal obligations.</li>
         </ul>
       </section>
       <section>
         <h2>3. Payments</h2>
-        <p>Card numbers, UPI credentials and netbanking secrets are never stored on our systems. Payments are processed by our payment provider; we retain only the payment reference, method, amount, status and provider transaction identifiers needed for verification, refunds and reconciliation.</p>
+        <p>Card numbers, UPI credentials and netbanking secrets are never stored on our systems. Payments are processed by certified payment gateways; we retain only the payment reference, method, amount, status and provider transaction identifiers needed for verification, refunds and reconciliation.</p>
       </section>
       <section>
         <h2>4. Cookies and sessions</h2>
@@ -37,19 +38,19 @@ export default function PrivacyPage() {
       </section>
       <section>
         <h2>7. Your rights</h2>
-        <p>You may access and correct your profile and addresses from your account, and contact us to request export, correction or deletion of your personal data, or to opt out of marketing communications. Write to support@flyphones.in. Grievances are handled per the Information Technology Act, 2000 and the DPDP Act, 2023; our grievance officer responds within statutory timelines.</p>
+        <p>You may access and correct your profile and addresses from your account, and contact us to request export, correction or deletion of your personal data, or to opt out of marketing communications. Write to {BRAND.supportEmail}. Grievances are handled per the Information Technology Act, 2000 and the DPDP Act, 2023; our grievance officer responds within statutory timelines.</p>
       </section>
       <section>
         <h2>8. Security</h2>
-        <p>Passwords are stored only as salted hashes (BCrypt). Sessions expire automatically, repeated failed sign-ins are locked out, and requests are rate-limited. Access to personal data within FlyPhones is role-restricted and every administrative action is audit-logged.</p>
+        <p>Passwords are stored only as salted hashes (BCrypt). Sessions expire automatically, repeated failed sign-ins are locked out, and requests are rate-limited. Access to personal data within {BRAND.name} (Powered by {BRAND.parentCompany}) is role-restricted and every administrative action is audit-logged.</p>
       </section>
       <section>
         <h2>9. Children</h2>
         <p>The platform is intended for adults. We do not knowingly collect data from minors; orders require a valid payment method and delivery address.</p>
       </section>
       <section>
-        <h2>10. Changes</h2>
-        <p>Material changes to this policy will be announced on this page with an updated revision date. Continued use after changes constitutes acceptance.</p>
+        <h2>10. Contact</h2>
+        <p>Questions about this policy or personal data handling? Contact {BRAND.supportEmail} or write to: {BRAND.address.full}.</p>
       </section>
     </PolicyPage>
   );

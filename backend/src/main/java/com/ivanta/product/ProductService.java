@@ -186,10 +186,15 @@ public class ProductService {
 
     private List<CategoryNode> buildTree(String parentId, Map<String, List<Category>> byParent) {
         return byParent.getOrDefault(parentId, List.of()).stream()
-                .map(c -> new CategoryNode(c.getId(), c.getName(), c.getSlug(), c.getDescription(),
-                        c.getImageKey(),
-                        products.findByCategoryIdAndIsActiveTrueAndDeletedAtIsNullOrderByNameAsc(c.getId()).size(),
-                        buildTree(c.getId(), byParent)))
+                .map(c -> {
+                    List<CategoryNode> children = buildTree(c.getId(), byParent);
+                    long directCount = products.findByCategoryIdAndIsActiveTrueAndDeletedAtIsNullOrderByNameAsc(c.getId()).size();
+                    long totalCount = directCount + children.stream().mapToLong(CategoryNode::productCount).sum();
+                    return new CategoryNode(c.getId(), c.getName(), c.getSlug(), c.getDescription(),
+                            c.getImageKey(),
+                            totalCount,
+                            children);
+                })
                 .toList();
     }
 

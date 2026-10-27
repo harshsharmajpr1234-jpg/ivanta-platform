@@ -77,9 +77,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* sidebar (desktop) */}
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-line bg-white lg:flex">
         <div className="flex items-center gap-2.5 border-b border-line px-5 py-4">
-          <img src="/logo-icon.png" alt="FlyPhones" className="h-8 w-auto object-contain" />
+          <img src="/logo-icon.png" alt="Flyphones Mascot" className="h-8 w-auto object-contain" />
           <div>
-            <p className="text-[14px] font-bold leading-tight text-ink">FlyPhones Admin</p>
+            <p className="text-[14px] font-bold leading-tight text-ink">Flyphones Admin</p>
             <p className="text-[10.5px] text-ink-muted">Commerce console</p>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* topbar (mobile/tablet) */}
       <header className="sticky top-0 z-40 flex items-center gap-3 border-b border-line bg-white px-4 py-3 lg:hidden">
         <button type="button" onClick={() => setNavOpen(true)} aria-label="Open admin menu" className="rounded-lg p-1.5 text-ink hover:bg-surface-sunk"><Menu className="h-5 w-5" /></button>
-        <img src="/logo-icon.png" alt="FlyPhones" className="h-7 w-auto object-contain" />
+        <img src="/logo-icon.png" alt="Flyphones Mascot" className="h-7 w-auto object-contain" />
         <p className="text-[14px] font-bold text-ink">Admin</p>
         <span className="ml-auto rounded-full bg-accent-soft px-2.5 py-1 text-[10px] font-bold text-accent">{ROLE_LABEL[admin.role]}</span>
       </header>

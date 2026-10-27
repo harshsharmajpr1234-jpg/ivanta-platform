@@ -116,8 +116,8 @@ public class ReviewService {
     public ReviewView toView(ProductReview r) {
         String name = users.findById(r.getUserId()).map(u -> {
             String n = u.getName();
-            return n == null || n.isBlank() ? "iVanta Customer" : n;
-        }).orElse("iVanta Customer");
+            return n == null || n.isBlank() ? "Flyphones Customer" : n;
+        }).orElse("Flyphones Customer");
         return new ReviewView(r.getId(), r.getProductId(), name, r.getRating(), r.getTitle(), r.getBody(),
                 Boolean.TRUE.equals(r.getVerifiedPurchase()), r.getStatus(),
                 r.getCreatedAt() == null ? null : r.getCreatedAt().toString());

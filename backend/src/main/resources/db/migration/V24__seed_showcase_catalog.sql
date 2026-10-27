@@ -41,7 +41,7 @@ INSERT INTO products (
   ('PRD-0003', 'IPHONE-14-BASE', 'iPhone 14 (Certified Pre-Owned)', 'iphone-14-pre-owned',
    'BRD-0001', 'CAT-0001', 'A2882',
    'Super Retina XDR display, dual-camera system with Photonic Engine, Crash Detection and all-day battery.',
-   'Top-selling pre-owned value. Clean condition, zero functional issues, covered by iVanta 1-month warranty.',
+   'Top-selling pre-owned value. Clean condition, zero functional issues, covered by Flyphones 6-month limited warranty.',
    42999.00, 69900.00, 0.1800, 'IN_STOCK', 2022, 12, TRUE, TRUE, 4.80, 215, 2100),
 
   ('PRD-0004', 'MBP-14-M3', 'MacBook Pro 14" M3 Chip (Certified Pre-Owned)', 'macbook-pro-14-m3-pre-owned',
@@ -71,7 +71,7 @@ INSERT INTO products (
   ('PRD-0008', 'WATCH-SERIES-9', 'Apple Watch Series 9 GPS 45mm (Certified Pre-Owned)', 'apple-watch-series-9-pre-owned',
    'BRD-0001', 'CAT-0004', 'MR993HN/A',
    'S9 SiP chip with Double Tap gesture, brighter 2000-nit display, on-device Siri, and advanced ECG / blood oxygen sensors.',
-   'Flawless sapphire glass, battery condition checked, packaged in premium iVanta box with certified charger.',
+   'Flawless sapphire glass, battery condition checked, packaged in premium Flyphones box with certified charger.',
    29999.00, 44900.00, 0.1800, 'IN_STOCK', 2023, 12, TRUE, TRUE, 4.88, 97, 1100),
 
   ('PRD-0009', 'AIRPODS-PRO-2-USBC', 'AirPods Pro 2nd Gen with MagSafe USB-C (Certified Pre-Owned)', 'airpods-pro-2-usbc-pre-owned',

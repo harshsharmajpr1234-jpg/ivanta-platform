@@ -123,7 +123,7 @@ public class DeliveryService {
         s.setOrderId(orderId);
         s.setShippingMethodId(method != null ? method.getId() : methods.findByIsActiveTrueOrderBySortOrderAsc().get(0).getId());
         s.setAddressId(addr.getId());
-        s.setCarrier(req != null && req.carrier() != null ? req.carrier() : res.carrierName() != null ? res.carrierName() : "iVanta Logistics");
+        s.setCarrier(req != null && req.carrier() != null ? req.carrier() : res.carrierName() != null ? res.carrierName() : "Flyphones Logistics");
         s.setTrackingNumber(req != null && req.trackingNumber() != null && !req.trackingNumber().isBlank()
                 ? req.trackingNumber().trim()
                 : res.awbNumber() != null ? res.awbNumber() : "IVN" + (1_000_000_000L + RANDOM.nextLong(8_999_999_999L)));
@@ -317,15 +317,15 @@ public class DeliveryService {
         Map<String, String> map = new HashMap<>();
         systemSettings.findAll().forEach(s -> map.put(s.getSettingKey(), s.getSettingValue()));
         return new WarehouseSettingsView(
-            map.getOrDefault("warehouse.name", "iVanta Main Fulfilment Centre"),
-            map.getOrDefault("warehouse.contact_name", "iVanta Logistics Manager"),
-            map.getOrDefault("warehouse.phone", "919876543210"),
-            map.getOrDefault("warehouse.email", "logistics@ivanta.in"),
-            map.getOrDefault("warehouse.address_line1", "iVanta House, Plot 42"),
-            map.getOrDefault("warehouse.address_line2", "Malviya Nagar Industrial Area"),
-            map.getOrDefault("warehouse.city", "Jaipur"),
-            map.getOrDefault("warehouse.state", "Rajasthan"),
-            map.getOrDefault("warehouse.pincode", "302017"),
+            map.getOrDefault("warehouse.name", "Flyphones Main Fulfilment Centre"),
+            map.getOrDefault("warehouse.contact_name", "Flyphones Logistics Manager"),
+            map.getOrDefault("warehouse.phone", "918130506855"),
+            map.getOrDefault("warehouse.email", "support@flyphones.co.in"),
+            map.getOrDefault("warehouse.address_line1", "510, Suneja Tower 2"),
+            map.getOrDefault("warehouse.address_line2", "District Center, Janakpuri West"),
+            map.getOrDefault("warehouse.city", "New Delhi"),
+            map.getOrDefault("warehouse.state", "Delhi"),
+            map.getOrDefault("warehouse.pincode", "110078"),
             map.getOrDefault("warehouse.operating_hours", "09:00 AM - 06:00 PM (Mon-Sat)"),
             map.getOrDefault("seller.gstin", "08ABCDE1234F1Z5")
         );

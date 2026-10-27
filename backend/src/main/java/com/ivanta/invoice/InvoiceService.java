@@ -129,12 +129,10 @@ public class InvoiceService {
                 : users.findById(o.getUserId()).map(u -> u.getPhone()).orElse("");
         Payment payment = payments.findFirstByOrderIdOrderByIdDesc(o.getId()).orElse(null);
 
-        String sellerName = setting("warehouse.name", setting("invoice.seller_name", "iVanta Retail Pvt Ltd"));
-        String sellerAddress = setting("warehouse.address_line1", "") + ", " +
-                setting("warehouse.city", "Jaipur") + ", " + setting("warehouse.state", "Rajasthan") + " " +
-                setting("warehouse.pincode", "302017") + ", India";
-        String sellerGstin = setting("seller.gstin", "08ABCDE1234F1Z5");
-        String sellerState = setting("warehouse.state", "Rajasthan");
+        String sellerName = setting("warehouse.name", setting("invoice.seller_name", "Manish Technologies (Flyphones)"));
+        String sellerAddress = setting("invoice.seller_address", "510, Suneja Tower 2, District Center, Janakpuri West, New Delhi 110078, India");
+        String sellerGstin = setting("seller.gstin", "07ABCDE1234F1Z5");
+        String sellerState = setting("warehouse.state", "Delhi");
 
         boolean isIntraState = addr != null && addr.getState() != null &&
                 addr.getState().equalsIgnoreCase(sellerState);

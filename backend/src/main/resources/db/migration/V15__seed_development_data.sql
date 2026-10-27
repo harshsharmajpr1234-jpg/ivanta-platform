@@ -17,6 +17,6 @@ INSERT INTO inventory_locations (id, warehouse_id, aisle, rack, shelf, label) VA
 
 -- ---------- Shipping methods (§29) ----------
 INSERT INTO shipping_methods (id, name, carrier, base_fee, free_above, eta_min_days, eta_max_days, sort_order) VALUES
-  ('SM-0001','Standard Delivery','iVanta Logistics',49.00,999.00,3,5,1),
-  ('SM-0002','Express Delivery','iVanta Express',199.00,25000.00,1,2,2),
+  ('SM-0001','Standard Delivery','Flyphones Logistics',49.00,999.00,3,5,1),
+  ('SM-0002','Express Delivery','Flyphones Express',199.00,25000.00,1,2,2),
   ('SM-0003','Same-Day (select cities)','iVanta Now',399.00,NULL,0,1,3);

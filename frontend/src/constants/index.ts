@@ -2,12 +2,15 @@ import type { AdminRole, OrderStatus, PaymentMethod, ReturnStatus, StockStatus }
 import type { BadgeTone } from '@/components/ui/badge';
 
 export const BRAND = {
-  name: 'FlyPhones',
-  tagline: 'Pre-Owned Apple Devices — Quality Checked & Affordable',
+  name: 'Flyphones',
+  parentCompany: 'Manish Technologies',
+  tagline: 'Empowering you with the latest mobile devices',
   domain: 'https://flyphones.in',
-  supportEmail: 'support@flyphones.in',
-  supportPhone: '+91 81305 06855',
+  supportEmail: 'support@flyphones.co.in',
+  supportEmailDomain: '@flyphones.co.in',
+  supportPhone: '+91 8130506855',
   supportPhoneRaw: '8130506855',
+  supportHours: 'Monday to Saturday – 10:00 AM to 07:00 PM IST',
   address: {
     line1: '510, Suneja Tower 2',
     line2: 'District Center, Janakpuri West',
@@ -16,6 +19,71 @@ export const BRAND = {
     pincode: '110078',
     full: '510, Suneja Tower 2, District Center, Janakpuri West, New Delhi, 110078',
   },
+} as const;
+
+/* ---------- condition grading (Website Condition.docx) ---------- */
+export interface ConditionGrade {
+  grade: 'A' | 'B' | 'C';
+  label: string;
+  badgeTone: BadgeTone;
+  functional: string;
+  display: string;
+  displayGlass: string;
+  bodyCondition: string;
+  summary: string;
+}
+
+export const CONDITION_GRADES: Record<'A' | 'B' | 'C', ConditionGrade> = {
+  A: {
+    grade: 'A',
+    label: 'A Grade – Superb Condition',
+    badgeTone: 'success',
+    functional: 'No Functional Defect',
+    display: 'Perfect Condition',
+    displayGlass: 'Minimal scratches that are barely visible',
+    bodyCondition: 'Few scratches / minor signs of usage',
+    summary: 'Pristine pre-owned device with flawless display and minimal cosmetic wear.',
+  },
+  B: {
+    grade: 'B',
+    label: 'B Grade – Good Condition',
+    badgeTone: 'accent',
+    functional: 'No Functional Defect',
+    display: 'Minor dot of pixel on display, no issue for visibility',
+    displayGlass: 'Minor 4–5 scratches on display glass',
+    bodyCondition: 'Minor dents and scratches on device',
+    summary: 'Great value with 100% functional performance and minor light cosmetic wear.',
+  },
+  C: {
+    grade: 'C',
+    label: 'C Grade – Fair Condition',
+    badgeTone: 'warning',
+    functional: 'No Functional Defect',
+    display: 'Minor 3–4 dot of pixel on display or shade on display, no issue for visibility',
+    displayGlass: 'Minor 7–8 scratches on display glass',
+    bodyCondition: '5–8 minor dents and scratches on device',
+    summary: 'Fully functional, budget-friendly device with noticeable external signs of use.',
+  },
+};
+
+/* ---------- warranty policy (Refurbished Device Policy) ---------- */
+export const WARRANTY_POLICY = {
+  refurbishedMonths: 6,
+  refurbishedLabel: '6 Months Limited Warranty',
+  accessoriesMonths: 3,
+  accessoriesLabel: '3 Months Accessories Warranty (Adaptor, Cord & Battery)',
+  damageReportingHours: 24,
+  unboxingVideoRequired: true,
+  imeiValidationRequired: true,
+  internalSealIntegrityRequired: true,
+  subcontractingPermitted: true,
+  exclusions: [
+    'Physical damage, such as cracked screens, dents, or impact damage',
+    'Water or liquid damage',
+    'Accidental or intentional damage',
+    'Cosmetic defects or regular signs of wear and tear',
+    'Issues due to software tampering, rooting/jailbreaking, or unauthorized repairs',
+  ],
 } as const;
 
 /* ---------- catalog ---------- */
