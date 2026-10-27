@@ -177,7 +177,7 @@ function CheckoutFlow() {
           key: payment.keyId,
           amount: Math.round(payment.amount * 100),
           currency: payment.currency || 'INR',
-          name: 'iVanta Store',
+          name: 'FlyPhones Store',
           description: `Order #${order.orderNumber || order.id}`,
           order_id: rzpOrderId,
           prefill: {

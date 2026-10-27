@@ -10,7 +10,7 @@ import { cn, timeAgo } from '@/lib/utils';
 const TYPE_LABEL: Record<string, string> = {
   order: 'Order', payment: 'Payment', shipment: 'Delivery', return: 'Return',
   refund: 'Refund', replacement: 'Replacement', review: 'Review', coupon: 'Offer',
-  account: 'Account', system: 'iVanta',
+  account: 'Account', system: 'FlyPhones',
 };
 
 export default function NotificationsPage() {

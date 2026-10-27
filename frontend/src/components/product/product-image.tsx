@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 /**
  * Product imagery with graceful fallback: tries the backend media endpoint for the
  * stored key; if the asset is missing (seed data ships without photo files) renders
- * an original iVanta vector illustration derived from the product name/category.
+ * an original FlyPhones vector illustration derived from the product name/category.
  * Never hotlinks Apple assets — this is original branding (§ constraints).
  */
 export type ArtKind = 'iphone' | 'ipad' | 'mac' | 'watch' | 'airpods' | 'accessory';

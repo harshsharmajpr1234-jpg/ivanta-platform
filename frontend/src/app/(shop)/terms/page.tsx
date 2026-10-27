@@ -1,13 +1,13 @@
 import { PolicyPage } from '@/components/layout/policy-page';
 
-export const metadata = { title: 'Terms of Service — iVanta' };
+export const metadata = { title: 'Terms of Service — FlyPhones' };
 
 export default function TermsPage() {
   return (
     <PolicyPage title="Terms of Service" updated="September 2026">
       <section>
-        <h2>1. What iVanta is</h2>
-        <p>iVanta is an online retail platform selling genuine Apple products — iPhones, Macs, MacBooks, iPads, Apple Watches, AirPods and accessories — to customers in India. By browsing, ordering or using an account on ivanta.in you agree to these terms.</p>
+        <h2>1. What FlyPhones is</h2>
+        <p>FlyPhones is an online retail platform selling genuine Apple products — iPhones, Macs, MacBooks, iPads, Apple Watches, AirPods and accessories — to customers in India. By browsing, ordering or using an account on flyphones.in you agree to these terms.</p>
       </section>
       <section>
         <h2>2. Your account</h2>
@@ -27,7 +27,7 @@ export default function TermsPage() {
       </section>
       <section>
         <h2>6. Returns, refunds and warranty</h2>
-        <p>Returns are accepted within the published return window from delivery, subject to the conditions in our Refund Policy. Refunds are issued to the original payment method, or via bank transfer for COD orders. Product warranty is provided by Apple India per its standard terms; iVanta facilitates but does not replace manufacturer warranty obligations.</p>
+        <p>Returns are accepted within the published return window from delivery, subject to the conditions in our Refund Policy. Refunds are issued to the original payment method, or via bank transfer for COD orders. Product warranty is provided by Apple India per its standard terms; FlyPhones facilitates but does not replace manufacturer warranty obligations.</p>
       </section>
       <section>
         <h2>7. Coupons and promotions</h2>
@@ -39,11 +39,11 @@ export default function TermsPage() {
       </section>
       <section>
         <h2>9. Liability</h2>
-        <p>To the maximum extent permitted by law, iVanta&apos;s aggregate liability for any order is limited to the amount paid for that order. Nothing in these terms limits liability that cannot be limited under Indian law, including for fraud or death or personal injury caused by negligence.</p>
+        <p>To the maximum extent permitted by law, FlyPhones&apos;s aggregate liability for any order is limited to the amount paid for that order. Nothing in these terms limits liability that cannot be limited under Indian law, including for fraud or death or personal injury caused by negligence.</p>
       </section>
       <section>
         <h2>10. Governing law</h2>
-        <p>These terms are governed by the laws of India. Courts at Jaipur, Rajasthan have exclusive jurisdiction. Questions: ivanta@gmail.com.</p>
+        <p>These terms are governed by the laws of India. Courts at Jaipur, Rajasthan have exclusive jurisdiction. Questions: support@flyphones.in.</p>
       </section>
     </PolicyPage>
   );

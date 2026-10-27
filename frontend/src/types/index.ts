@@ -1,4 +1,4 @@
-/* iVanta e-commerce domain model — mirrors the Spring Boot DTOs one-for-one.
+/* FlyPhones e-commerce domain model — mirrors the Spring Boot DTOs one-for-one.
  * All money values arrive as JSON numbers (BigDecimal serialisation) and are
  * formatted with lib/utils inr(). All dates are ISO-8601 strings. */
 

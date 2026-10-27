@@ -283,7 +283,7 @@ export default function AdminStaffPage() {
               type="email"
               value={createEmail}
               onChange={(e) => setCreateEmail(e.target.value)}
-              placeholder="e.g. rahul@ivanta.in"
+              placeholder="e.g. rahul@flyphones.in"
               required
             />
           </div>

@@ -88,7 +88,7 @@ export function Hero3DShowcase() {
         >
           <Image
             src="/hero-3d-apple-studio-white.jpg"
-            alt="iVanta Apple 3D Device Showcase - Certified Pre-Owned iPhone, Apple Watch and AirPods"
+            alt="FlyPhones Apple 3D Device Showcase - Certified Pre-Owned iPhone, Apple Watch and AirPods"
             width={1200}
             height={896}
             priority

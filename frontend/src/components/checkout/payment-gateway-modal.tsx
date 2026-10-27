@@ -88,7 +88,7 @@ export function PaymentGatewayModal({
               <Lock className="h-4 w-4" />
             </span>
             <div>
-              <p className="text-[13px] font-bold text-ink">iVanta Secure Gateway</p>
+              <p className="text-[13px] font-bold text-ink">FlyPhones Secure Gateway</p>
               <p className="text-[10px] font-medium text-emerald-700 flex items-center gap-1">
                 <ShieldCheck className="h-3 w-3" /> 256-bit Encrypted · Sandbox
               </p>
@@ -179,7 +179,7 @@ export function PaymentGatewayModal({
                     <div className="relative flex h-36 w-36 items-center justify-center rounded-xl border-2 border-dashed border-ink/20 bg-white p-2 shadow-inner">
                       <QrCode className="h-28 w-28 text-ink/85" />
                       <div className="absolute inset-x-0 bottom-1 text-[9px] font-bold tracking-tight text-accent bg-white/90 py-0.5">
-                        iVanta UPI Gateway
+                        FlyPhones UPI Gateway
                       </div>
                     </div>
                     <p className="text-[12px] font-medium text-ink">Scan using Google Pay, PhonePe, Paytm or BHIM</p>

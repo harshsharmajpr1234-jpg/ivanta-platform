@@ -17,7 +17,7 @@ const POLICIES = [
     icon: ShieldCheck,
     title: '1-Month Hardware Warranty',
     badge: 'Standard on All Devices',
-    summary: 'Every pre-owned Apple product purchased from iVanta includes a 1-month comprehensive hardware warranty from the date of delivery.',
+    summary: 'Every pre-owned Apple product purchased from FlyPhones includes a 1-month comprehensive hardware warranty from the date of delivery.',
     details: [
       'Covered: Internal hardware failure, motherboard defects, logic board, and sudden component failure.',
       'Covered: Touchscreen digitizer failure, camera sensor/OIS failure, and speaker/mic malfunction.',
@@ -57,7 +57,7 @@ const POLICIES = [
     id: 'qc-certification',
     icon: CheckCircle2,
     title: '32-Point Quality Inspection',
-    badge: 'iVanta Technical Inspection',
+    badge: 'FlyPhones Technical Inspection',
     summary: 'How every pre-owned Apple device is graded, tested, and verified before dispatch.',
     details: [
       'Original Displays: Polarized light testing confirms OEM Retina glass with factory True Tone calibration intact.',
@@ -70,7 +70,7 @@ const POLICIES = [
 ];
 
 const FAQS = [
-  { id: 'f1', title: 'How do I claim my 1-Month Hardware Warranty?', content: 'Simply email support@ivanta.in or call our helpline with your 6-digit Order ID. Our technical team will review the issue and schedule a free courier pickup for testing and repair or replacement.' },
+  { id: 'f1', title: 'How do I claim my 1-Month Hardware Warranty?', content: 'Simply email support@flyphones.in or call our helpline with your 6-digit Order ID. Our technical team will review the issue and schedule a free courier pickup for testing and repair or replacement.' },
   { id: 'f2', title: 'How does Open Box Delivery work?', content: 'When the courier arrives, they will unbox the package in your presence. You can inspect the device cosmetics and power it on. Only accept and share the delivery OTP once you are completely satisfied with the device condition.' },
   { id: 'f3', title: 'What is the return/replacement window?', content: 'You have a 3-day testing window from delivery. If you encounter any technical defect, open your Account → Orders page and click "Request Replacement". Return pickup is 100% free.' },
   { id: 'f4', title: 'Are all devices genuine Apple hardware?', content: 'Yes. We do not sell clone or counterfeit devices. Every unit undergoes a rigorous 32-point hardware inspection by specialized technicians to verify genuine components and function.' },
@@ -88,7 +88,7 @@ export default function SupportPage() {
             <Headset className="h-6 w-6" />
           </span>
           <h1 className="mt-4 text-[28px] font-extrabold tracking-tight text-ink sm:text-[36px]">
-            iVanta Care & Support Hub
+            FlyPhones Care & Support Hub
           </h1>
           <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-ink-muted sm:text-[15px]">
             Comprehensive information on our 1-Month Hardware Warranty, Doorstep Open Box Delivery, 3-Day Replacement Window, and 32-Point Quality Certification.

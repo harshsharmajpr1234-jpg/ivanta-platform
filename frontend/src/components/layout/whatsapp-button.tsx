@@ -7,7 +7,7 @@ import { BRAND } from '@/constants';
 export function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false);
   const cleanPhone = BRAND.supportPhone.replace(/\D/g, '');
-  const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hello iVanta, I have an inquiry regarding Apple products.')}`;
+  const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hello FlyPhones, I have an inquiry regarding Apple products.')}`;
 
   return (
     <div className="fixed bottom-16 right-3.5 z-40 flex items-center gap-3 sm:bottom-6 sm:right-6">

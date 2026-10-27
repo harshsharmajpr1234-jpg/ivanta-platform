@@ -92,7 +92,7 @@ function LoginForm() {
             </div>
 
             <h1 className="text-2xl font-bold tracking-tight text-ink">
-              {isRegister ? 'Create your iVanta account' : 'Sign in to iVanta'}
+              {isRegister ? 'Create your FlyPhones account' : 'Sign in to FlyPhones'}
             </h1>
             <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-muted">
               {isRegister
@@ -192,7 +192,7 @@ function LoginForm() {
                 </span>
               ) : (
                 <span>
-                  New to iVanta?{' '}
+                  New to FlyPhones?{' '}
                   <button
                     type="button"
                     onClick={() => { setIsRegister(true); setError(''); }}
@@ -220,7 +220,7 @@ function LoginForm() {
 
         <div className="order-1 hidden lg:order-2 lg:block">
           <div className="rounded-3xl border border-line bg-white p-8 shadow-soft">
-            <p className="text-[13px] font-bold uppercase tracking-widest text-accent">iVanta Store</p>
+            <p className="text-[13px] font-bold uppercase tracking-widest text-accent">FlyPhones Store</p>
             <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-ink">Genuine Apple products.<br />Delivered with care.</h2>
             <ul className="mt-6 space-y-3 text-[13.5px] text-ink-soft">
               <li className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-success" /> 100% genuine, certified refurbished with warranty</li>

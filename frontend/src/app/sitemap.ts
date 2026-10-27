@@ -4,7 +4,7 @@ const ROUTES = ['', '/sell', '/accepted-devices', '/how-it-works', '/locations',
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.map((r) => ({
-    url: `https://ivanta.in${r}`,
+    url: `https://flyphones.in${r}`,
     lastModified: new Date(),
     changeFrequency: r === '' || r === '/sell' ? 'daily' : 'weekly',
     priority: r === '' ? 1 : r === '/sell' ? 0.9 : 0.6,

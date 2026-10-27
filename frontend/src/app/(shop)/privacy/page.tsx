@@ -1,6 +1,6 @@
 import { PolicyPage } from '@/components/layout/policy-page';
 
-export const metadata = { title: 'Privacy Policy — iVanta' };
+export const metadata = { title: 'Privacy Policy — FlyPhones' };
 
 export default function PrivacyPage() {
   return (
@@ -37,11 +37,11 @@ export default function PrivacyPage() {
       </section>
       <section>
         <h2>7. Your rights</h2>
-        <p>You may access and correct your profile and addresses from your account, and contact us to request export, correction or deletion of your personal data, or to opt out of marketing communications. Write to ivanta@gmail.com. Grievances are handled per the Information Technology Act, 2000 and the DPDP Act, 2023; our grievance officer responds within statutory timelines.</p>
+        <p>You may access and correct your profile and addresses from your account, and contact us to request export, correction or deletion of your personal data, or to opt out of marketing communications. Write to support@flyphones.in. Grievances are handled per the Information Technology Act, 2000 and the DPDP Act, 2023; our grievance officer responds within statutory timelines.</p>
       </section>
       <section>
         <h2>8. Security</h2>
-        <p>Passwords are stored only as salted hashes (BCrypt). Sessions expire automatically, repeated failed sign-ins are locked out, and requests are rate-limited. Access to personal data within iVanta is role-restricted and every administrative action is audit-logged.</p>
+        <p>Passwords are stored only as salted hashes (BCrypt). Sessions expire automatically, repeated failed sign-ins are locked out, and requests are rate-limited. Access to personal data within FlyPhones is role-restricted and every administrative action is audit-logged.</p>
       </section>
       <section>
         <h2>9. Children</h2>

@@ -6,9 +6,9 @@ import { BRAND } from '@/constants';
 export const metadata: Metadata = {
   metadataBase: new URL(BRAND.domain),
   title: { default: `${BRAND.name} — ${BRAND.tagline}`, template: `%s · ${BRAND.name}` },
-  description: 'iVanta buys used Apple devices directly from you — iPhone, iPad, Mac, Apple Watch and AirPods. Instant estimate, free doorstep pickup, 16-point inspection and payout within 24 hours via UPI or bank transfer.',
-  keywords: ['sell old iPhone', 'sell used MacBook India', 'Apple buyback', 'sell iPad for cash', 'used Apple device buyer Jaipur'],
-  openGraph: { type: 'website', siteName: BRAND.name, title: `${BRAND.name} — ${BRAND.tagline}`, description: 'Sell your used Apple device to iVanta — fair formula-based valuation, certified inspection, next-day payout.', url: BRAND.domain },
+  description: 'FlyPhones — India\'s trusted platform for certified pre-owned Apple devices. Buy quality-checked iPhones, MacBooks, iPads, Apple Watches and AirPods with 1-month hardware warranty and doorstep open box inspection.',
+  keywords: ['pre-owned iPhone', 'refurbished MacBook India', 'pre-owned Apple Watch', 'buy used iPad', 'FlyPhones India'],
+  openGraph: { type: 'website', siteName: BRAND.name, title: `${BRAND.name} — ${BRAND.tagline}`, description: 'Shop certified pre-owned Apple devices on FlyPhones with 32-point inspection, 1-month warranty, and open box delivery.', url: BRAND.domain },
   twitter: { card: 'summary_large_image', title: `${BRAND.name} — ${BRAND.tagline}` },
   icons: {
     icon: [

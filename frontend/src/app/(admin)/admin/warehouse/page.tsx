@@ -144,7 +144,7 @@ export default function AdminWarehousePage() {
               className="w-full h-9 rounded-xl border border-line bg-white px-3 text-sm text-ink focus:border-accent focus:outline-none"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              placeholder="e.g. iVanta Main Fulfilment Centre"
+              placeholder="e.g. FlyPhones Main Fulfilment Centre"
             />
           </div>
 

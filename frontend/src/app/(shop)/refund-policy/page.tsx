@@ -1,13 +1,13 @@
 import { PolicyPage } from '@/components/layout/policy-page';
 
-export const metadata = { title: 'Refund & Return Policy — iVanta' };
+export const metadata = { title: 'Refund & Return Policy — FlyPhones' };
 
 export default function RefundPolicyPage() {
   return (
     <PolicyPage title="Refund & Return Policy" updated="September 2026">
       <section>
         <h2>1. 3-Day Testing & Replacement Window</h2>
-        <p>All items on iVanta are independently quality-checked pre-owned Apple devices. Every order comes with <strong>Open Box Delivery</strong> and a strict <strong>3-Day Testing Window</strong> starting from the timestamp of delivery. You can thoroughly test all hardware and software features of the device. If any hardware defect or functionality issue arises within these 3 days, you can raise a free replacement request directly from your Account → Orders page.</p>
+        <p>All items on FlyPhones are independently quality-checked pre-owned Apple devices. Every order comes with <strong>Open Box Delivery</strong> and a strict <strong>3-Day Testing Window</strong> starting from the timestamp of delivery. You can thoroughly test all hardware and software features of the device. If any hardware defect or functionality issue arises within these 3 days, you can raise a free replacement request directly from your Account → Orders page.</p>
       </section>
       <section>
         <h2>2. Open Box Delivery & Eligibility</h2>
@@ -39,7 +39,7 @@ export default function RefundPolicyPage() {
       </section>
       <section>
         <h2>7. 1-Month Hardware Warranty (Post-3-Day Coverage)</h2>
-        <p>All pre-owned Apple devices come with a <strong>3-Day Instant Replacement Window</strong> followed by a <strong>1-Month (30 days from delivery) iVanta Hardware Warranty</strong>. This covers internal hardware malfunctions (display, camera, Face ID, motherboard, speaker) not caused by physical drops, liquid/water damage, or unauthorized tampering. Once the 1-month warranty period expires, the company bears no further warranty, liability, or role.</p>
+        <p>All pre-owned Apple devices come with a <strong>3-Day Instant Replacement Window</strong> followed by a <strong>1-Month (30 days from delivery) FlyPhones Hardware Warranty</strong>. This covers internal hardware malfunctions (display, camera, Face ID, motherboard, speaker) not caused by physical drops, liquid/water damage, or unauthorized tampering. Once the 1-month warranty period expires, the company bears no further warranty, liability, or role.</p>
       </section>
       <section>
         <h2>8. Fraud prevention</h2>
@@ -47,7 +47,7 @@ export default function RefundPolicyPage() {
       </section>
       <section>
         <h2>9. Contact</h2>
-        <p>Refund status not updating or money not received within the timelines above? Write to ivanta@gmail.com with your order ID — we reconcile against payment provider records and respond within 2 working days.</p>
+        <p>Refund status not updating or money not received within the timelines above? Write to support@flyphones.in with your order ID — we reconcile against payment provider records and respond within 2 working days.</p>
       </section>
     </PolicyPage>
   );

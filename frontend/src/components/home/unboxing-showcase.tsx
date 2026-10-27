@@ -68,7 +68,7 @@ export function UnboxingShowcase() {
             What's inside your certified box. <span className="text-accent">Zero surprises.</span>
           </h2>
           <p className="mt-2 text-[13px] leading-relaxed text-ink-muted sm:text-[15px]">
-            Every iVanta certified order arrives sealed in eco-luxury packaging with tested accessories, verified QC certificate, and doorstep Open Box inspection.
+            Every FlyPhones certified order arrives sealed in eco-luxury packaging with tested accessories, verified QC certificate, and doorstep Open Box inspection.
           </p>
         </div>
 
@@ -138,7 +138,7 @@ export function UnboxingShowcase() {
 
                       {/* Display graphic */}
                       <div className="my-auto text-center">
-                        <div className="text-[10px] uppercase font-bold text-accent tracking-wider">iVanta QC</div>
+                        <div className="text-[10px] uppercase font-bold text-accent tracking-wider">FlyPhones QC</div>
                         <div className="text-[14px] font-extrabold tracking-tight mt-0.5">True Tone</div>
                         <div className="mt-1 text-[9px] text-white/60">32/32 Tests Passed</div>
                       </div>

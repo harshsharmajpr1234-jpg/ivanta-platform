@@ -1,6 +1,6 @@
 import { PolicyPage } from '@/components/layout/policy-page';
 
-export const metadata = { title: 'Shipping Policy — iVanta' };
+export const metadata = { title: 'Shipping Policy — FlyPhones' };
 
 export default function ShippingPolicyPage() {
   return (

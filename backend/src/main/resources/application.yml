@@ -60,7 +60,7 @@ ivanta:
     # Leave unset in production after first boot; rotate by direct DB update.
     bootstrap-admin-email: ${IVANTA_INITIAL_ADMIN_EMAIL:${ADMIN_ROOT_EMAIL:}}
     bootstrap-admin-password: ${IVANTA_INITIAL_ADMIN_PASSWORD:${ADMIN_ROOT_PASSWORD:}}
-    bootstrap-admin-name: ${ADMIN_ROOT_NAME:iVanta Root Admin}
+    bootstrap-admin-name: ${ADMIN_ROOT_NAME:FlyPhones Root Admin}
     dev-seed-demo-admins: ${DEV_SEED_DEMO_ADMINS:false}  # "true" only in local dev
   otp:
     provider: mock            # mock | msg91 | twilio (future) — OtpProvider interface

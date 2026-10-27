@@ -372,7 +372,7 @@ export default function ProductDetailPage() {
           </div>
 
           <ul className="mt-5 grid gap-2 text-[12.5px] text-ink-soft sm:grid-cols-2">
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Pre-Owned · iVanta 32-Pt Hardware Tested</li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Pre-Owned · FlyPhones 32-Pt Hardware Tested</li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Open Box Delivery (Verify at Doorstep)</li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> 1-Month Hardware Warranty Included</li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> 3-Day Replacement Testing Window</li>
@@ -380,7 +380,7 @@ export default function ProductDetailPage() {
           </ul>
 
           <div className="mt-4 rounded-xl border border-line bg-surface-sunk p-3 text-[12px] text-ink-muted">
-            <p><strong className="text-ink">1-Month Warranty & Guarantee:</strong> Open Box Delivery allows inspection before accepting. You have a <strong>3-Day Testing Window</strong> for instant replacement if defective, backed by a <strong>1-Month iVanta Hardware Warranty</strong> for internal hardware faults. No warranty applies after 1 month.</p>
+            <p><strong className="text-ink">1-Month Warranty & Guarantee:</strong> Open Box Delivery allows inspection before accepting. You have a <strong>3-Day Testing Window</strong> for instant replacement if defective, backed by a <strong>1-Month FlyPhones Hardware Warranty</strong> for internal hardware faults. No warranty applies after 1 month.</p>
           </div>
         </div>
       </div>
@@ -463,7 +463,7 @@ export default function ProductDetailPage() {
                     <Star className="h-3 w-3 fill-white" /> {r.rating}
                   </span>
                   {r.verifiedPurchase && <Badge tone="success"><Check className="h-3 w-3" /> Verified purchase</Badge>}
-                  <span className="text-[12px] font-medium text-ink">{r.userName ?? 'iVanta customer'}</span>
+                  <span className="text-[12px] font-medium text-ink">{r.userName ?? 'FlyPhones customer'}</span>
                   <span className="ml-auto text-[11px] text-ink-faint">{formatDate(r.createdAt)}</span>
                 </div>
                 {r.title && <h3 className="mt-2 text-[14px] font-semibold text-ink">{r.title}</h3>}
@@ -501,7 +501,7 @@ export default function ProductDetailPage() {
         }
       >
         <p className="text-[13px] leading-relaxed text-ink-soft">
-          Your wishlist is tied to your iVanta account so it syncs across devices. New here? An account
+          Your wishlist is tied to your FlyPhones account so it syncs across devices. New here? An account
           is created automatically with your first OTP sign-in — no separate registration needed.
         </p>
       </Dialog>

@@ -2,10 +2,10 @@ import type { AdminRole, OrderStatus, PaymentMethod, ReturnStatus, StockStatus }
 import type { BadgeTone } from '@/components/ui/badge';
 
 export const BRAND = {
-  name: 'iVanta',
+  name: 'FlyPhones',
   tagline: 'Premium Apple Products, Delivered',
-  domain: 'https://ivanta.in',
-  supportEmail: 'ivanta@gmail.com',
+  domain: 'https://flyphones.in',
+  supportEmail: 'support@flyphones.in',
   supportPhone: '+91 90214 11513',
 } as const;
 

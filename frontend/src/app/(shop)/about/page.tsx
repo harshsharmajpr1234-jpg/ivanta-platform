@@ -25,7 +25,7 @@ const PILLARS = [
   {
     icon: RotateCcw,
     title: '1-Month Warranty & 3-Day Testing',
-    body: 'Includes a 3-day replacement window for real-world testing and a 1-month iVanta hardware warranty for complete peace of mind.',
+    body: 'Includes a 3-day replacement window for real-world testing and a 1-month FlyPhones hardware warranty for complete peace of mind.',
   },
 ];
 
@@ -35,13 +35,13 @@ export default function AboutPage() {
       {/* ---------- HEADER HERO ---------- */}
       <section className="mx-auto max-w-[1240px] px-4 py-12 text-center sm:py-16 lg:py-20">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-sunk px-3.5 py-1 text-[11px] font-semibold text-ink">
-          About iVanta
+          About FlyPhones
         </span>
         <h1 className="mx-auto mt-4 max-w-3xl text-[30px] font-extrabold leading-tight tracking-tight text-ink sm:text-[42px] lg:text-[48px]">
           The most trustworthy way to buy pre-owned Apple in India.
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-[14px] leading-relaxed text-ink-muted sm:text-[16px]">
-          iVanta is an independent platform dedicated to delivering certified pre-owned Apple devices.
+          FlyPhones is an independent platform dedicated to delivering certified pre-owned Apple devices.
           We test every device across 32 quality points, back every order with a 1-month hardware warranty,
           and offer doorstep open-box inspection across India.
         </p>
