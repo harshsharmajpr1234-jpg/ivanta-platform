@@ -33,70 +33,55 @@ export default function HomePage() {
   return (
     <div className="bg-surface">
       {/* ---------- HERO ---------- */}
-      <section className="relative border-b border-line bg-white">
-        <div className="mx-auto grid max-w-[1240px] items-center gap-8 px-4 py-10 sm:py-16 md:grid-cols-2 md:gap-12 md:py-20">
-          <div className="w-full min-w-0">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-sunk/80 px-3.5 py-1 text-[11.5px] font-semibold text-ink">
-               Certified Pre-Owned Apple Store
+      <section className="relative border-b border-line bg-white overflow-hidden">
+        <div className="mx-auto grid max-w-[1240px] items-center gap-8 px-4 py-8 sm:py-12 md:grid-cols-2 md:gap-10 lg:py-16">
+          <div className="w-full min-w-0 max-w-xl">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-sunk/80 px-3 py-1 text-[11px] font-semibold text-ink">
+               Certified Pre-Owned Apple
             </span>
-            <h1 className="mt-4 text-[32px] font-extrabold leading-[1.12] tracking-tight text-ink sm:text-[44px] md:text-[52px]">
-              Premium Pre-Owned Apple.<br />
-              <span className="text-accent">Tested. Verified.</span>
+            <h1 className="mt-3.5 text-[34px] font-extrabold leading-[1.08] tracking-tight text-ink sm:text-[44px] lg:text-[52px]">
+              Pure Apple.<br />
+              <span className="text-accent">Pristine Quality.</span>
             </h1>
-            <p className="mt-3.5 max-w-md text-[14px] leading-relaxed text-ink-muted sm:text-[15.5px]">
-              Inspected across 32 quality points by certified experts. 100% genuine hardware backed by warranty and doorstep open box inspection.
+            <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-ink-muted sm:text-[15.5px]">
+              100% genuine Apple devices inspected across 32 quality points. Backed by warranty, easy returns and doorstep open box inspection.
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link href="/products" className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-7 text-[14px] font-semibold text-white shadow-soft transition-transform hover:scale-[1.02] active:scale-[.98] sm:h-12 sm:px-8 sm:text-[15px]">
-                Shop Pre-Owned <ArrowRight className="h-4 w-4" />
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Link
+                href="/products"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-6 text-[14px] font-semibold text-white shadow-soft transition-transform hover:scale-[1.02] active:scale-[.98] sm:h-12 sm:px-7 sm:text-[14.5px]"
+              >
+                Shop All Products <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href="/support" className="inline-flex h-11 items-center justify-center rounded-full border border-line-strong bg-white px-5 text-[14px] font-semibold text-ink transition-colors hover:border-ink/40 hover:bg-surface-sunk sm:h-12 sm:px-6 sm:text-[14.5px]">
-                Support & Warranty Hub
+              <Link
+                href="/support"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-line-strong bg-white px-5 text-[14px] font-semibold text-ink transition-colors hover:border-ink/40 hover:bg-surface-sunk sm:h-12 sm:px-6 sm:text-[14px]"
+              >
+                Care & Warranty Hub
               </Link>
-            </div>
-
-            {/* Clean Minimal Highlights Strip */}
-            <div className="mt-8 border-t border-line pt-4">
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] font-medium text-ink-soft">
-                <span className="flex items-center gap-1"><span className="text-emerald-600 font-bold">✓</span> 1-Month Hardware Warranty</span>
-                <span className="flex items-center gap-1"><span className="text-emerald-600 font-bold">✓</span> Open Box Doorstep Delivery</span>
-                <span className="flex items-center gap-1"><span className="text-emerald-600 font-bold">✓</span> 3-Day Free Replacement</span>
-              </div>
-              <p className="mt-2 text-[11px] text-ink-faint">
-                All detailed claim procedures, coverage terms and testing standards documented in our{' '}
-                <Link href="/support#warranty" className="font-semibold text-accent hover:underline">
-                  Support Hub →
-                </Link>
-              </p>
             </div>
           </div>
 
           {/* Clean 3D Apple Studio Showcase */}
-          <div className="relative hidden w-full md:block">
+          <div className="relative w-full">
             <Hero3DShowcase />
           </div>
         </div>
       </section>
 
-      {/* ---------- TRUST ROW (Quick Links to Support Hub) ---------- */}
-      <section className="border-b border-line bg-white">
-        <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-3 px-4 py-4 sm:gap-6 sm:py-5 lg:grid-cols-4">
+      {/* ---------- SLEEK MINIMAL TRUST STRIP ---------- */}
+      <section className="border-b border-line bg-white py-3 sm:py-3.5">
+        <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-y-2 gap-x-6 px-4 text-[12px] sm:text-[12.5px] text-ink-soft">
           {TRUST.map((t) => (
             <Link
               key={t.title}
               href={t.href}
-              className="group flex min-w-0 items-center gap-3 rounded-2xl border border-transparent p-2 transition-colors hover:border-line hover:bg-surface-sunk"
+              className="inline-flex items-center gap-2 transition-colors hover:text-accent"
             >
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent transition-transform group-hover:scale-105">
-                <t.icon className="h-4 w-4" />
-              </span>
-              <div className="min-w-0">
-                <h3 className="text-[12.5px] font-bold text-ink group-hover:text-accent transition-colors truncate">
-                  {t.title}
-                </h3>
-                <p className="text-[11px] text-ink-muted truncate">{t.body}</p>
-              </div>
+              <t.icon className="h-3.5 w-3.5 text-accent shrink-0" />
+              <span className="font-bold text-ink">{t.title}</span>
+              <span className="hidden lg:inline text-ink-faint text-[11.5px]">· {t.body}</span>
             </Link>
           ))}
         </div>
