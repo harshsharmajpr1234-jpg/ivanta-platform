@@ -83,15 +83,23 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-line bg-white/85 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-[1240px] items-center gap-2 px-3 sm:px-4">
+        <div className="mx-auto flex h-16 max-w-[1240px] items-center gap-2 px-3 sm:h-[68px] sm:gap-3 sm:px-4">
           <button type="button" className="rounded-full p-2 text-ink md:hidden" aria-label="Open menu" onClick={() => setMenuOpen(true)}>
             <Menu className="h-5 w-5" />
           </button>
-          <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="FlyPhones home">
-            <img src="/logo-icon.png" alt="Flyphones — Powered by Hansh Technologies" className="h-9 w-auto object-contain" />
-            <div className="flex flex-col">
-              <span className="text-[18px] font-extrabold tracking-tight text-ink sm:text-[19px] leading-none">Flyphones</span>
-              <span className="text-[8.5px] font-medium tracking-wider text-ink-muted hidden sm:block uppercase pt-0.5">by Hansh Tech</span>
+          <Link href="/" className="group flex shrink-0 items-center gap-2.5 sm:gap-3" aria-label="Flyphones — Powered by Hansh Technologies">
+            <img
+              src="/logo-icon.png"
+              alt="Flyphones — Powered by Hansh Technologies"
+              className="h-10 w-auto object-contain shrink-0 transition-transform duration-200 group-hover:scale-105 sm:h-12"
+            />
+            <div className="flex flex-col justify-center">
+              <span className="text-[20px] font-extrabold tracking-tight text-ink leading-tight sm:text-[25px]">
+                Flyphones
+              </span>
+              <span className="text-[7.5px] font-bold tracking-wider text-ink-muted uppercase leading-none pt-0.5 sm:text-[9.5px]">
+                Powered by Hansh Technologies
+              </span>
             </div>
           </Link>
 
