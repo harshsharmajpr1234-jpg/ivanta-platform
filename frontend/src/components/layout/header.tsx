@@ -88,10 +88,10 @@ export function Header() {
             <Menu className="h-5 w-5" />
           </button>
           <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="FlyPhones home">
-            <img src="/logo-icon.png" alt="Flyphones Mascot" className="h-9 w-auto object-contain" />
+            <img src="/logo-icon.png" alt="Flyphones — Powered by Hansh Technologies" className="h-9 w-auto object-contain" />
             <div className="flex flex-col">
               <span className="text-[18px] font-extrabold tracking-tight text-ink sm:text-[19px] leading-none">Flyphones</span>
-              <span className="text-[8.5px] font-medium tracking-wider text-ink-muted hidden sm:block uppercase pt-0.5">by Manish Tech</span>
+              <span className="text-[8.5px] font-medium tracking-wider text-ink-muted hidden sm:block uppercase pt-0.5">by Hansh Tech</span>
             </div>
           </Link>
 

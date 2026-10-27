@@ -68,6 +68,12 @@ function LoginForm() {
       <div className="mx-auto grid min-h-[calc(100vh-56px)] max-w-[1240px] items-center gap-8 px-3.5 sm:px-4 py-6 sm:py-12 lg:grid-cols-2 lg:gap-10">
         <div className="order-2 lg:order-1">
           <div className="mx-auto w-full max-w-md rounded-3xl border border-line bg-white p-5 sm:p-8 shadow-soft">
+            {/* Brand Logo */}
+            <div className="mb-6 flex justify-center">
+              <Link href="/" aria-label="Flyphones — Powered by Hansh Technologies">
+                <img src="/logo.png" alt="Flyphones — Powered by Hansh Technologies" className="h-14 w-auto object-contain" />
+              </Link>
+            </div>
             
             {/* Top Switcher: Sign In vs Register */}
             <div className="mb-6 grid grid-cols-2 gap-1 rounded-2xl bg-surface-sunk p-1 text-[13px] font-semibold">

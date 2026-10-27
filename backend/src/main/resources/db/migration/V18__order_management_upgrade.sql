@@ -175,5 +175,5 @@ INSERT IGNORE INTO system_settings (setting_key, setting_value, category, descri
   ('order.customer_cancellable_statuses','PENDING_PAYMENT,PAYMENT_FAILED,PLACED,CONFIRMED,PROCESSING','ORDER','Statuses from which customers may cancel directly'),
   ('order.customer_cancel_request_statuses','SHIPPED,IN_TRANSIT,OUT_FOR_DELIVERY','ORDER','Statuses from which customers may request cancellation (admin approves)'),
   ('order.replacement_enabled','true','ORDER','Whether customers may request replacements'),
-  ('invoice.seller_name','Manish Technologies (Flyphones)','INVOICE','Seller name printed on invoices'),
+  ('invoice.seller_name','Hansh Technologies (Flyphones)','INVOICE','Seller name printed on invoices'),
   ('invoice.seller_address','510, Suneja Tower 2, District Center, Janakpuri West, New Delhi, 110078','INVOICE','Seller address printed on invoices');

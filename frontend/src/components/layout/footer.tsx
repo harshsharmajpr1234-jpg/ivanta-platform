@@ -44,8 +44,8 @@ export function Footer() {
       <div className="mx-auto max-w-[1240px] px-4 py-10 sm:py-12">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-10">
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5">
-              <img src="/logo-icon.png" alt="Flyphones Mascot" className="h-9 w-auto object-contain" />
+            <Link href="/" className="flex items-center gap-2.5" aria-label="Flyphones — Powered by Hansh Technologies">
+              <img src="/logo-icon.png" alt="Flyphones — Powered by Hansh Technologies" className="h-9 w-auto object-contain" />
               <div>
                 <span className="text-[19px] font-extrabold tracking-tight text-ink">{BRAND.name}</span>
                 <span className="block text-[10px] font-medium uppercase tracking-wider text-ink-faint">

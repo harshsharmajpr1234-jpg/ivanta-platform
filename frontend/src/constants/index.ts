@@ -3,7 +3,7 @@ import type { BadgeTone } from '@/components/ui/badge';
 
 export const BRAND = {
   name: 'Flyphones',
-  parentCompany: 'Manish Technologies',
+  parentCompany: 'Hansh Technologies',
   tagline: 'Empowering you with the latest mobile devices',
   domain: 'https://flyphones.in',
   supportEmail: 'support@flyphones.co.in',

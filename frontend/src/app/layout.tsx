@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(BRAND.domain),
   title: { default: `${BRAND.name} — ${BRAND.tagline}`, template: `%s · ${BRAND.name}` },
   description: `${BRAND.name} (Powered by ${BRAND.parentCompany}) — India's trusted platform for quality-checked pre-owned and refurbished mobile devices. Buy tested iPhones, MacBooks, iPads, Apple Watches and AirPods with 6-month limited warranty and transparent condition grading.`,
-  keywords: ['pre-owned iPhone', 'refurbished mobile devices India', 'pre-owned Apple Watch', 'buy used iPad', 'Flyphones India', 'Manish Technologies'],
+  keywords: ['pre-owned iPhone', 'refurbished mobile devices India', 'pre-owned Apple Watch', 'buy used iPad', 'Flyphones India', 'Hansh Technologies'],
   openGraph: { type: 'website', siteName: BRAND.name, title: `${BRAND.name} — ${BRAND.tagline}`, description: 'Shop tested pre-owned and refurbished mobile devices on Flyphones with 6-month warranty, transparent grading, and doorstep open box inspection.', url: BRAND.domain },
   twitter: { card: 'summary_large_image', title: `${BRAND.name} — ${BRAND.tagline}` },
   icons: {

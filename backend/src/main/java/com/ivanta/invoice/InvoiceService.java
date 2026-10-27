@@ -129,7 +129,7 @@ public class InvoiceService {
                 : users.findById(o.getUserId()).map(u -> u.getPhone()).orElse("");
         Payment payment = payments.findFirstByOrderIdOrderByIdDesc(o.getId()).orElse(null);
 
-        String sellerName = setting("warehouse.name", setting("invoice.seller_name", "Manish Technologies (Flyphones)"));
+        String sellerName = setting("warehouse.name", setting("invoice.seller_name", "Hansh Technologies (Flyphones)"));
         String sellerAddress = setting("invoice.seller_address", "510, Suneja Tower 2, District Center, Janakpuri West, New Delhi 110078, India");
         String sellerGstin = setting("seller.gstin", "07ABCDE1234F1Z5");
         String sellerState = setting("warehouse.state", "Delhi");
