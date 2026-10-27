@@ -19,6 +19,6 @@ spring:
 ivanta:
   security:
     bootstrap-admin-email: ${IVANTA_INITIAL_ADMIN_EMAIL:${ADMIN_ROOT_EMAIL:admin@flyphones.in}}
-    bootstrap-admin-password: ${IVANTA_INITIAL_ADMIN_PASSWORD:${ADMIN_ROOT_PASSWORD:Admin@12345}}
-    bootstrap-admin-name: FlyPhones Root Admin
+    bootstrap-admin-password: ${IVANTA_INITIAL_ADMIN_PASSWORD:${ADMIN_ROOT_PASSWORD:Flyphones@Admin123}}
+    bootstrap-admin-name: Flyphones Root Admin
     dev-seed-demo-admins: ${DEV_SEED_DEMO_ADMINS:true}

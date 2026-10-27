@@ -59,12 +59,12 @@ export default function AdminLoginPage() {
               <div>
                 <Label htmlFor="a-email" required><span className="text-white/80">Work email</span></Label>
                 <Input id="a-email" type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@company.com" className="border-white/20 bg-white/10 text-white placeholder:text-white/30" />
+                  placeholder="admin@flyphones.in" className="border-white/20 bg-white/10 text-white placeholder:text-white/30" />
               </div>
               <div>
                 <Label htmlFor="a-pass" required><span className="text-white/80">Password</span></Label>
                 <Input id="a-pass" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••" className="border-white/20 bg-white/10 text-white placeholder:text-white/30" />
+                  placeholder="Flyphones@••••••" className="border-white/20 bg-white/10 text-white placeholder:text-white/30" />
               </div>
               {error && (
                 <p className="flex items-start gap-2 rounded-xl bg-red-500/15 px-3.5 py-2.5 text-[12.5px] font-medium text-red-300">
@@ -75,6 +75,31 @@ export default function AdminLoginPage() {
                 className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-ink transition-all hover:bg-white/90 disabled:opacity-40">
                 {busy ? <Spinner className="h-4 w-4" /> : <>Continue <ArrowRight className="h-4 w-4" /></>}
               </button>
+
+              <div className="pt-2 border-t border-white/10 flex flex-wrap items-center justify-center gap-2">
+                <span className="text-[11px] text-white/40">Quick Fill:</span>
+                <button
+                  type="button"
+                  onClick={() => { setEmail('admin@flyphones.in'); setPassword('Flyphones@Admin123'); }}
+                  className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white/80 hover:bg-white/20 transition-colors"
+                >
+                  Super Admin
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setEmail('delivery@flyphones.in'); setPassword('Flyphones@Delivery123'); }}
+                  className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white/80 hover:bg-white/20 transition-colors"
+                >
+                  Delivery Manager
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setEmail('orders@flyphones.in'); setPassword('Flyphones@Orders123'); }}
+                  className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white/80 hover:bg-white/20 transition-colors"
+                >
+                  Orders
+                </button>
+              </div>
             </form>
           ) : (
             <form onSubmit={verify2fa} className="space-y-4" noValidate>

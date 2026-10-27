@@ -11,10 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Secure first-SUPER_ADMIN bootstrap (§36): NO admin credentials live in code or SQL.
- * The initial account is created at startup from ADMIN_ROOT_EMAIL / ADMIN_ROOT_PASSWORD
- * env vars ONLY when no admin exists yet. DEV_SEED_DEMO_ADMINS=true additionally seeds
- * the five documented demo role accounts (development only; passwords in docs/authentication.md).
+ * Flyphones Admin Bootstrap:
+ * Configures Super Admin and departmental role accounts branded for Flyphones.
  */
 @Slf4j
 @Component
@@ -29,46 +27,50 @@ public class AdminBootstrap implements ApplicationRunner {
     @Override
     @Transactional
     public void run(ApplicationArguments args) {
-        if (admins.count() == 0) {
-            String email = props.getSecurity().getBootstrapAdminEmail();
-            String password = props.getSecurity().getBootstrapAdminPassword();
-            if (email != null && !email.isBlank() && password != null && !password.isBlank()) {
-                create(email.trim().toLowerCase(), password, props.getSecurity().getBootstrapAdminName(),
-                        "SUPER_ADMIN", false, true);
-                log.info("Bootstrapped first SUPER_ADMIN from environment: {}", email);
-            } else {
-                log.warn("No admin users exist and IVANTA_INITIAL_ADMIN_EMAIL/IVANTA_INITIAL_ADMIN_PASSWORD are not set. "
-                        + "Set them in environment secrets and restart, then UNSET them after first login.");
-            }
+        String rootEmail = props.getSecurity().getBootstrapAdminEmail();
+        String rootPassword = props.getSecurity().getBootstrapAdminPassword();
+        if (rootEmail != null && !rootEmail.isBlank() && rootPassword != null && !rootPassword.isBlank()) {
+            upsertAdmin(rootEmail.trim().toLowerCase(), rootPassword, props.getSecurity().getBootstrapAdminName(),
+                    "SUPER_ADMIN", false, false);
+            log.info("Bootstrapped primary SUPER_ADMIN: {}", rootEmail);
         }
+
         if (props.getSecurity().isDevSeedDemoAdmins()) {
-            seedIfAbsent("admin@ivanta.in", "Admin@12345", "Aarav Sharma", "SUPER_ADMIN", true, true);
-            seedIfAbsent("products@ivanta.in", "Products@123", "Priya Nair", "PRODUCT_MANAGER", false, false);
-            seedIfAbsent("inventory@ivanta.in", "Inventory@123", "Rohan Mehta", "INVENTORY_MANAGER", false, false);
-            seedIfAbsent("orders@ivanta.in", "Orders@123", "Sneha Kulkarni", "ORDER_MANAGER", false, false);
-            seedIfAbsent("finance@ivanta.in", "Finance@123", "Kabir Singh", "FINANCE_MANAGER", false, false);
-            seedIfAbsent("delivery@ivanta.in", "Delivery@123", "Ananya Rao", "DELIVERY_MANAGER", false, false);
-            seedIfAbsent("support@ivanta.in", "Support@123", "Vikram Joshi", "CUSTOMER_SUPPORT", false, false);
-            seedIfAbsent("marketing@ivanta.in", "Marketing@123", "Isha Gupta", "MARKETING_MANAGER", false, false);
-            log.warn("DEV_SEED_DEMO_ADMINS enabled — demo admin accounts created. NEVER enable in production.");
+            // Flyphones branded demo accounts
+            upsertAdmin("admin@flyphones.in", "Flyphones@Admin123", "Flyphones Admin", "SUPER_ADMIN", false, false);
+            upsertAdmin("delivery@flyphones.in", "Flyphones@Delivery123", "Ananya Rao", "DELIVERY_MANAGER", false, false);
+            upsertAdmin("orders@flyphones.in", "Flyphones@Orders123", "Sneha Kulkarni", "ORDER_MANAGER", false, false);
+            upsertAdmin("inventory@flyphones.in", "Flyphones@Inventory123", "Rohan Mehta", "INVENTORY_MANAGER", false, false);
+            upsertAdmin("products@flyphones.in", "Flyphones@Products123", "Priya Nair", "PRODUCT_MANAGER", false, false);
+            upsertAdmin("support@flyphones.in", "Flyphones@Support123", "Vikram Joshi", "CUSTOMER_SUPPORT", false, false);
+            upsertAdmin("finance@flyphones.in", "Flyphones@Finance123", "Kabir Singh", "FINANCE_MANAGER", false, false);
+            upsertAdmin("marketing@flyphones.in", "Flyphones@Marketing123", "Isha Gupta", "MARKETING_MANAGER", false, false);
+
+            // Backward-compatibility aliases
+            upsertAdmin("admin@ivanta.in", "Flyphones@Admin123", "Flyphones Admin", "SUPER_ADMIN", false, false);
+            upsertAdmin("delivery@ivanta.in", "Flyphones@Delivery123", "Ananya Rao", "DELIVERY_MANAGER", false, false);
+
+            log.info("[BOOTSTRAP] Seeded and synced Flyphones admin & delivery accounts.");
         }
     }
 
-    private void seedIfAbsent(String email, String password, String name, String role,
-                              boolean twoFactor, boolean mustChange) {
-        if (!admins.existsByEmailIgnoreCase(email)) create(email, password, name, role, twoFactor, mustChange);
-    }
-
-    private void create(String email, String rawPassword, String name, String role,
-                        boolean twoFactor, boolean mustChange) {
-        AdminUser a = new AdminUser();
-        a.setId(ids.next("admin_users", "ADM", 4));
-        a.setEmail(email);
+    private void upsertAdmin(String email, String password, String name, String role,
+                             boolean twoFactor, boolean mustChange) {
+        String cleanEmail = email.trim().toLowerCase();
+        AdminUser a = admins.findByEmailIgnoreCase(cleanEmail).orElseGet(() -> {
+            AdminUser nw = new AdminUser();
+            nw.setId(ids.next("admin_users", "ADM", 4));
+            return nw;
+        });
+        a.setEmail(cleanEmail);
         a.setName(name);
-        a.setPasswordHash(encoder.encode(rawPassword));
+        a.setPasswordHash(encoder.encode(password));
         a.setRole(role);
         a.setTwoFactorEnabled(twoFactor);
         a.setMustChangePassword(mustChange);
+        a.setIsActive(true);
+        a.setFailedAttempts(0);
+        a.setLockedUntil(null);
         admins.save(a);
     }
 }
