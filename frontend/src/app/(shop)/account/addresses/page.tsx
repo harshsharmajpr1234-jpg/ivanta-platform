@@ -317,10 +317,10 @@ export default function AddressesPage() {
           </div>
         )}
         <form id="address-form" onSubmit={save} className="grid gap-3 sm:grid-cols-2">
-          <div><Label required>Full name</Label><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} maxLength={120} /></div>
-          <div><Label required>Phone</Label><Input required inputMode="numeric" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })} placeholder="10-digit mobile" /></div>
-          <div className="sm:col-span-2"><Label required>Address line 1</Label><Input required value={form.addressLine1} onChange={(e) => setForm({ ...form, addressLine1: e.target.value })} maxLength={200} placeholder="Flat / house no, building, street" /></div>
-          <div className="sm:col-span-2"><Label>Address line 2</Label><Input value={form.addressLine2 ?? ''} onChange={(e) => setForm({ ...form, addressLine2: e.target.value })} maxLength={200} /></div>
+          <div><Label required>Full name</Label><Input required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} maxLength={120} /></div>
+          <div><Label required>Phone</Label><Input required inputMode="numeric" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value.replace(/\D/g, '').slice(0, 10) }))} placeholder="10-digit mobile" /></div>
+          <div className="sm:col-span-2"><Label required>Address line 1</Label><Input required value={form.addressLine1} onChange={(e) => setForm((f) => ({ ...f, addressLine1: e.target.value }))} maxLength={200} placeholder="Flat / house no, building, street" /></div>
+          <div className="sm:col-span-2"><Label>Address line 2</Label><Input value={form.addressLine2 ?? ''} onChange={(e) => setForm((f) => ({ ...f, addressLine2: e.target.value }))} maxLength={200} /></div>
           <div>
             <Label required>PIN code</Label>
             <div className="relative">
@@ -364,7 +364,7 @@ export default function AddressesPage() {
             <Input
               list="account-localities-list"
               value={form.locality ?? ''}
-              onChange={(e) => setForm({ ...form, locality: e.target.value })}
+              onChange={(e) => setForm((f) => ({ ...f, locality: e.target.value }))}
               maxLength={120}
               placeholder="e.g. Jhotwara, Murlipura"
             />
@@ -405,14 +405,14 @@ export default function AddressesPage() {
               </div>
             )}
           </div>
-          <div><Label required>City</Label><Input required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} maxLength={80} /></div>
-          <div><Label>District</Label><Input value={form.district ?? ''} onChange={(e) => setForm({ ...form, district: e.target.value })} maxLength={80} placeholder="District" /></div>
-          <div><Label required>State</Label><Input required value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} maxLength={80} /></div>
-          <div><Label>Landmark</Label><Input value={form.landmark ?? ''} onChange={(e) => setForm({ ...form, landmark: e.target.value })} maxLength={200} /></div>
+          <div><Label required>City</Label><Input required value={form.city} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} maxLength={80} /></div>
+          <div><Label>District</Label><Input value={form.district ?? ''} onChange={(e) => setForm((f) => ({ ...f, district: e.target.value }))} maxLength={80} placeholder="District" /></div>
+          <div><Label required>State</Label><Input required value={form.state} onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))} maxLength={80} /></div>
+          <div><Label>Landmark</Label><Input value={form.landmark ?? ''} onChange={(e) => setForm((f) => ({ ...f, landmark: e.target.value }))} maxLength={200} /></div>
           <div><Label>Type</Label>
             <div className="flex gap-2 pt-1.5">
               {(['HOME', 'WORK', 'OTHER'] as const).map((t) => (
-                <button key={t} type="button" onClick={() => setForm({ ...form, addressType: t })}
+                <button key={t} type="button" onClick={() => setForm((f) => ({ ...f, addressType: t }))}
                   className={cn('rounded-full border px-3 py-1.5 text-[12px] font-semibold',
                     form.addressType === t ? 'border-ink bg-ink text-white' : 'border-line-strong text-ink-soft')}>
                   {t}
