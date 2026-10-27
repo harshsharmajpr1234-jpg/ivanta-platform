@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { ShieldCheck, Truck, RotateCcw, BadgeIndianRupee, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Truck, RotateCcw, BadgeIndianRupee, ArrowRight, MapPin } from 'lucide-react';
+import { BRAND } from '@/constants';
 import { InspectionAndGrading } from '@/components/home/inspection-and-grading';
 import { UnboxingShowcase } from '@/components/home/unboxing-showcase';
 import { TradeInCalculator } from '@/components/home/trade-in-calculator';
@@ -106,6 +107,31 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+
+          {/* Office & Experience Center */}
+          <div className="mt-8 rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm sm:p-8">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-3.5">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/20 text-accent">
+                  <MapPin className="h-5 w-5" />
+                </span>
+                <div>
+                  <h4 className="text-[15px] font-bold text-white">Experience Center & Registered Office</h4>
+                  <p className="mt-1 text-[13px] text-white/80">{BRAND.address.full}</p>
+                  <p className="mt-1 text-[12px] text-white/60">Support: {BRAND.supportPhone} · {BRAND.supportEmail}</p>
+                </div>
+              </div>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BRAND.address.full)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 px-4 text-[12.5px] font-medium text-white transition-colors hover:bg-white/20"
+              >
+                Get Directions
+              </a>
+            </div>
+          </div>
+
           <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-white/10 pt-6">
             <Link
               href="/products"

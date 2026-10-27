@@ -3,10 +3,19 @@ import type { BadgeTone } from '@/components/ui/badge';
 
 export const BRAND = {
   name: 'FlyPhones',
-  tagline: 'Premium Apple Products, Delivered',
+  tagline: 'Pre-Owned Apple Devices — Quality Checked & Affordable',
   domain: 'https://flyphones.in',
   supportEmail: 'support@flyphones.in',
-  supportPhone: '+91 90214 11513',
+  supportPhone: '+91 81305 06855',
+  supportPhoneRaw: '8130506855',
+  address: {
+    line1: '510, Suneja Tower 2',
+    line2: 'District Center, Janakpuri West',
+    city: 'New Delhi',
+    state: 'Delhi',
+    pincode: '110078',
+    full: '510, Suneja Tower 2, District Center, Janakpuri West, New Delhi, 110078',
+  },
 } as const;
 
 /* ---------- catalog ---------- */

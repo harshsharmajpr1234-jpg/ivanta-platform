@@ -106,6 +106,10 @@ export default function SupportPage() {
               <a href={`tel:${BRAND.supportPhone.replace(/\s/g, '')}`} className="flex items-center gap-2.5 font-medium text-ink hover:text-accent">
                 <Phone className="h-4 w-4 text-accent" /> {BRAND.supportPhone}
               </a>
+              <div className="pt-2 border-t border-line/60">
+                <p className="text-[11.5px] font-semibold uppercase tracking-wider text-ink-faint">Experience Center & Office</p>
+                <p className="mt-0.5 text-[12.5px] text-ink leading-relaxed font-medium">{BRAND.address.full}</p>
+              </div>
               <p className="text-[12px] text-ink-muted">Mon–Sat, 10:00–19:00 IST · Instant WhatsApp & Call Support</p>
             </CardContent>
           </Card>

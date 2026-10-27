@@ -53,6 +53,9 @@ export function Footer() {
             <p className="mt-4 text-[12.5px] text-ink-muted">
               {BRAND.supportEmail} · {BRAND.supportPhone}
             </p>
+            <p className="mt-1 text-[12px] leading-snug text-ink-muted">
+              {BRAND.address.full}
+            </p>
           </div>
           {COLS.map((c) => (
             <div key={c.title} className="col-span-1">
