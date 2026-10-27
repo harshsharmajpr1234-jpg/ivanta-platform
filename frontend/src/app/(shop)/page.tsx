@@ -14,10 +14,10 @@ import { CategoryShowcaseSection } from '@/components/home/category-showcase-sec
 import { catalogService } from '@/services';
 
 const TRUST = [
-  { icon: BadgeCheck, title: '100% Genuine Pre-Owned', body: 'Original Apple hardware, 32-point QC tested and fully functional with GST invoice.' },
-  { icon: Truck, title: 'Open Box Delivery', body: 'Inspect physical condition at your doorstep in front of the courier before acceptance.' },
-  { icon: RotateCcw, title: '1-Month Warranty', body: '3-day testing window for free replacement, backed by a 1-month hardware warranty.' },
-  { icon: ShieldCheck, title: 'Pay Online or COD', body: 'Secure UPI, cards, net banking or Cash on Delivery — verified server-side.' },
+  { icon: BadgeCheck, title: '32-Point QC Certified', body: 'Original Apple hardware & battery', href: '/support#qc-certification' },
+  { icon: Truck, title: 'Open Box Delivery', body: 'Doorstep inspection before accept', href: '/support#open-box' },
+  { icon: RotateCcw, title: '1-Month Warranty', body: 'With 3-day free replacement', href: '/support#warranty' },
+  { icon: ShieldCheck, title: 'Safe Online & COD', body: 'UPI, EMI, cards & Cash on Delivery', href: '/support' },
 ];
 
 export default function HomePage() {
@@ -34,70 +34,70 @@ export default function HomePage() {
     <div className="bg-surface">
       {/* ---------- HERO ---------- */}
       <section className="relative border-b border-line bg-white">
-        <div className="mx-auto grid max-w-[1240px] items-center gap-8 px-4 py-8 sm:py-12 md:grid-cols-2 md:gap-10 md:py-20">
+        <div className="mx-auto grid max-w-[1240px] items-center gap-8 px-4 py-10 sm:py-16 md:grid-cols-2 md:gap-12 md:py-20">
           <div className="w-full min-w-0">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-border bg-accent-soft px-3 py-1 text-[11px] font-semibold text-accent sm:text-[12px]">
-              Certified Pre-Owned · 1-Month Warranty Included
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-sunk/80 px-3.5 py-1 text-[11.5px] font-semibold text-ink">
+               Certified Pre-Owned Apple Store
             </span>
-            <h1 className="mt-3.5 text-[26px] font-extrabold leading-[1.14] tracking-tight text-ink sm:text-[38px] md:text-[50px]">
-              Premium Pre-Owned Apple. <span className="text-accent">Tested. Verified. Affordable.</span>
+            <h1 className="mt-4 text-[32px] font-extrabold leading-[1.12] tracking-tight text-ink sm:text-[44px] md:text-[52px]">
+              Premium Pre-Owned Apple.<br />
+              <span className="text-accent">Tested. Verified.</span>
             </h1>
-            <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-ink-soft sm:mt-4 sm:text-[15px] md:text-base">
-              Shop certified used iPhones, Macs, iPads, Watches and AirPods at up to 60% off —
-              with Open Box Delivery, 3-Day Free Replacement, 1-Month Hardware Warranty, and Online/COD payments.
+            <p className="mt-3.5 max-w-md text-[14px] leading-relaxed text-ink-muted sm:text-[15.5px]">
+              Inspected across 32 quality points by certified experts. 100% genuine hardware backed by warranty and doorstep open box inspection.
             </p>
 
-            <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3">
-              <Link href="/products" className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-6 text-[14px] font-semibold text-white shadow-soft transition-transform hover:scale-[1.02] active:scale-[.98] sm:h-12 sm:px-7 sm:text-[15px]">
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link href="/products" className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-7 text-[14px] font-semibold text-white shadow-soft transition-transform hover:scale-[1.02] active:scale-[.98] sm:h-12 sm:px-8 sm:text-[15px]">
                 Shop Pre-Owned <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href="/products?cat=iphone" className="inline-flex h-11 items-center justify-center rounded-full border border-line-strong bg-white px-5 text-[14px] font-semibold text-ink transition-colors hover:border-ink/40 hover:bg-surface-sunk sm:h-12 sm:px-6 sm:text-[15px]">
-                Explore iPhones
+              <Link href="/support" className="inline-flex h-11 items-center justify-center rounded-full border border-line-strong bg-white px-5 text-[14px] font-semibold text-ink transition-colors hover:border-ink/40 hover:bg-surface-sunk sm:h-12 sm:px-6 sm:text-[14.5px]">
+                Support & Warranty Hub
               </Link>
             </div>
 
-            {/* Quick Mobile Category Badges */}
-            <div className="mt-4 flex w-full max-w-full items-center gap-2 overflow-x-auto pb-1 no-scrollbar sm:hidden">
-              {[
-                { label: 'iPhones', href: '/products?cat=iphone' },
-                { label: 'MacBooks', href: '/products?cat=mac' },
-                { label: 'iPads', href: '/products?cat=ipad' },
-                { label: 'Watches', href: '/products?cat=apple-watch' },
-                { label: 'AirPods', href: '/products?cat=airpods' },
-              ].map((pill) => (
-                <Link key={pill.label} href={pill.href} className="shrink-0 rounded-full border border-line bg-surface-sunk px-3 py-1 text-[11.5px] font-semibold text-ink hover:bg-white">
-                  {pill.label}
+            {/* Clean Minimal Highlights Strip */}
+            <div className="mt-8 border-t border-line pt-4">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] font-medium text-ink-soft">
+                <span className="flex items-center gap-1"><span className="text-emerald-600 font-bold">✓</span> 1-Month Hardware Warranty</span>
+                <span className="flex items-center gap-1"><span className="text-emerald-600 font-bold">✓</span> Open Box Doorstep Delivery</span>
+                <span className="flex items-center gap-1"><span className="text-emerald-600 font-bold">✓</span> 3-Day Free Replacement</span>
+              </div>
+              <p className="mt-2 text-[11px] text-ink-faint">
+                All detailed claim procedures, coverage terms and testing standards documented in our{' '}
+                <Link href="/support#warranty" className="font-semibold text-accent hover:underline">
+                  Support Hub →
                 </Link>
-              ))}
+              </p>
             </div>
-
-            <dl className="mt-6 grid grid-cols-3 gap-2 border-t border-line pt-4 sm:mt-9 sm:max-w-md sm:gap-4 sm:pt-6">
-              <div className="min-w-0"><dt className="truncate text-[10px] uppercase tracking-wider text-ink-faint sm:text-[11px]">Warranty</dt><dd className="mt-0.5 text-[14px] font-bold text-ink sm:text-lg">1 Month</dd></div>
-              <div className="min-w-0"><dt className="truncate text-[10px] uppercase tracking-wider text-ink-faint sm:text-[11px]">Delivery</dt><dd className="mt-0.5 text-[14px] font-bold text-ink sm:text-lg">Open Box</dd></div>
-              <div className="min-w-0"><dt className="truncate text-[10px] uppercase tracking-wider text-ink-faint sm:text-[11px]">Replacement</dt><dd className="mt-0.5 text-[14px] font-bold text-ink sm:text-lg">3 Days</dd></div>
-            </dl>
           </div>
 
-          {/* Interactive 3D Apple Studio Showcase */}
+          {/* Clean 3D Apple Studio Showcase */}
           <div className="relative hidden w-full md:block">
             <Hero3DShowcase />
           </div>
         </div>
       </section>
 
-      {/* ---------- TRUST ROW ---------- */}
+      {/* ---------- TRUST ROW (Quick Links to Support Hub) ---------- */}
       <section className="border-b border-line bg-white">
-        <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-2.5 px-3 py-6 sm:gap-6 sm:px-4 sm:py-10 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-3 px-4 py-4 sm:gap-6 sm:py-5 lg:grid-cols-4">
           {TRUST.map((t) => (
-            <div key={t.title} className="flex min-w-0 flex-col gap-2 rounded-2xl bg-surface-sunk/60 p-3 sm:flex-row sm:bg-transparent sm:p-0">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent sm:h-9 sm:w-9">
-                <t.icon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+            <Link
+              key={t.title}
+              href={t.href}
+              className="group flex min-w-0 items-center gap-3 rounded-2xl border border-transparent p-2 transition-colors hover:border-line hover:bg-surface-sunk"
+            >
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent transition-transform group-hover:scale-105">
+                <t.icon className="h-4 w-4" />
               </span>
-              <div>
-                <h3 className="text-[12.5px] font-semibold text-ink sm:text-[13px]">{t.title}</h3>
-                <p className="mt-0.5 text-[11px] leading-relaxed text-ink-muted sm:text-[12px]">{t.body}</p>
+              <div className="min-w-0">
+                <h3 className="text-[12.5px] font-bold text-ink group-hover:text-accent transition-colors truncate">
+                  {t.title}
+                </h3>
+                <p className="text-[11px] text-ink-muted truncate">{t.body}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

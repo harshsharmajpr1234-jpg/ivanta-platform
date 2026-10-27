@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { ShieldCheck, BatteryCharging, Sparkles, Camera, PackageCheck, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type TitaniumFinish = 'natural' | 'blue' | 'black' | 'white';
@@ -17,22 +16,22 @@ const FINISHES: Record<TitaniumFinish, FinishConfig> = {
   natural: {
     name: 'Natural Titanium',
     dotColor: '#b8afa2',
-    accentGlow: 'rgba(184, 175, 162, 0.35)',
+    accentGlow: 'rgba(184, 175, 162, 0.3)',
   },
   blue: {
     name: 'Blue Titanium',
     dotColor: '#3a4b63',
-    accentGlow: 'rgba(58, 75, 99, 0.4)',
+    accentGlow: 'rgba(58, 75, 99, 0.35)',
   },
   black: {
     name: 'Black Titanium',
     dotColor: '#2b2c30',
-    accentGlow: 'rgba(40, 40, 45, 0.35)',
+    accentGlow: 'rgba(40, 40, 45, 0.3)',
   },
   white: {
     name: 'White Titanium',
     dotColor: '#e8e8ed',
-    accentGlow: 'rgba(232, 232, 237, 0.5)',
+    accentGlow: 'rgba(232, 232, 237, 0.45)',
   },
 };
 
@@ -55,15 +54,15 @@ export function Hero3DShowcase() {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    // Smooth tilt angles (-10deg to +10deg)
-    const rotateY = ((x - centerX) / centerX) * 10;
-    const rotateX = -((y - centerY) / centerY) * 10;
+    // Smooth tilt angles (-8deg to +8deg)
+    const rotateY = ((x - centerX) / centerX) * 8;
+    const rotateX = -((y - centerY) / centerY) * 8;
 
     setRotate({ x: rotateX, y: rotateY });
     setGlare({
       x: (x / rect.width) * 100,
       y: (y / rect.height) * 100,
-      opacity: 0.25,
+      opacity: 0.22,
     });
   };
 
@@ -83,8 +82,8 @@ export function Hero3DShowcase() {
     const animate = (now: number) => {
       const time = (now - start) / 1000;
       setRotate({
-        x: Math.sin(time * 0.9) * 2.5,
-        y: Math.cos(time * 0.7) * 3.5,
+        x: Math.sin(time * 0.9) * 2,
+        y: Math.cos(time * 0.7) * 2.8,
       });
       frame = requestAnimationFrame(animate);
     };
@@ -98,7 +97,7 @@ export function Hero3DShowcase() {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative flex flex-col items-center justify-center select-none py-2 lg:py-6"
+      className="relative flex flex-col items-center justify-center select-none py-2 lg:py-4"
       style={{ perspective: '1100px' }}
       aria-label="Interactive 3D Apple Device Showcase"
     >
@@ -118,60 +117,12 @@ export function Hero3DShowcase() {
           transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
         }}
       >
-        {/* ========================================================= */}
-        {/* PARALLAX FLOATING QC TRUST BADGES                         */}
-        {/* ========================================================= */}
-
-        {/* Badge 1: 85%+ Battery (Top-Right) */}
+        {/* Photorealistic Clean White Apple Studio 3D Artwork */}
         <div
-          className="absolute -right-2 sm:-right-4 -top-3 sm:-top-2 z-30 flex items-center gap-2 rounded-2xl border border-emerald-500/20 bg-white/95 px-3 py-2 shadow-pop backdrop-blur-md transition-transform duration-300 hover:scale-105"
-          style={{ transform: 'translateZ(55px)' }}
-        >
-          <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
-            <BatteryCharging className="h-4 w-4" />
-          </span>
-          <div>
-            <p className="text-[10px] uppercase font-bold tracking-wider text-emerald-700">Health Guarantee</p>
-            <p className="text-[12px] font-black text-ink">85%+ Apple Battery</p>
-          </div>
-        </div>
-
-        {/* Badge 2: Retina OLED & True Tone (Top-Left) */}
-        <div
-          className="absolute -left-2 sm:-left-4 top-8 sm:top-12 z-30 flex items-center gap-2 rounded-2xl border border-blue-500/20 bg-white/95 px-3 py-2 shadow-pop backdrop-blur-md transition-transform duration-300 hover:scale-105"
-          style={{ transform: 'translateZ(50px)' }}
-        >
-          <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-            <Eye className="h-4 w-4" />
-          </span>
-          <div>
-            <p className="text-[10px] uppercase font-bold tracking-wider text-blue-700">Display QC</p>
-            <p className="text-[12px] font-black text-ink">True Tone & OLED Pass</p>
-          </div>
-        </div>
-
-        {/* Badge 3: Open Box Delivery (Bottom-Right) */}
-        <div
-          className="absolute -right-2 sm:-right-4 bottom-4 sm:bottom-6 z-30 flex items-center gap-2 rounded-2xl border border-amber-500/20 bg-white/95 px-3 py-2 shadow-pop backdrop-blur-md transition-transform duration-300 hover:scale-105"
-          style={{ transform: 'translateZ(60px)' }}
-        >
-          <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
-            <PackageCheck className="h-4 w-4" />
-          </span>
-          <div>
-            <p className="text-[10px] uppercase font-bold tracking-wider text-amber-700">Zero Risk</p>
-            <p className="text-[12px] font-black text-ink">Open Box Delivery</p>
-          </div>
-        </div>
-
-        {/* ========================================================= */}
-        {/* PHOTOREALISTIC CLEAN WHITE APPLE STUDIO 3D ARTWORK        */}
-        {/* ========================================================= */}
-        <div
-          className="relative w-full max-w-[480px] sm:max-w-[540px] md:max-w-[580px] rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 bg-[#f3f3f5] border border-line"
+          className="relative w-full max-w-[480px] sm:max-w-[520px] md:max-w-[560px] rounded-3xl overflow-hidden shadow-xl transition-all duration-500 bg-[#f3f3f5] border border-line"
           style={{
             transformStyle: 'preserve-3d',
-            transform: 'translateZ(20px)',
+            transform: 'translateZ(15px)',
           }}
         >
           <Image
@@ -180,7 +131,7 @@ export function Hero3DShowcase() {
             width={1200}
             height={896}
             priority
-            className="w-full h-auto object-cover transition-transform duration-500 hover:scale-[1.02]"
+            className="w-full h-auto object-cover transition-transform duration-500 hover:scale-[1.01]"
           />
 
           {/* Interactive cursor light sheen */}
@@ -193,51 +144,43 @@ export function Hero3DShowcase() {
         </div>
       </div>
 
-      {/* ========================================================= */}
-      {/* TITANIUM COLOR SWITCHER PILL (Interactive)                */}
-      {/* ========================================================= */}
-      <div className="mt-5 flex flex-col items-center gap-2">
-        <div className="flex items-center gap-2 rounded-full border border-line bg-white/90 px-3.5 py-1.5 shadow-soft backdrop-blur-md">
-          <span className="text-[10.5px] uppercase font-bold tracking-wider text-ink-faint">
-            Finish:
-          </span>
-          <div className="flex items-center gap-2">
-            {(Object.keys(FINISHES) as TitaniumFinish[]).map((key) => {
-              const f = FINISHES[key];
-              const isActive = finish === key;
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => setFinish(key)}
-                  aria-label={`Select ${f.name}`}
-                  title={f.name}
-                  className={cn(
-                    'relative h-5 w-5 rounded-full transition-all duration-300 focus:outline-hidden',
-                    isActive
-                      ? 'scale-125 ring-2 ring-accent ring-offset-2'
-                      : 'hover:scale-110 opacity-70 hover:opacity-100'
-                  )}
-                  style={{
-                    background: f.dotColor,
-                    boxShadow: isActive ? `0 0 10px ${f.accentGlow}` : undefined,
-                  }}
-                >
-                  {isActive && (
-                    <span className="absolute inset-0 rounded-full border border-white/60" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-          <span className="text-[11px] font-bold text-ink transition-all duration-300 pl-1">
-            {cur.name}
-          </span>
+      {/* Titanium Color Switcher Pill (Clean Minimal) */}
+      <div className="mt-4 flex items-center gap-2 rounded-full border border-line bg-white/95 px-3.5 py-1.5 shadow-xs backdrop-blur-md">
+        <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint">
+          Finish:
+        </span>
+        <div className="flex items-center gap-2">
+          {(Object.keys(FINISHES) as TitaniumFinish[]).map((key) => {
+            const f = FINISHES[key];
+            const isActive = finish === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setFinish(key)}
+                aria-label={`Select ${f.name}`}
+                title={f.name}
+                className={cn(
+                  'relative h-4.5 w-4.5 rounded-full transition-all duration-300 focus:outline-hidden',
+                  isActive
+                    ? 'scale-120 ring-2 ring-accent ring-offset-2'
+                    : 'hover:scale-110 opacity-70 hover:opacity-100'
+                )}
+                style={{
+                  background: f.dotColor,
+                  boxShadow: isActive ? `0 0 8px ${f.accentGlow}` : undefined,
+                }}
+              >
+                {isActive && (
+                  <span className="absolute inset-0 rounded-full border border-white/60" />
+                )}
+              </button>
+            );
+          })}
         </div>
-
-        <p className="text-[11px] text-ink-faint">
-          ✦ Interactive 3D perspective — Move cursor to inspect angles
-        </p>
+        <span className="text-[11px] font-bold text-ink transition-all duration-300 pl-1">
+          {cur.name}
+        </span>
       </div>
     </div>
   );
