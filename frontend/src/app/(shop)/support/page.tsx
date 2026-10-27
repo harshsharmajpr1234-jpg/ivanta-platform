@@ -57,8 +57,8 @@ const POLICIES = [
     id: 'qc-certification',
     icon: CheckCircle2,
     title: '32-Point Quality Inspection',
-    badge: 'Apple Specialist Certified',
-    summary: 'How every pre-owned Apple device is graded, tested, and certified before dispatch.',
+    badge: 'iVanta Technical Inspection',
+    summary: 'How every pre-owned Apple device is graded, tested, and verified before dispatch.',
     details: [
       'Original Displays: Polarized light testing confirms OEM Retina glass with factory True Tone calibration intact.',
       'Original Battery: Minimum 85% battery floor verified via Apple system profiler with zero generic warning popups.',
@@ -73,7 +73,7 @@ const FAQS = [
   { id: 'f1', title: 'How do I claim my 1-Month Hardware Warranty?', content: 'Simply email support@ivanta.in or call our helpline with your 6-digit Order ID. Our technical team will review the issue and schedule a free courier pickup for testing and repair or replacement.' },
   { id: 'f2', title: 'How does Open Box Delivery work?', content: 'When the courier arrives, they will unbox the package in your presence. You can inspect the device cosmetics and power it on. Only accept and share the delivery OTP once you are completely satisfied with the device condition.' },
   { id: 'f3', title: 'What is the return/replacement window?', content: 'You have a 3-day testing window from delivery. If you encounter any technical defect, open your Account → Orders page and click "Request Replacement". Return pickup is 100% free.' },
-  { id: 'f4', title: 'Are all devices original Apple hardware?', content: 'Yes, 100%. We never use cheap aftermarket screens, duplicate batteries, or modified motherboards. Every unit undergoes a rigorous 32-point inspection by Apple-certified technicians.' },
+  { id: 'f4', title: 'Are all devices genuine Apple hardware?', content: 'Yes. We do not sell clone or counterfeit devices. Every unit undergoes a rigorous 32-point hardware inspection by specialized technicians to verify genuine components and function.' },
   { id: 'f5', title: 'What payment methods can I use?', content: 'We accept UPI (Google Pay, PhonePe, Paytm), Net Banking, Debit/Credit Cards with No-Cost EMI options, and Cash on Delivery (COD) across serviceable pin codes.' },
   { id: 'f6', title: 'How do I track my order?', content: 'Open Account → My Orders to see a live status timeline from dispatch to delivery with the courier tracking ID.' },
 ];

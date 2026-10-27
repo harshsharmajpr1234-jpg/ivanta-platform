@@ -17,9 +17,8 @@ const NAV = [
   { label: 'iPhone', href: '/products?cat=iphone' },
   { label: 'iPad', href: '/products?cat=ipad' },
   { label: 'Mac', href: '/products?cat=mac' },
-  { label: 'Watch', href: '/products?cat=apple-watch' },
+  { label: 'Watch', href: '/products?cat=watch' },
   { label: 'AirPods', href: '/products?cat=airpods' },
-  { label: 'Accessories', href: '/products?cat=accessories' },
   { label: 'Support', href: '/support' },
 ];
 

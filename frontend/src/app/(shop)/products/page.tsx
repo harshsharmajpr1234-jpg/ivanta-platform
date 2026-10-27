@@ -40,10 +40,16 @@ function Catalog() {
 
   const categories = useQuery({ queryKey: ['categories'], queryFn: () => catalogService.categories(), staleTime: 5 * 60_000 });
   const catList = useMemo(() => flatten(categories.data ?? []), [categories.data]);
-  const activeCat = catList.find((c) => c.node.slug === cat)?.node;
+  const activeCat = catList.find((c) => c.node.slug === cat || (cat === 'apple-watch' && c.node.slug === 'watch'))?.node;
 
+  const effectiveCategory = cat || activeCat?.id || undefined;
   const query: ProductQuery = {
-    q: q || undefined, categoryId: activeCat?.id, sort, page, size: 12,
+    q: q || undefined,
+    category: effectiveCategory,
+    categoryId: activeCat?.id || effectiveCategory,
+    sort,
+    page,
+    size: 12,
     minPrice: minPrice ? Number(minPrice) : undefined,
     maxPrice: maxPrice ? Number(maxPrice) : undefined,
   };

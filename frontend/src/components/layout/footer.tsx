@@ -9,9 +9,8 @@ const COLS = [
       { label: 'iPhone', href: '/products?cat=iphone' },
       { label: 'Mac & MacBook', href: '/products?cat=mac' },
       { label: 'iPad', href: '/products?cat=ipad' },
-      { label: 'Apple Watch', href: '/products?cat=apple-watch' },
+      { label: 'Apple Watch', href: '/products?cat=watch' },
       { label: 'AirPods', href: '/products?cat=airpods' },
-      { label: 'Accessories', href: '/products?cat=accessories' },
     ],
   },
   {
@@ -70,7 +69,9 @@ export function Footer() {
         </div>
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-line pt-6 text-[12px] text-ink-faint md:flex-row">
           <p>© {new Date().getFullYear()} {BRAND.name}. All rights reserved.</p>
-          <p>iVanta is an independent retailer. Apple, iPhone, iPad, Mac, Apple Watch and AirPods are trademarks of Apple Inc.</p>
+          <p className="max-w-2xl text-center md:text-right">
+            iVanta is an independent provider of quality-checked pre-owned electronics. Apple, iPhone, iPad, Mac, Apple Watch, and AirPods are trademarks of Apple Inc. Products sold by iVanta are pre-owned, independently inspected by iVanta, and are not affiliated with, certified by, or warranted by Apple Inc.
+          </p>
         </div>
       </div>
     </footer>

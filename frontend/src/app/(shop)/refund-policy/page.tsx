@@ -7,7 +7,7 @@ export default function RefundPolicyPage() {
     <PolicyPage title="Refund & Return Policy" updated="September 2026">
       <section>
         <h2>1. 3-Day Testing & Replacement Window</h2>
-        <p>All items on iVanta are certified pre-owned Apple devices. Every order comes with <strong>Open Box Delivery</strong> and a strict <strong>3-Day Testing Window</strong> starting from the timestamp of delivery. You can thoroughly test all hardware and software features of the device. If any hardware defect or functionality issue arises within these 3 days, you can raise a free replacement request directly from your Account → Orders page.</p>
+        <p>All items on iVanta are independently quality-checked pre-owned Apple devices. Every order comes with <strong>Open Box Delivery</strong> and a strict <strong>3-Day Testing Window</strong> starting from the timestamp of delivery. You can thoroughly test all hardware and software features of the device. If any hardware defect or functionality issue arises within these 3 days, you can raise a free replacement request directly from your Account → Orders page.</p>
       </section>
       <section>
         <h2>2. Open Box Delivery & Eligibility</h2>

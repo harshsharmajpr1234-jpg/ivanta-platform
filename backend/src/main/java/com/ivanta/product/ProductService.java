@@ -119,7 +119,16 @@ public class ProductService {
     }
 
     private Set<String> categorySubtree(String slugOrId) {
-        Optional<Category> cat = categories.findBySlugAndIsActiveTrue(slugOrId)
+        if (slugOrId == null || slugOrId.isBlank()) return Set.of();
+        String normalized = slugOrId.toLowerCase().trim();
+        if ("apple-watch".equals(normalized) || "watches".equals(normalized)) normalized = "watch";
+        else if ("iphones".equals(normalized)) normalized = "iphone";
+        else if ("macs".equals(normalized) || "macbook".equals(normalized) || "macbooks".equals(normalized)) normalized = "mac";
+        else if ("ipads".equals(normalized)) normalized = "ipad";
+
+        String finalSlug = normalized;
+        Optional<Category> cat = categories.findBySlugAndIsActiveTrue(finalSlug)
+                .or(() -> categories.findBySlugAndIsActiveTrue(slugOrId))
                 .or(() -> categories.findById(slugOrId));
         if (cat.isEmpty()) return Set.of();
         Set<String> ids = new LinkedHashSet<>();

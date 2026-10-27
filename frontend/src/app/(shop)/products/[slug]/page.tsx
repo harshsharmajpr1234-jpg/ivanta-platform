@@ -372,7 +372,7 @@ export default function ProductDetailPage() {
           </div>
 
           <ul className="mt-5 grid gap-2 text-[12.5px] text-ink-soft sm:grid-cols-2">
-            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Certified Pre-Owned · 32-Pt QC Tested</li>
+            <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Pre-Owned · iVanta 32-Pt Hardware Tested</li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> Open Box Delivery (Verify at Doorstep)</li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> 1-Month Hardware Warranty Included</li>
             <li className="flex items-center gap-2"><Check className="h-4 w-4 text-success" /> 3-Day Replacement Testing Window</li>

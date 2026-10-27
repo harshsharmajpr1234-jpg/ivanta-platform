@@ -25,6 +25,7 @@ interface CategoryShowcaseSectionProps {
   categorySlug: string;
   features: FeaturePoint[];
   products: ProductListItem[];
+  totalCount?: number;
   loading?: boolean;
   reverseBanner?: boolean;
 }
@@ -41,6 +42,7 @@ export function CategoryShowcaseSection({
   categorySlug,
   features,
   products,
+  totalCount,
   loading = false,
   reverseBanner = false,
 }: CategoryShowcaseSectionProps) {
@@ -147,7 +149,11 @@ export function CategoryShowcaseSection({
               href={`/products?cat=${categorySlug}`}
               className="inline-flex items-center gap-1 text-[12.5px] font-bold text-accent hover:underline"
             >
-              View all ({products.length}) <ArrowRight className="h-3.5 w-3.5" />
+              {loading ? (
+                <span className="opacity-60">Loading {categoryName}s…</span>
+              ) : (
+                <>View all ({(totalCount !== undefined ? totalCount : products.length)}) <ArrowRight className="h-3.5 w-3.5" /></>
+              )}
             </Link>
           </div>
 

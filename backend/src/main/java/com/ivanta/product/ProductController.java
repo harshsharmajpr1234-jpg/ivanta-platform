@@ -21,7 +21,9 @@ public class ProductController {
     public ApiResponse<PageResponse<ProductListItem>> search(
             @RequestParam(value = "q", required = false) String q,
             @RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "categoryId", required = false) String categoryId,
             @RequestParam(value = "brand", required = false) String brand,
+            @RequestParam(value = "brandId", required = false) String brandId,
             @RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
             @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
             @RequestParam(value = "storage", required = false) String storage,
@@ -31,8 +33,10 @@ public class ProductController {
             @RequestParam(value = "sort", required = false, defaultValue = "popular") String sort,
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "size", required = false, defaultValue = "12") int size) {
+        String effectiveCategory = (category != null && !category.isBlank()) ? category : categoryId;
+        String effectiveBrand = (brand != null && !brand.isBlank()) ? brand : brandId;
         return ApiResponse.ok(service.search(new ProductService.SearchParams(
-                q, category, brand, minPrice, maxPrice, storage, color, inStock, minRating, sort, page, size)));
+                q, effectiveCategory, effectiveBrand, minPrice, maxPrice, storage, color, inStock, minRating, sort, page, size)));
     }
 
     @GetMapping("/featured")
