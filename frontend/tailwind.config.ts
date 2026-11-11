@@ -5,52 +5,58 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // ControlZ Exact Signature Colors
         accent: {
-          DEFAULT: '#0b5cff',
-          hover: '#0046d6',
-          soft: '#eaf1ff',
-          border: '#c5d8ff',
+          DEFAULT: '#0000FF',       // ControlZ Signature Electric Cobalt Blue (--cz-blue)
+          hover: '#0000cc',
+          soft: '#D8E5FF',          // ControlZ Soft Light Blue Accent (--cz-lblue)
+          border: '#B3CEFF',
         },
         ink: {
-          DEFAULT: '#1d1d1f',
-          soft: '#424245',
-          muted: '#6e6e73',
-          faint: '#86868b',
+          DEFAULT: '#000000',       // Deep Pure Black (--cz-black)
+          dark: '#111111',          // Charcoal Dark (--cz-fab-bg)
+          soft: '#3A3A3A',
+          muted: '#717171',         // ControlZ Muted Text Gray (--cz-gray)
+          faint: '#8E8E93',
         },
         surface: {
-          DEFAULT: '#fbfbfd',
-          card: '#ffffff',
-          sunk: '#f5f5f7',
+          DEFAULT: '#FFFFFF',       // Crisp White (--cz-white)
+          card: '#FFFFFF',
+          sunk: '#F4F4F4',          // ControlZ Light Gray Section BG (--cz-lgray)
+          dark: '#000000',          // ControlZ Dark Section BG (--cz-bg)
         },
-        line: { DEFAULT: '#e4e4e7', strong: '#d2d2d7' },
-        success: { DEFAULT: '#1a7f37', soft: '#e8f5ec' },
-        warning: { DEFAULT: '#b45309', soft: '#fdf3e3' },
-        danger: { DEFAULT: '#c62f2f', soft: '#fdecec' },
+        line: { 
+          DEFAULT: '#E5E7EB',       // Modern Light Gray Border
+          strong: '#D1D5DB',
+          dark: 'rgba(255, 255, 255, 0.16)', // Dark Section Line (--cz-line)
+        },
+        success: { DEFAULT: '#10B981', soft: '#E0F4E8' },
+        warning: { DEFAULT: '#F59E0B', soft: '#FEF3C7' },
+        danger: { DEFAULT: '#EF4444', soft: '#FEE2E2' },
       },
       fontFamily: {
-        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'Inter', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        sans: [
+          'SF Pro Display',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Inter',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif',
+        ],
       },
       boxShadow: {
-        soft: '0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06)',
-        card: '0 1px 3px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.07)',
-        pop: '0 12px 40px rgba(0,0,0,0.14)',
+        soft: '0 2px 8px rgba(0, 0, 0, 0.04)',
+        card: '0 4px 20px rgba(0, 0, 0, 0.06)',
+        pop: '0 12px 40px rgba(0, 0, 0, 0.12)',
+        blue: '0 8px 30px rgba(0, 0, 255, 0.25)',
       },
-      borderRadius: { xl2: '14px', xl3: '18px', xl4: '24px' },
-      keyframes: {
-        'fade-up': { '0%': { opacity: '0', transform: 'translateY(8px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-        'fade-in': { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-        'slide-in-right': { '0%': { transform: 'translateX(100%)' }, '100%': { transform: 'translateX(0)' } },
-        'slide-up': { '0%': { transform: 'translateY(100%)' }, '100%': { transform: 'translateY(0)' } },
-        shimmer: { '100%': { transform: 'translateX(100%)' } },
-        'pulse-soft': { '0%,100%': { opacity: '1' }, '50%': { opacity: '0.55' } },
-      },
-      animation: {
-        'fade-up': 'fade-up .45s cubic-bezier(.22,.8,.36,1) both',
-        'fade-in': 'fade-in .3s ease both',
-        'slide-in-right': 'slide-in-right .3s cubic-bezier(.22,.8,.36,1) both',
-        'slide-up': 'slide-up .3s cubic-bezier(.22,.8,.36,1) both',
-        shimmer: 'shimmer 1.6s infinite',
-        'pulse-soft': 'pulse-soft 1.8s ease-in-out infinite',
+      borderRadius: {
+        xl2: '14px',
+        xl3: '18px',
+        xl4: '22px', // ControlZ Border Radius (--cz-r)
       },
     },
   },
