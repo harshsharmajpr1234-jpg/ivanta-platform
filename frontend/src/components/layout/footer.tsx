@@ -1,93 +1,152 @@
 import Link from 'next/link';
 import { BRAND } from '@/constants';
+import { ShieldCheck, Truck, RotateCcw, Award } from 'lucide-react';
 
 const COLS = [
   {
-    title: 'Shop',
+    title: 'Flagship iPhones',
     links: [
-      { label: 'All products', href: '/products' },
-      { label: 'iPhone', href: '/products?cat=iphone' },
-      { label: 'Mac & MacBook', href: '/products?cat=mac' },
-      { label: 'iPad', href: '/products?cat=ipad' },
-      { label: 'Apple Watch', href: '/products?cat=watch' },
-      { label: 'AirPods', href: '/products?cat=airpods' },
+      { label: 'iPhone 16 Series', href: '/products?q=iPhone+16' },
+      { label: 'iPhone 15 Pro & Pro Max', href: '/products?q=iPhone+15+Pro' },
+      { label: 'iPhone 14 Series', href: '/products?q=iPhone+14' },
+      { label: 'iPhone 13 Series', href: '/products?q=iPhone+13' },
+      { label: 'All Pre-Owned iPhones', href: '/products?cat=iphone' },
     ],
   },
   {
-    title: 'Account',
+    title: 'Apple Ecosystem',
     links: [
-      { label: 'Sign in', href: '/login' },
-      { label: 'My orders', href: '/orders' },
-      { label: 'Wishlist', href: '/wishlist' },
-      { label: 'Addresses', href: '/account/addresses' },
-      { label: 'Returns & refunds', href: '/account/returns' },
+      { label: 'Apple Watch Series & Ultra', href: '/products?cat=watch' },
+      { label: 'MacBook Air & Pro', href: '/products?cat=mac' },
+      { label: 'iPad & iPad Pro', href: '/products?cat=ipad' },
+      { label: 'AirPods & Accessories', href: '/products?cat=airpods' },
     ],
   },
   {
-    title: 'Standards & Policies',
+    title: 'Why Flyphones',
     links: [
-      { label: 'Device Condition Guide', href: '/condition-guide' },
-      { label: 'Warranty & Return Policy', href: '/warranty-policy' },
-      { label: 'Shipping Policy', href: '/shipping-policy' },
+      { label: 'Component-Level Renewal', href: '/condition-guide' },
+      { label: '32-Point Quality Checklist', href: '/condition-guide#checklist' },
+      { label: '1-Year Limited Warranty', href: '/warranty-policy' },
+      { label: 'Open-Box Delivery Verification', href: '/shipping-policy' },
+      { label: 'About Us & Hansh Tech', href: '/about' },
+    ],
+  },
+  {
+    title: 'Support & Policies',
+    links: [
+      { label: 'Track Your Shipment', href: '/support#tracking' },
       { label: 'Refund & Returns Policy', href: '/refund-policy' },
-      { label: 'Customer Support', href: '/support' },
-      { label: 'About Flyphones', href: '/about' },
       { label: 'Terms of Service', href: '/terms' },
       { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Customer Help Desk', href: '/support' },
     ],
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-white">
-      <div className="mx-auto max-w-[1240px] px-4 py-10 sm:py-12">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-10">
+    <footer className="border-t border-line/70 bg-[#ffffff] text-[#111111]">
+      {/* Top Value Assurance Ribbon (ControlZ style) */}
+      <div className="border-b border-line/60 bg-surface-sunk/60">
+        <div className="mx-auto grid max-w-[1280px] grid-cols-2 divide-y divide-line/60 sm:grid-cols-4 sm:divide-y-0 sm:divide-x sm:divide-line/60">
+          <div className="flex items-center gap-3 p-4 sm:p-5">
+            <Award className="h-5 w-5 text-accent shrink-0" />
+            <div>
+              <p className="text-[12.5px] font-bold text-ink">Certified Renewed</p>
+              <p className="text-[11px] text-ink-muted">Factory grade inspection</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 p-4 sm:p-5">
+            <ShieldCheck className="h-5 w-5 text-emerald-600 shrink-0" />
+            <div>
+              <p className="text-[12.5px] font-bold text-ink">Up to 1-Year Warranty</p>
+              <p className="text-[11px] text-ink-muted">Pan-India doorstep support</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 p-4 sm:p-5">
+            <Truck className="h-5 w-5 text-purple-600 shrink-0" />
+            <div>
+              <p className="text-[12.5px] font-bold text-ink">Open Box Delivery</p>
+              <p className="text-[11px] text-ink-muted">Inspect before acceptance</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 p-4 sm:p-5">
+            <RotateCcw className="h-5 w-5 text-amber-600 shrink-0" />
+            <div>
+              <p className="text-[12.5px] font-bold text-ink">Hassle-Free Returns</p>
+              <p className="text-[11px] text-ink-muted">Instant return & replace</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer Links */}
+      <div className="mx-auto max-w-[1280px] px-4 py-12 sm:px-6 sm:py-16">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-5 md:gap-10">
+          
+          {/* Brand Info Column */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5" aria-label="Flyphones — Powered by Hansh Technologies">
-              <img src="/logo-icon.png" alt="Flyphones — Powered by Hansh Technologies" className="h-9 w-auto object-contain" />
-              <div>
-                <span className="text-[19px] font-extrabold tracking-tight text-ink">{BRAND.name}</span>
-                <span className="block text-[10px] font-medium uppercase tracking-wider text-ink-faint">
-                  Powered by {BRAND.parentCompany}
+            <Link href="/" className="inline-flex items-center gap-2.5" aria-label="Flyphones Home">
+              <img
+                src="/logo-icon.png"
+                alt="Flyphones Mascot"
+                className="h-8.5 w-auto object-contain shrink-0"
+              />
+              <div className="flex flex-col">
+                <div className="flex items-baseline leading-none font-black tracking-tight text-[18px]">
+                  <span className="text-[#f59e0b]">Fly</span>
+                  <span className="text-ink">phones</span>
+                  <span className="text-[#f59e0b]">.</span>
+                </div>
+                <span className="text-[6.5px] font-bold tracking-wider text-ink-muted uppercase leading-none pt-1">
+                  Powered by Hansh Technologies
                 </span>
               </div>
             </Link>
-            <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-ink-muted">
-              {BRAND.tagline}. High-quality pre-owned and refurbished devices with transparent grading, 6-month limited warranty, and fast insured delivery across India.
+
+            <p className="mt-4 text-[12.5px] leading-relaxed text-ink-muted">
+              India&apos;s trusted platform for component-renewed Apple flagship smartphones, MacBooks, and wearables. Like new, only smarter.
             </p>
-            <div className="mt-4 space-y-1 text-[12.5px] text-ink-soft">
-              <p className="font-semibold text-ink">
-                <a href={`tel:${BRAND.supportPhoneRaw}`} className="hover:text-accent">{BRAND.supportPhone}</a>
-                {' · '}
-                <a href={`mailto:${BRAND.supportEmail}`} className="hover:text-accent">{BRAND.supportEmail}</a>
-              </p>
-              <p className="text-[12px] text-ink-muted">
-                Support Hours: {BRAND.supportHours}
-              </p>
-              <p className="text-[12px] text-ink-muted leading-snug pt-1">
-                Experience Center & Office: {BRAND.address.full}
-              </p>
+
+            <div className="mt-5 space-y-1 text-[11.5px] text-ink-muted">
+              <p><strong className="text-ink">Office:</strong> {BRAND.address.full}</p>
+              <p><strong className="text-ink">Support:</strong> {BRAND.supportPhone}</p>
+              <p><strong className="text-ink">Email:</strong> {BRAND.supportEmail}</p>
             </div>
           </div>
+
+          {/* Links Columns */}
           {COLS.map((c) => (
-            <div key={c.title} className="col-span-1">
-              <h3 className="text-[12px] font-semibold uppercase tracking-wider text-ink">{c.title}</h3>
-              <ul className="mt-3 space-y-2">
+            <div key={c.title}>
+              <h4 className="text-[13px] font-bold uppercase tracking-wider text-ink">
+                {c.title}
+              </h4>
+              <ul className="mt-4 space-y-2.5">
                 {c.links.map((l) => (
-                  <li key={l.href + l.label}>
-                    <Link href={l.href} className="text-[13px] text-ink-muted transition-colors hover:text-accent">{l.label}</Link>
+                  <li key={l.label}>
+                    <Link
+                      href={l.href}
+                      className="text-[13px] text-ink-muted transition-colors hover:text-ink hover:underline"
+                    >
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
+
         </div>
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-line pt-6 text-[12px] text-ink-faint md:flex-row">
-          <p>© {new Date().getFullYear()} {BRAND.name} (Powered by {BRAND.parentCompany}). All rights reserved.</p>
-          <p className="max-w-2xl text-center md:text-right">
-            Flyphones is an independent provider of quality-checked pre-owned electronics. Apple, iPhone, iPad, Mac, Apple Watch, and AirPods are trademarks of Apple Inc. Products sold by Flyphones are pre-owned, independently inspected by Flyphones, and are not affiliated with, certified by, or warranted by Apple Inc.
-          </p>
+
+        {/* Bottom Copyright */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-line/70 pt-8 sm:flex-row text-[12px] text-ink-muted">
+          <p>© {new Date().getFullYear()} {BRAND.name} (Powered by Hansh Technologies). All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <Link href="/terms" className="hover:text-ink">Terms of Use</Link>
+            <Link href="/privacy" className="hover:text-ink">Privacy Policy</Link>
+            <Link href="/warranty-policy" className="hover:text-ink">Warranty & Repairs</Link>
+          </div>
         </div>
       </div>
     </footer>
