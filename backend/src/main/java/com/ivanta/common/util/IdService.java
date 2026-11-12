@@ -44,11 +44,14 @@ public class IdService {
         // Lazy, idempotent init: seed the counter from MAX(id) of the owning table.
         try {
             jdbc.update("INSERT INTO id_sequences (seq_name, next_val) "
-                            + "SELECT ?, COALESCE(MAX(CAST(SUBSTRING(id, ?) AS BIGINT)), 0) "
-                            + "FROM " + table + " WHERE id LIKE ?",
+                            + "SELECT ?, COALESCE(MAX(CAST(SUBSTRING(id, ?) AS UNSIGNED)), 0) "
+                            + "FROM " + table + " WHERE id LIKE ? "
+                            + "ON DUPLICATE KEY UPDATE next_val = next_val",
                     key, numberStart, like);
-        } catch (Exception ignored) {
-            // Row already exists
+        } catch (Exception e) {
+            try {
+                jdbc.update("INSERT IGNORE INTO id_sequences (seq_name, next_val) VALUES (?, 0)", key);
+            } catch (Exception ignored) {}
         }
 
         // Atomic increment

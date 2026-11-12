@@ -121,13 +121,17 @@ UPDATE orders
 SET order_number = CONCAT('IVN-20260925-', LPAD(RIGHT(id, 6), 6, '0'))
 WHERE order_number IS NULL;
 
-ALTER TABLE orders ALTER COLUMN order_number VARCHAR(24) NOT NULL;
+ALTER TABLE orders MODIFY COLUMN order_number VARCHAR(24) NOT NULL;
 ALTER TABLE orders ADD CONSTRAINT uq_ord_number UNIQUE (order_number);
 
 -- seed the per-day IdService counters so future numbers never collide
-MERGE INTO id_sequences (seq_name, next_val) KEY (seq_name)
-SELECT CONCAT('orders:IVN-', REPLACE(SUBSTR(CAST(placed_at AS VARCHAR), 1, 10), '-', '')), COUNT(*)
-FROM orders GROUP BY SUBSTR(CAST(placed_at AS VARCHAR), 1, 10);
+INSERT INTO id_sequences (seq_name, next_val)
+SELECT CONCAT('orders:IVN-', grp), cnt FROM (
+  SELECT REPLACE(SUBSTR(CAST(placed_at AS CHAR), 1, 10), '-', '') AS grp, COUNT(*) AS cnt
+  FROM orders
+  GROUP BY 1
+) t
+ON DUPLICATE KEY UPDATE next_val = VALUES(next_val);
 
 -- ---------- 10. denormalised payment/shipping status + lifecycle stamps ----------
 UPDATE orders o SET o.payment_status = COALESCE(

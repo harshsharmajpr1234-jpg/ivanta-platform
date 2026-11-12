@@ -29,6 +29,11 @@ import java.util.zip.GZIPInputStream;
 @Component
 @Order(10)
 @RequiredArgsConstructor
+@org.springframework.boot.autoconfigure.condition.ConditionalOnProperty(
+    name = "ivanta.location.seed-pincodes",
+    havingValue = "true",
+    matchIfMissing = false
+)
 public class IndiaPincodeDatabaseInitializer implements ApplicationRunner {
 
     private final PincodeLookupCacheRepository cacheRepo;
