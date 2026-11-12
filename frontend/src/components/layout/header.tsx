@@ -87,19 +87,19 @@ export function Header() {
           <button type="button" className="rounded-full p-2 text-white hover:bg-white/10 md:hidden" aria-label="Open menu" onClick={() => setMenuOpen(true)}>
             <Menu className="h-5 w-5" />
           </button>
-          <Link href="/" className="group flex shrink-0 items-center gap-2.5 sm:gap-3" aria-label="Flyphones — Powered by Hansh Technologies">
+          <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3" aria-label="Flyphones — Powered by Hansh Technologies">
             <img
               src="/logo-icon.png"
               alt="Flyphones Mascot"
-              className="h-8.5 w-auto object-contain shrink-0 transition-transform duration-200 group-hover:scale-105 sm:h-9"
+              className="h-8 w-auto object-contain shrink-0 transition-transform duration-200 group-hover:scale-105 sm:h-9"
             />
             <div className="flex flex-col justify-center">
-              <div className="flex items-baseline leading-none font-black tracking-tight text-[17px] sm:text-[19px]">
+              <div className="flex items-baseline leading-none font-black tracking-tight text-[16px] sm:text-[19px]">
                 <span className="text-[#f59e0b]">Fly</span>
                 <span className="text-white">phones</span>
                 <span className="text-[#f59e0b]">.</span>
               </div>
-              <span className="text-[6.5px] font-bold tracking-wider text-neutral-400 uppercase leading-none pt-1 sm:text-[7.5px]">
+              <span className="text-[6px] font-bold tracking-wider text-neutral-400 uppercase leading-none pt-0.5 sm:text-[7.5px] sm:pt-1">
                 — Powered by Hansh Technologies —
               </span>
             </div>
@@ -212,7 +212,7 @@ export function Header() {
                 </div>
               )}
             </div>
-            <Link href="/login" className="rounded-full bg-white px-3.5 py-1.5 text-[12.5px] font-semibold text-black hover:bg-neutral-200 md:hidden shrink-0">{user ? 'Account' : 'Sign In'}</Link>
+            <Link href="/login" className="hidden sm:inline-flex rounded-full bg-white px-3.5 py-1.5 text-[12.5px] font-semibold text-black hover:bg-neutral-200 md:hidden shrink-0">{user ? 'Account' : 'Sign In'}</Link>
           </div>
         </div>
       </header>

@@ -27,6 +27,11 @@ const ITEMS = [
 
 export function BottomNav() {
   const pathname = usePathname();
+  // On Product Detail Page, let the sticky Buy Now / Add to Cart action bar take precedence
+  if (pathname.startsWith('/products/') && pathname !== '/products') {
+    return null;
+  }
+
   const { user } = useAuthStore();
   const { data: cart } = useQuery({ queryKey: ['cart'], queryFn: () => cartService.get(), enabled: Boolean(user) });
   const guestCount = useGuestCart((s) => guestCartCount(s.items));
@@ -40,20 +45,22 @@ export function BottomNav() {
   const orderCount = activeOrders?.content.filter((o) => ACTIVE_ORDER_STATUSES.includes(o.status)).length ?? 0;
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 backdrop-blur-xl md:hidden" aria-label="Bottom">
-      <div className="grid grid-cols-5">
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[#262626] bg-[#0d0d0d]/95 backdrop-blur-xl md:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.6)]" aria-label="Bottom">
+      <div className="grid grid-cols-5 py-1">
         {ITEMS.map((it) => {
           const active = it.href === '/' ? pathname === '/' : pathname.startsWith(it.href);
           return (
             <Link key={it.label} href={it.href}
-              className={cn('relative flex flex-col items-center gap-0.5 py-2 text-[10.5px] font-medium', active ? 'text-accent' : 'text-ink-muted')}>
-              <it.icon className="h-5 w-5" />
-              {it.label}
+              className={cn('relative flex flex-col items-center gap-1 py-1.5 text-[10px] font-semibold transition-colors', active ? 'text-[#0000FF] text-white' : 'text-neutral-400 hover:text-white')}>
+              <div className={cn('flex h-7 w-7 items-center justify-center rounded-full transition-all', active && 'bg-white/10 text-white')}>
+                <it.icon className={cn('h-4.5 w-4.5', active ? 'text-white' : 'text-neutral-400')} />
+              </div>
+              <span className={cn('tracking-tight', active ? 'text-white font-bold' : 'text-neutral-400')}>{it.label}</span>
               {it.badge && cartCount > 0 && (
-                <span className="absolute right-[22%] top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-bold text-white">{cartCount}</span>
+                <span className="absolute right-[20%] top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0000FF] px-1 text-[9px] font-black text-white shadow-xs">{cartCount}</span>
               )}
               {'orderBadge' in it && it.orderBadge && orderCount > 0 && (
-                <span className="absolute right-[22%] top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-bold text-white">{orderCount}</span>
+                <span className="absolute right-[20%] top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0000FF] px-1 text-[9px] font-black text-white shadow-xs">{orderCount}</span>
               )}
             </Link>
           );
