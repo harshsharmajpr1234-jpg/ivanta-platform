@@ -11,6 +11,7 @@ import com.ivanta.inventory.InventoryService;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Subquery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Public catalog + search (§11/§53): server-side filtering, sorting and
@@ -57,7 +59,7 @@ public class ProductService {
         };
         PageRequest pr = PageRequest.of(Math.max(0, p.page()), Math.min(Math.max(1, p.size()), 48), sort);
         Page<Product> result = products.findAll(spec(p), pr);
-        List<ProductListItem> content = result.getContent().stream().map(this::toListItem).toList();
+        List<ProductListItem> content = toListItems(result.getContent());
         return new PageResponse<>(content, result.getNumber(), result.getSize(),
                 result.getTotalElements(), result.getTotalPages());
     }
@@ -154,18 +156,19 @@ public class ProductService {
         return toDetail(p);
     }
 
+    @Cacheable(value = "featuredProducts", unless = "#result == null")
     @Transactional(readOnly = true)
     public List<ProductListItem> featured() {
-        return products.findByFeaturedTrueAndIsActiveTrueAndDeletedAtIsNullOrderByCreatedAtDesc().stream()
-                .limit(12).map(this::toListItem).toList();
+        return toListItems(products.findByFeaturedTrueAndIsActiveTrueAndDeletedAtIsNullOrderByCreatedAtDesc().stream()
+                .limit(12).toList());
     }
 
     @Transactional(readOnly = true)
     public List<ProductListItem> related(String productId) {
         Product p = products.findByIdAndDeletedAtIsNull(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product " + productId));
-        return products.findByCategoryIdAndIsActiveTrueAndDeletedAtIsNullOrderByNameAsc(p.getCategoryId())
-                .stream().filter(x -> !x.getId().equals(productId)).limit(8).map(this::toListItem).toList();
+        return toListItems(products.findByCategoryIdAndIsActiveTrueAndDeletedAtIsNullOrderByNameAsc(p.getCategoryId())
+                .stream().filter(x -> !x.getId().equals(productId)).limit(8).toList());
     }
 
     @Transactional(readOnly = true)
@@ -175,20 +178,26 @@ public class ProductService {
 
     /* ---------- category tree ---------- */
 
+    @Cacheable(value = "categoryTree", unless = "#result == null")
     @Transactional(readOnly = true)
     public List<CategoryNode> categoryTree() {
         List<Category> all = categories.findByIsActiveTrueOrderBySortOrderAsc();
+        List<Product> allProducts = products.findAll();
+        Map<String, Long> counts = allProducts.stream()
+                .filter(p -> Boolean.TRUE.equals(p.getIsActive()) && p.getDeletedAt() == null && p.getCategoryId() != null)
+                .collect(Collectors.groupingBy(Product::getCategoryId, Collectors.counting()));
+
         Map<String, List<Category>> byParent = new LinkedHashMap<>();
         all.forEach(c -> byParent.computeIfAbsent(c.getParentId() == null ? "" : c.getParentId(),
                 k -> new ArrayList<>()).add(c));
-        return buildTree("", byParent);
+        return buildTreeFast("", byParent, counts);
     }
 
-    private List<CategoryNode> buildTree(String parentId, Map<String, List<Category>> byParent) {
+    private List<CategoryNode> buildTreeFast(String parentId, Map<String, List<Category>> byParent, Map<String, Long> counts) {
         return byParent.getOrDefault(parentId, List.of()).stream()
                 .map(c -> {
-                    List<CategoryNode> children = buildTree(c.getId(), byParent);
-                    long directCount = products.findByCategoryIdAndIsActiveTrueAndDeletedAtIsNullOrderByNameAsc(c.getId()).size();
+                    List<CategoryNode> children = buildTreeFast(c.getId(), byParent, counts);
+                    long directCount = counts.getOrDefault(c.getId(), 0L);
                     long totalCount = directCount + children.stream().mapToLong(CategoryNode::productCount).sum();
                     return new CategoryNode(c.getId(), c.getName(), c.getSlug(), c.getDescription(),
                             c.getImageKey(),
@@ -200,15 +209,36 @@ public class ProductService {
 
     /* ---------- mappers ---------- */
 
+    public List<ProductListItem> toListItems(List<Product> list) {
+        if (list == null || list.isEmpty()) return List.of();
+        List<String> pids = list.stream().map(Product::getId).toList();
+
+        // 1. Single bulk query for all product images
+        Map<String, String> imageByProduct = new HashMap<>();
+        images.findByProductIdInAndIsActiveTrueOrderBySortOrderAsc(pids).forEach(img -> {
+            imageByProduct.putIfAbsent(img.getProductId(), img.getStorageKey());
+            if (Boolean.TRUE.equals(img.getIsMain())) {
+                imageByProduct.put(img.getProductId(), img.getStorageKey());
+            }
+        });
+
+        // 2. Preload brands and categories into memory maps
+        Map<String, String> brandNames = new HashMap<>();
+        brands.findAll().forEach(b -> brandNames.put(b.getId(), b.getName()));
+
+        Map<String, String> categoryNames = new HashMap<>();
+        categories.findAll().forEach(c -> categoryNames.put(c.getId(), c.getName()));
+
+        return list.stream().map(p -> new ProductListItem(
+                p.getId(), p.getName(), p.getSlug(), brandNames.get(p.getBrandId()),
+                categoryNames.get(p.getCategoryId()), p.getPrice(), p.getMrp(), discountPct(p.getPrice(), p.getMrp()),
+                p.getRatingAvg(), p.getRatingCount(), imageByProduct.get(p.getId()), p.getStockStatus(),
+                Boolean.TRUE.equals(p.getFeatured()), p.getReleaseYear(), p.getShortDescription()
+        )).toList();
+    }
+
     public ProductListItem toListItem(Product p) {
-        String image = images.findByProductIdAndIsActiveTrueOrderBySortOrderAsc(p.getId()).stream()
-                .filter(i -> Boolean.TRUE.equals(i.getIsMain())).findFirst()
-                .or(() -> images.findByProductIdAndIsActiveTrueOrderBySortOrderAsc(p.getId()).stream().findFirst())
-                .map(ProductImage::getStorageKey).orElse(null);
-        return new ProductListItem(p.getId(), p.getName(), p.getSlug(), brandName(p.getBrandId()),
-                categoryName(p.getCategoryId()), p.getPrice(), p.getMrp(), discountPct(p.getPrice(), p.getMrp()),
-                p.getRatingAvg(), p.getRatingCount(), image, p.getStockStatus(),
-                Boolean.TRUE.equals(p.getFeatured()), p.getReleaseYear(), p.getShortDescription());
+        return toListItems(List.of(p)).stream().findFirst().orElse(null);
     }
 
     public ProductDetail toDetail(Product p) {

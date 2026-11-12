@@ -21,7 +21,13 @@ async function proxy(req: NextRequest, ctx: { params: { path: string[] } | Promi
   const accept = req.headers.get('accept');
   headers.set('accept', accept ?? 'application/json');
 
-  const init: RequestInit = { method: req.method, headers, cache: 'no-store' };
+  const isCatalogGet = req.method === 'GET' && (path[0] === 'products' || path[0] === 'categories');
+  const init: RequestInit = { 
+    method: req.method, 
+    headers, 
+    next: isCatalogGet ? { revalidate: 30 } : undefined,
+    cache: isCatalogGet ? undefined : 'no-store' 
+  };
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     init.body = await req.arrayBuffer();
   }
@@ -43,6 +49,10 @@ async function proxy(req: NextRequest, ctx: { params: { path: string[] } | Promi
   if (upstreamCt) resHeaders.set('content-type', upstreamCt);
   const cd = upstream.headers.get('content-disposition');
   if (cd) resHeaders.set('content-disposition', cd);
+
+  if (isCatalogGet && upstream.ok) {
+    resHeaders.set('Cache-Control', 'public, max-age=15, stale-while-revalidate=60');
+  }
 
   return new NextResponse(upstream.body, { status: upstream.status, headers: resHeaders });
 }
