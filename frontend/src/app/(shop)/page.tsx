@@ -18,49 +18,38 @@ import {
   Layers,
   Award,
   RefreshCw,
-  Check
+  Check,
+  ArrowUpRight
 } from 'lucide-react';
 import { ProductCard } from '@/components/product/product-card';
 import { ProductGridSkeleton } from '@/components/ui/skeleton';
 import { catalogService } from '@/services';
 import { BRAND } from '@/constants';
 
-// ControlZ Exact Trust Pillars
+// ControlZ Exact Trust Pillars (Glassmorphic cards)
 const CONTROLZ_PILLARS = [
   {
-    icon: BatteryCharging,
-    badge: '100% Health Guarantee',
-    title: 'Battery you can count on.',
-    description: 'Every Flyphones device is delivered with high-capacity tested battery performance or certified replacement.',
-    accent: 'bg-[#D8E5FF]',
-    iconColor: 'text-[#0000FF]',
+    value: '100%',
+    title: 'Battery health you can count on.',
+    subtitle: 'Tested high-capacity battery health on every device with certified peak performance.',
     link: '/condition-guide#battery'
   },
   {
-    icon: Cpu,
-    badge: '300+ Test Diagnostics',
-    title: 'Component-level precision.',
-    description: 'FaceID, cameras, OLED retina display, logic board, and True Tone tested with advanced diagnostic automation.',
-    accent: 'bg-[#F4F4F4]',
-    iconColor: 'text-[#000000]',
+    value: '300+',
+    title: 'Every device, checked 300+ ways.',
+    subtitle: 'Component-level diagnostics on display, logic board, cameras, sensors, and biometrics.',
     link: '/condition-guide'
   },
   {
-    icon: ShieldCheck,
-    badge: 'Comprehensive Protection',
+    value: '1-Year',
     title: 'Covered for a full year.',
-    description: 'Hassle-free coverage with doorstep pickup, genuine repairs, and swift turnaround service across India.',
-    accent: 'bg-[#D8E5FF]',
-    iconColor: 'text-[#0000FF]',
+    subtitle: 'Doorstep warranty support, genuine repair service, and free pickup across India.',
     link: '/warranty-policy'
   },
   {
-    icon: Truck,
-    badge: 'Doorstep Peace of Mind',
-    title: 'Open box delivery verified.',
-    description: 'Inspect physical beauty and authenticity right at your doorstep before final acceptance. 100% risk-free.',
-    accent: 'bg-[#F4F4F4]',
-    iconColor: 'text-[#000000]',
+    value: 'Open Box',
+    title: 'Help is never far away.',
+    subtitle: 'Doorstep inspection before delivery acceptance. 100% verified and zero risk.',
     link: '/shipping-policy'
   },
 ];
@@ -96,108 +85,153 @@ export default function HomePage() {
   const cats = (categories.data?.[0]?.children ?? []).slice(0, 6);
 
   return (
-    <div className="bg-[#FFFFFF] text-[#000000] selection:bg-[#0000FF] selection:text-white">
+    <div className="bg-[#000000] text-white selection:bg-[#0000FF] selection:text-white min-h-screen">
       
       {/* ========================================================= */}
-      {/* 1. CONTROLZ SIGNATURE HERO (Pure White + Electric Blue)   */}
+      {/* 1. CONTROLZ PRODUCT LINKS BAR (cz-product-links-bar)       */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden border-b border-[#E5E7EB] bg-[#FFFFFF]">
-        <div className="mx-auto max-w-[1240px] px-4 pt-12 pb-16 sm:px-6 sm:pt-20 sm:pb-24 lg:pt-24 lg:pb-28">
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
+      <section className="bg-[#000000] pt-6 pb-2">
+        <div className="mx-auto max-w-[1240px] px-4">
+          <div className="flex items-center gap-1 overflow-x-auto rounded-full bg-[#161616] border border-[#3A3A3A] p-1.5 scrollbar-none">
+            <Link
+              href="/products?cat=iphone"
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-white transition-all hover:bg-white hover:text-black shrink-0"
+            >
+              <span>iPhone</span>
+            </Link>
+            <div className="h-4 w-px bg-[#3A3A3A] shrink-0" />
+            <Link
+              href="/products?cat=ipad"
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-white/80 transition-all hover:bg-white hover:text-black shrink-0"
+            >
+              <span>iPad</span>
+            </Link>
+            <div className="h-4 w-px bg-[#3A3A3A] shrink-0" />
+            <Link
+              href="/products?cat=mac"
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-white/80 transition-all hover:bg-white hover:text-black shrink-0"
+            >
+              <span>MacBook</span>
+            </Link>
+            <div className="h-4 w-px bg-[#3A3A3A] shrink-0" />
+            <Link
+              href="/products?cat=watch"
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-white/80 transition-all hover:bg-white hover:text-black shrink-0"
+            >
+              <span>Apple Watch</span>
+            </Link>
+            <div className="h-4 w-px bg-[#3A3A3A] shrink-0" />
+            <Link
+              href="/products?cat=airpods"
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-white/80 transition-all hover:bg-white hover:text-black shrink-0"
+            >
+              <span>AirPods</span>
+            </Link>
+            <div className="h-4 w-px bg-[#3A3A3A] shrink-0" />
+            <Link
+              href="/condition-guide"
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#D8E5FF] transition-all hover:bg-white hover:text-black shrink-0"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-[#0000FF]" />
+              <span>Renewed Standards</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 2. CONTROLZ EXACT HERO (czp_hero)                         */}
+      {/* ========================================================= */}
+      <section className="bg-[#000000] px-4 py-6 sm:px-6 sm:py-8">
+        <div className="mx-auto max-w-[1240px]">
+          <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] border-2 border-white/30 bg-[#000000] p-8 sm:p-14 lg:p-16 min-h-[580px] sm:min-h-[660px] flex flex-col justify-between">
             
-            {/* Left Content Column */}
-            <div className="lg:col-span-7">
-              {/* ControlZ Micro Pill */}
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-[#E5E7EB] bg-[#F4F4F4] px-4 py-1.5 text-[12px] font-semibold text-[#000000]">
+            {/* Ambient Background Gradient Mesh */}
+            <div className="pointer-events-none absolute -right-24 -top-24 h-[500px] w-[500px] rounded-full bg-[#0000FF]/25 blur-[120px]" />
+            <div className="pointer-events-none absolute -left-24 -bottom-24 h-[400px] w-[400px] rounded-full bg-[#0000FF]/15 blur-[100px]" />
+
+            {/* Top Micro Trust Pill */}
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[11px] font-bold text-white uppercase tracking-widest backdrop-blur-md">
                 <span className="flex h-2 w-2 rounded-full bg-[#0000FF] animate-pulse" />
-                <span className="tracking-wider uppercase text-[10.5px] font-black text-[#717171]">From New to Renewed</span>
-                <span className="text-[#D1D5DB]">|</span>
-                <span className="font-bold text-[#000000]">Like New. Only Smarter.</span>
-              </div>
-
-              {/* ControlZ Signature Huge Typography */}
-              <h1 className="mt-6 text-[44px] font-black tracking-tight text-[#000000] sm:text-[62px] lg:text-[72px] leading-[1.02]">
-                Premium<br />
-                <span className="text-[#0000FF]">
-                  Renewed.
-                </span>
-              </h1>
-
-              <p className="mt-6 max-w-xl text-[16px] sm:text-[17.5px] leading-relaxed text-[#717171] font-normal">
-                Flagship Apple devices precision-renewed at component level. 
-                Experience pristine cosmetics, 100% verified battery health, and factory diagnostics backed by comprehensive warranty.
-              </p>
-
-              {/* ControlZ CTAs */}
-              <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Link
-                  href="/products?cat=iphone"
-                  className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full bg-[#000000] px-8 text-[15px] font-bold text-white shadow-soft transition-all hover:bg-[#0000FF] hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  Pick Your iPhone <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/condition-guide"
-                  className="inline-flex h-13 items-center justify-center rounded-full border-2 border-[#E5E7EB] bg-[#FFFFFF] px-7 text-[15px] font-bold text-[#000000] transition-all hover:border-[#000000] hover:bg-[#F4F4F4]"
-                >
-                  See How We Renew
-                </Link>
-              </div>
-
-              {/* Micro Trust Stats */}
-              <div className="mt-12 grid grid-cols-3 gap-6 border-t border-[#E5E7EB] pt-8">
-                <div>
-                  <p className="text-[26px] font-black text-[#000000] tracking-tight sm:text-[30px]">100%</p>
-                  <p className="text-[12px] font-semibold text-[#717171]">Battery Performance</p>
-                </div>
-                <div>
-                  <p className="text-[26px] font-black text-[#000000] tracking-tight sm:text-[30px]">300+</p>
-                  <p className="text-[12px] font-semibold text-[#717171]">Diagnostic Checkpoints</p>
-                </div>
-                <div>
-                  <p className="text-[26px] font-black text-[#000000] tracking-tight sm:text-[30px]">Up to 1-Yr</p>
-                  <p className="text-[12px] font-semibold text-[#717171]">Comprehensive Warranty</p>
-                </div>
+                <span>From New to Renewed</span>
+                <span className="text-white/40">|</span>
+                <span className="text-neutral-300">Like New. Only Smarter.</span>
               </div>
             </div>
 
-            {/* Right Showcase Column (ControlZ Floating Showcase Card) */}
-            <div className="relative flex justify-center lg:col-span-5">
-              <div className="relative w-full max-w-[450px] rounded-[22px] border border-[#E5E7EB] bg-gradient-to-b from-[#FFFFFF] to-[#F4F4F4] p-5 shadow-card">
-                
-                {/* Floating Inspection Card Top Left */}
-                <div className="absolute -top-3.5 -left-3.5 z-20 flex items-center gap-2.5 rounded-2xl border border-[#E5E7EB] bg-white/95 px-4 py-2.5 shadow-pop backdrop-blur">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#D8E5FF] text-[#0000FF]">
-                    <CheckCircle2 className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[12px] font-bold text-[#000000]">Zero Scratches on Display</p>
-                    <p className="text-[10.5px] text-[#717171]">Component-Level Polished</p>
-                  </div>
-                </div>
+            {/* Middle Main Content */}
+            <div className="relative z-10 grid items-center gap-8 lg:grid-cols-12 lg:gap-12 my-auto pt-6 pb-6">
+              
+              <div className="lg:col-span-7">
+                <h1 className="text-[52px] sm:text-[78px] lg:text-[96px] font-black tracking-tight leading-[0.93] text-white">
+                  Premium<br />
+                  <span className="text-[#0000FF]">Renewed.</span>
+                </h1>
 
-                {/* Floating Inspection Card Bottom Right */}
-                <div className="absolute -bottom-3.5 -right-3.5 z-20 flex items-center gap-2.5 rounded-2xl border border-[#E5E7EB] bg-white/95 px-4 py-2.5 shadow-pop backdrop-blur">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 text-amber-600">
-                    <BatteryCharging className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[12px] font-bold text-[#000000]">Original Battery Verified</p>
-                    <p className="text-[10.5px] text-[#717171]">Peak Efficiency Tested</p>
-                  </div>
-                </div>
+                <p className="mt-6 max-w-xl text-[16px] sm:text-[18px] leading-relaxed text-neutral-300 font-light">
+                  Flagship Apple smartphones precision-renewed at component level. 
+                  Experience factory diagnostics, 100% verified battery health, and zero-compromise cosmetics with doorstep warranty.
+                </p>
 
-                {/* Device Studio Graphic */}
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[18px] bg-white flex items-center justify-center p-3">
+                {/* ControlZ Action Buttons */}
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <Link
+                    href="/products?cat=iphone"
+                    className="inline-flex h-14 items-center justify-center gap-2.5 rounded-full bg-white px-8 text-[15px] font-black text-black transition-all hover:bg-neutral-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+                  >
+                    Pick Your iPhone <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href="/condition-guide"
+                    className="inline-flex h-14 items-center justify-center rounded-full border-2 border-white/40 bg-white/5 px-8 text-[15px] font-bold text-white transition-all hover:bg-white/15 hover:border-white"
+                  >
+                    See How We Renew
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right Visual (Studio iPhone Showcase) */}
+              <div className="lg:col-span-5 flex justify-center relative">
+                <div className="relative w-full max-w-[420px] aspect-[4/5] rounded-[32px] border-2 border-white/20 bg-white/5 p-4 backdrop-blur-xl flex items-center justify-center overflow-hidden">
+                  
+                  {/* Diagnostic Badges */}
+                  <div className="absolute top-4 left-4 z-20 flex items-center gap-2 rounded-2xl border border-white/20 bg-black/80 px-3.5 py-2 backdrop-blur-md">
+                    <CheckCircle2 className="h-4 w-4 text-[#0000FF]" />
+                    <span className="text-[11.5px] font-bold text-white">100% Original Retina</span>
+                  </div>
+
+                  <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 rounded-2xl border border-white/20 bg-black/80 px-3.5 py-2 backdrop-blur-md">
+                    <BatteryCharging className="h-4 w-4 text-emerald-400" />
+                    <span className="text-[11.5px] font-bold text-white">Peak Battery Health</span>
+                  </div>
+
                   <Image
                     src="/hero-3d-apple-studio-white.jpg"
-                    alt="Flyphones Premium Renewed iPhone Flagship"
+                    alt="Flyphones Certified Renewed Flagship"
                     fill
                     priority
-                    sizes="(max-width: 768px) 100vw, 450px"
-                    className="object-contain p-2 transition-transform duration-700 hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 420px"
+                    className="object-contain p-4 transition-transform duration-700 hover:scale-105"
                   />
                 </div>
+              </div>
+
+            </div>
+
+            {/* Bottom 3 Numbers Bar */}
+            <div className="relative z-10 grid grid-cols-3 gap-6 border-t border-white/20 pt-6">
+              <div>
+                <p className="text-[28px] sm:text-[36px] font-black text-white tracking-tight">100%</p>
+                <p className="text-[12px] font-medium text-neutral-400">Battery Performance</p>
+              </div>
+              <div>
+                <p className="text-[28px] sm:text-[36px] font-black text-white tracking-tight">300+</p>
+                <p className="text-[12px] font-medium text-neutral-400">Diagnostic Checkpoints</p>
+              </div>
+              <div>
+                <p className="text-[28px] sm:text-[36px] font-black text-white tracking-tight">1-Year</p>
+                <p className="text-[12px] font-medium text-neutral-400">Doorstep Warranty</p>
               </div>
             </div>
 
@@ -206,51 +240,35 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================= */}
-      {/* 2. THE 4 PILLARS OF CONTROLZ RENEWAL (Grid Section)       */}
+      {/* 3. CONTROLZ TRUST PILLARS (czp_trust 4 Glass Cards)       */}
       {/* ========================================================= */}
-      <section className="bg-[#F4F4F4] py-16 sm:py-20 border-b border-[#E5E7EB]">
-        <div className="mx-auto max-w-[1240px] px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="rounded-full bg-[#D8E5FF] px-3.5 py-1 text-[11px] font-black uppercase tracking-wider text-[#0000FF]">
-              The Flyphones Guarantee
-            </span>
-            <h2 className="mt-3 text-2xl font-black tracking-tight text-[#000000] sm:text-4xl">
-              Every device earns the Flyphones name.
-            </h2>
-            <p className="mt-2.5 text-[14.5px] text-[#717171]">
-              We don&apos;t just wipe and resell. We renew smartphones with engineering precision to deliver a true unboxing experience.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="bg-[#000000] px-4 py-8 sm:px-6 sm:py-12">
+        <div className="mx-auto max-w-[1240px]">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {CONTROLZ_PILLARS.map((p) => (
               <Link
                 key={p.title}
                 href={p.link}
-                className="group flex flex-col justify-between rounded-[22px] border border-[#E5E7EB] bg-[#FFFFFF] p-7 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card"
+                className="group relative flex flex-col justify-between rounded-[32px] sm:rounded-[36px] border-2 border-white/25 bg-white/[0.07] p-8 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/[0.12] hover:border-white/40 min-h-[220px]"
               >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${p.accent} ${p.iconColor}`}>
-                      <p.icon className="h-6 w-6" />
-                    </div>
-                    <span className="rounded-full bg-[#F4F4F4] px-2.5 py-1 text-[10.5px] font-bold text-[#717171]">
-                      {p.badge}
-                    </span>
-                  </div>
+                {/* Arrow Top Right */}
+                <div className="absolute top-6 right-6 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-white/70 transition-transform group-hover:rotate-45 group-hover:border-white group-hover:text-white">
+                  <ArrowUpRight className="h-4 w-4" />
+                </div>
 
-                  <h3 className="mt-6 text-[17.5px] font-black text-[#000000] tracking-tight group-hover:text-[#0000FF] transition-colors">
+                {/* Big Stat Value */}
+                <div>
+                  <p className="text-[44px] font-black tracking-tight leading-none text-white">
+                    {p.value}
+                  </p>
+                  <h3 className="mt-3 text-[17px] font-bold text-white tracking-tight leading-snug">
                     {p.title}
                   </h3>
-                  <p className="mt-2.5 text-[13.5px] leading-relaxed text-[#717171]">
-                    {p.description}
-                  </p>
                 </div>
 
-                <div className="mt-6 flex items-center gap-1.5 text-[12.5px] font-bold text-[#0000FF] group-hover:translate-x-1 transition-transform">
-                  <span>Learn more</span>
-                  <ChevronRight className="h-4 w-4" />
-                </div>
+                <p className="mt-4 text-[13px] leading-relaxed text-neutral-300 font-light">
+                  {p.subtitle}
+                </p>
               </Link>
             ))}
           </div>
@@ -258,217 +276,193 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================= */}
-      {/* 3. PICK YOUR IPHONE (ControlZ Signature Series Bar)       */}
+      {/* 4. PICK YOUR IPHONE (czp_lineup on Pure Black)            */}
       {/* ========================================================= */}
-      <section className="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 sm:py-20">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#E5E7EB] pb-6">
-          <div>
-            <span className="text-[11.5px] font-black uppercase tracking-wider text-[#0000FF]">Curated Inventory</span>
-            <h2 className="mt-1 text-2xl font-black tracking-tight text-[#000000] sm:text-4xl">
-              Pick your iPhone.
-            </h2>
-            <p className="mt-1 text-[14px] text-[#717171]">
-              Pristine pre-owned Apple smartphones in stock with same-day dispatch.
-            </p>
+      <section className="bg-[#000000] px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-[1240px]">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/20 pb-8">
+            <div>
+              <span className="text-[12px] font-black uppercase tracking-wider text-[#0000FF]">Curated Inventory</span>
+              <h2 className="mt-2 text-[38px] sm:text-[56px] font-black tracking-tight text-white leading-none">
+                Pick your iPhone.
+              </h2>
+              <p className="mt-3 text-[15px] text-neutral-400 font-light">
+                Pristine pre-owned Apple smartphones in stock with same-day dispatch and 1-year warranty.
+              </p>
+            </div>
+
+            <Link href="/products" className="inline-flex items-center gap-2 text-[14px] font-bold text-[#60a5fa] hover:text-white transition-colors">
+              View full catalogue ({categories.data?.[0]?.productCount || 'All'} devices) <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
 
-          <Link href="/products" className="inline-flex items-center gap-1.5 text-[13.5px] font-bold text-[#0000FF] hover:underline">
-            View full catalogue ({categories.data?.[0]?.productCount || 'All'} devices) <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-
-        {/* Series Filter Chips */}
-        <div className="mt-8 flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
-          {IPHONE_SERIES.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => setSelectedSeries(s.id)}
-              className={`shrink-0 rounded-full px-5 py-2.5 text-[13.5px] font-bold transition-all ${
-                selectedSeries === s.id
-                  ? 'bg-[#000000] text-white shadow-soft'
-                  : 'border border-[#E5E7EB] bg-[#FFFFFF] text-[#000000] hover:bg-[#F4F4F4]'
-              }`}
-            >
-              {s.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Product Cards Grid */}
-        <div className="mt-8">
-          {featured.isLoading ? (
-            <ProductGridSkeleton count={8} />
-          ) : !featured.data || featured.data.content.length === 0 ? (
-            <div className="rounded-[22px] border border-[#E5E7EB] bg-[#FFFFFF] p-12 text-center">
-              <p className="text-[16px] font-bold text-[#000000]">New renewed stock arriving today.</p>
-              <p className="mt-1 text-[13.5px] text-[#717171]">Explore our other categories or check all available iPhones.</p>
-              <Link
-                href="/products?cat=iphone"
-                className="mt-5 inline-flex h-11 items-center justify-center rounded-full bg-[#000000] px-6 text-[13.5px] font-bold text-white hover:bg-[#0000FF] transition-colors"
+          {/* Series Filter Chips */}
+          <div className="mt-8 flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+            {IPHONE_SERIES.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setSelectedSeries(s.id)}
+                className={`shrink-0 rounded-full px-5 py-2.5 text-[13.5px] font-bold transition-all ${
+                  selectedSeries === s.id
+                    ? 'bg-white text-black shadow-lg scale-105'
+                    : 'border border-white/20 bg-[#161616] text-white hover:bg-white/10'
+                }`}
               >
-                Browse All iPhones
-              </Link>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-              {featured.data.content.map((p) => (
-                <ProductCard key={p.id} p={p} />
-              ))}
-            </div>
-          )}
+                {s.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Product Cards Grid */}
+          <div className="mt-10">
+            {featured.isLoading ? (
+              <ProductGridSkeleton count={8} />
+            ) : !featured.data || featured.data.content.length === 0 ? (
+              <div className="rounded-[32px] border border-white/20 bg-[#161616] p-14 text-center">
+                <p className="text-[18px] font-bold text-white">New renewed stock arriving today.</p>
+                <p className="mt-2 text-[14px] text-neutral-400">Explore our other categories or check all available iPhones.</p>
+                <Link
+                  href="/products?cat=iphone"
+                  className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-white px-7 text-[14px] font-bold text-black hover:bg-neutral-200 transition-colors"
+                >
+                  Browse All iPhones
+                </Link>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+                {featured.data.content.map((p) => (
+                  <ProductCard key={p.id} p={p} />
+                ))}
+              </div>
+            )}
+          </div>
+
         </div>
       </section>
 
       {/* ========================================================= */}
-      {/* 4. COMPONENT ANATOMY & RENEWAL SHOWCASE (High Tech)       */}
+      {/* 5. INSIDE RENEW HUB (Engineering & Teardown Showcase)      */}
       {/* ========================================================= */}
-      <section className="bg-[#000000] text-white py-16 sm:py-24">
-        <div className="mx-auto max-w-[1240px] px-4 sm:px-6">
-          <div className="grid items-center gap-12 lg:grid-cols-12">
+      <section className="bg-[#000000] px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-[1240px]">
+          <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] border-2 border-white/20 bg-[#0d0d0d] p-8 sm:p-14 lg:p-16">
             
-            <div className="lg:col-span-7">
-              <span className="rounded-full bg-white/10 px-3.5 py-1 text-[11px] font-black uppercase tracking-wider text-[#D8E5FF]">
-                Precision Craftsmanship
+            <div className="grid items-center gap-12 lg:grid-cols-12">
+              <div className="lg:col-span-7">
+                <span className="rounded-full bg-white/10 px-3.5 py-1 text-[11px] font-black uppercase tracking-wider text-[#D8E5FF]">
+                  Component-Level Engineering
+                </span>
+                <h2 className="mt-4 text-[34px] sm:text-[48px] font-black tracking-tight text-white leading-tight">
+                  Inside Renew Hub.<br />
+                  <span className="text-[#0000FF]">Engineered to perfection.</span>
+                </h2>
+                <p className="mt-4 text-[15px] leading-relaxed text-neutral-300 font-light">
+                  Unlike informal second-hand markets, Flyphones subjects every device to micro-component testing before earning the renewed certificate.
+                </p>
+
+                <div className="mt-8 space-y-3.5">
+                  <div className="flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0000FF] text-white">
+                      <Check className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="text-[14px] font-bold text-white">Original OLED & 120Hz True Tone</p>
+                      <p className="text-[12.5px] text-neutral-400">No generic display swap warnings. Factory responsive touch.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0000FF] text-white">
+                      <Check className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="text-[14px] font-bold text-white">Bionic & Thermal Stress Tested</p>
+                      <p className="text-[12.5px] text-neutral-400">GPU stress benchmarks verified without thermal throttling.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0000FF] text-white">
+                      <Check className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="text-[14px] font-bold text-white">Camera Sensor & OIS Stabilization</p>
+                      <p className="text-[12.5px] text-neutral-400">4K 60FPS Dolby Vision, LiDAR sensor, and optical zoom verified.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 flex items-center gap-4">
+                  <Link
+                    href="/condition-guide"
+                    className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 text-[14px] font-bold text-black hover:bg-neutral-200 transition-all"
+                  >
+                    Read Condition Standards
+                  </Link>
+                  <Link
+                    href="/warranty-policy"
+                    className="inline-flex h-12 items-center justify-center rounded-full border border-white/30 bg-white/5 px-6 text-[14px] font-bold text-white hover:bg-white/10 transition-all"
+                  >
+                    Warranty Coverage
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right Diagnostic Seal */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative aspect-square w-full max-w-[380px] rounded-[32px] border-2 border-white/20 bg-white/5 p-8 flex flex-col items-center justify-center text-center backdrop-blur-xl">
+                  <Award className="h-16 w-16 text-[#0000FF]" />
+                  <p className="mt-4 text-xl font-black text-white tracking-wider">32-POINT DIAGNOSTIC SEAL</p>
+                  <p className="mt-2 text-[12.5px] text-neutral-300">
+                    Motherboard integrity, water-damage detection, and clean IMEI carrier whitelist validation.
+                  </p>
+                  <div className="mt-6 flex flex-wrap justify-center gap-2">
+                    <span className="rounded-xl border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white">FaceID 100% OK</span>
+                    <span className="rounded-xl border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white">Battery 90%+</span>
+                    <span className="rounded-xl border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white">Clean Carrier IMEI</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 6. CONTROLZ ELECTRIC BLUE ASSURANCE BANNER                */}
+      {/* ========================================================= */}
+      <section className="bg-[#000000] px-4 pb-16 sm:px-6 sm:pb-24">
+        <div className="mx-auto max-w-[1240px]">
+          <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#0000FF] px-8 py-12 sm:px-14 sm:py-16 text-white shadow-blue">
+            <div className="relative z-10 max-w-2xl">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3.5 py-1 text-[11px] font-black uppercase tracking-wider text-white">
+                <Zap className="h-3.5 w-3.5 text-amber-300" /> Doorstep Trust Guarantee
               </span>
-              <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl leading-tight">
-                Loved like new.<br />
-                <span className="text-[#D8E5FF]">Engineered to perfection.</span>
-              </h2>
-              <p className="mt-4 text-[15px] leading-relaxed text-white/70">
-                Unlike informal second-hand markets, Flyphones subjects every device to micro-component testing before earning the renewed certificate.
+              <h3 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl text-white leading-tight">
+                Love it or return it on the spot.<br />
+                Zero questions asked.
+              </h3>
+              <p className="mt-4 text-[15px] text-white/90 leading-relaxed font-light">
+                Every Flyphones package comes with Open-Box doorstep verification. Unbox the phone in front of the delivery executive, verify cosmetic perfection and IMEI, then sign with 100% peace of mind.
               </p>
 
-              <div className="mt-8 space-y-4">
-                <div className="flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0000FF] text-white">
-                    <Check className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[14px] font-bold text-white">Original OLED & 120Hz True Tone</p>
-                    <p className="text-[12.5px] text-white/60">No generic display swap warnings. Factory responsive touch.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0000FF] text-white">
-                    <Check className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[14px] font-bold text-white">Bionic & Thermal Stress Tested</p>
-                    <p className="text-[12.5px] text-white/60">GPU stress benchmarks verified without thermal throttling.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0000FF] text-white">
-                    <Check className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[14px] font-bold text-white">Camera Sensor & OIS Stabilization</p>
-                    <p className="text-[12.5px] text-white/60">4K 60FPS Dolby Vision, LiDAR sensor, and optical zoom verified.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-9 flex items-center gap-4">
+              <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link
-                  href="/condition-guide"
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 text-[14px] font-bold text-[#000000] shadow-soft hover:bg-[#D8E5FF] transition-all"
+                  href="/products?cat=iphone"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-7 text-[14px] font-bold text-black shadow-lg hover:bg-neutral-100 transition-all"
                 >
-                  Read Condition Standards
+                  Shop Certified Devices <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/warranty-policy"
-                  className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 bg-white/5 px-6 text-[14px] font-bold text-white hover:bg-white/10 transition-all"
+                  href="/support"
+                  className="inline-flex h-12 items-center justify-center rounded-full border-2 border-white/40 bg-transparent px-6 text-[14px] font-bold text-white hover:bg-white/10 transition-all"
                 >
-                  Warranty Coverage
+                  Need Help? Talk to Support
                 </Link>
               </div>
-            </div>
-
-            {/* Right Badge Seal Graphic */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative aspect-square w-full max-w-[380px] rounded-[22px] border border-white/15 bg-white/5 p-8 flex flex-col items-center justify-center text-center">
-                <Award className="h-16 w-16 text-[#D8E5FF]" />
-                <p className="mt-4 text-xl font-black text-white tracking-wider">32-POINT DIAGNOSTIC SEAL</p>
-                <p className="mt-2 text-[12.5px] text-white/60">
-                  Motherboard integrity, water-damage detection, and clean IMEI carrier whitelist validation.
-                </p>
-                <div className="mt-6 flex flex-wrap justify-center gap-2">
-                  <span className="rounded-xl border border-white/10 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white">FaceID 100% OK</span>
-                  <span className="rounded-xl border border-white/10 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white">Battery 90%+</span>
-                  <span className="rounded-xl border border-white/10 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white">Clean Carrier IMEI</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================= */}
-      {/* 5. SHOP BY CATEGORY (Apple Ecosystem)                     */}
-      {/* ========================================================= */}
-      <section className="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 sm:py-20">
-        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[#E5E7EB] pb-6">
-          <div>
-            <span className="text-[11.5px] font-black uppercase tracking-wider text-[#0000FF]">Entire Lineup</span>
-            <h2 className="mt-1 text-2xl font-black tracking-tight text-[#000000] sm:text-4xl">
-              Explore Apple Ecosystem
-            </h2>
-          </div>
-          <Link href="/products" className="inline-flex items-center gap-1 text-[13.5px] font-bold text-[#0000FF] hover:underline">
-            All devices <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-5">
-          {cats.map((c) => (
-            <Link
-              key={c.id}
-              href={`/products?cat=${c.slug}`}
-              className="group flex flex-col items-center rounded-[22px] border border-[#E5E7EB] bg-[#FFFFFF] p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#000000] hover:shadow-card"
-            >
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F4F4F4] text-[#000000] transition-transform group-hover:scale-110">
-                <Smartphone className="h-8 w-8 text-[#000000]" />
-              </div>
-              <h3 className="mt-4 text-[15px] font-black text-[#000000]">{c.name}</h3>
-              <p className="mt-1 text-[12px] font-bold text-[#0000FF]">{c.productCount} models in stock</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ========================================================= */}
-      {/* 6. CONTROLZ ASSURANCE CALLOUT BANNER                      */}
-      {/* ========================================================= */}
-      <section className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 sm:pb-24">
-        <div className="relative overflow-hidden rounded-[22px] bg-[#0000FF] px-8 py-12 sm:px-14 sm:py-16 text-white shadow-blue">
-          <div className="relative z-10 max-w-2xl">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1 text-[11px] font-black uppercase tracking-wider text-white">
-              <Zap className="h-3.5 w-3.5 text-amber-300" /> Doorstep Trust Guarantee
-            </span>
-            <h3 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl text-white leading-tight">
-              Love it or return it on the spot.<br />
-              Zero questions asked.
-            </h3>
-            <p className="mt-4 text-[15px] text-white/85 leading-relaxed">
-              Every Flyphones package comes with Open-Box doorstep verification. Unbox the phone in front of the delivery executive, verify cosmetic perfection and IMEI, then sign with 100% peace of mind.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link
-                href="/products?cat=iphone"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-7 text-[14px] font-bold text-[#000000] shadow-soft hover:bg-[#F4F4F4] transition-all"
-              >
-                Shop Certified Devices <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/support"
-                className="inline-flex h-12 items-center justify-center rounded-full border-2 border-white/30 bg-transparent px-6 text-[14px] font-bold text-white hover:bg-white/10 transition-all"
-              >
-                Need Help? Talk to Support
-              </Link>
             </div>
           </div>
         </div>

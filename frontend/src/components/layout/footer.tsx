@@ -73,11 +73,11 @@ export function Footer() {
                 </div>
               </Link>
 
-              {/* ControlZ-style Mission Heading */}
-              <h3 className="mt-6 text-[22px] font-extrabold leading-snug tracking-tight text-[#111111] sm:text-[26px]">
+              {/* ControlZ-style Electric Blue Mission Heading */}
+              <h3 className="mt-6 text-[28px] sm:text-[36px] lg:text-[40px] font-black leading-[1.08] tracking-tight text-[#0000FF]">
                 On a mission to make smartphones sustainable & affordable.
               </h3>
-              <p className="mt-3 text-[13.5px] leading-relaxed text-ink-muted max-w-md">
+              <p className="mt-4 text-[15px] leading-relaxed text-[#111111] max-w-md font-normal">
                 We increase the lifecycle of flagship smartphones by renewing them to like-new condition with 100% verified battery health and component-level diagnostic precision.
               </p>
             </div>
